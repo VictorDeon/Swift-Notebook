@@ -1,11 +1,6 @@
-//
-//  main.swift
-//  notebook
-//
-//  Created by Patrick Pow on 2025-05-05.
-//
+struct RUNNER {
+    let DELEGATE_DESIGN_PATTERN = delegateRunner
+}
 
-import Foundation
-
-print("Hello, Victor")
-
+let runner = RUNNER()
+runner.DELEGATE_DESIGN_PATTERN()
