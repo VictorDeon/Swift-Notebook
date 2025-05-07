@@ -11,6 +11,9 @@ func delegateRunner() {
     let angela = Surgeon(handler: emilio)
 
     emilio.assessSituation()
+    // Pode me dizer o que aconteceu?
     emilio.medicalEmergency()
+    // O médico fez uma compressa por 30 segundos.
+    // Estou cantando 'Staying Alive' para manter o paciente vivo.
 
 }

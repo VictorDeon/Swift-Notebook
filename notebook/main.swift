@@ -1,6 +1,8 @@
-struct RUNNER {
-    let DELEGATE_DESIGN_PATTERN = delegateRunner
+let CLOSURES = closureRunner
+let DELEGATE = delegateRunner
+
+func execute(_ runner: () -> Void) {
+    runner()
 }
 
-let runner = RUNNER()
-runner.DELEGATE_DESIGN_PATTERN()
+execute(CLOSURES)
