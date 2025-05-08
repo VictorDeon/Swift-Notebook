@@ -20,10 +20,16 @@ func sum4(_ n1: Int, n2: Int) -> Int {
     return n1 + n2
 }
 
+// Função sem retorno e sem parâmetros
+func printHello() -> Void {
+    print("Hello World!")
+}
+
 
 func functionRunner() {
     print(sum1(n1: 1, n2: 2))   // 3
     print(sum2(1, 2))           // 3
     print(sum3(n1: 1, n2: 2))   // 3
     print(sum4(1, n2: 2))       // 3
+    printHello()
 }
