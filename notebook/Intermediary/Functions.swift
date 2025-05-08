@@ -26,7 +26,7 @@ func printHello() -> Void {
 }
 
 
-func functionRunner() {
+func functionRunner() async {
     print(sum1(n1: 1, n2: 2))   // 3
     print(sum2(1, 2))           // 3
     print(sum3(n1: 1, n2: 2))   // 3

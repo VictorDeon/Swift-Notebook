@@ -12,11 +12,14 @@ let SCOPE = scopeRunner
 let TYPES = typeRunner
 let LOOPS = loopRunner
 let RANDOM = randomRunner
-let TIMER = timerRunner
+let TIMER = timerRunnerAsync
 let ENUMS = enumRunner
+let THIRD_PARTY_LIBRARY = thirdPartyLibraryRunner
 
-func execute(_ runner: () -> Void) -> Void {
-    runner()
+struct MyApp {
+    static func run() async {
+        await TIMER()
+    }
 }
 
-execute(ENUMS)
+await MyApp.run()

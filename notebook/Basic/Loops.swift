@@ -3,7 +3,7 @@
 // Half Open Range: start..<end
 // One Sided Range: ...end
 
-func loopRunner() {
+func loopRunner() async {
     let start: Int = 1
     let end: Int = 5
     

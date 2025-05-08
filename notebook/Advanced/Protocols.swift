@@ -50,7 +50,7 @@ struct FlyingMuseum {
     }
 }
 
-func protocolRunner() {
+func protocolRunner() async {
     let eagle = Eagle()
     let penguin = Penguin()
     let airplane = Airplane()

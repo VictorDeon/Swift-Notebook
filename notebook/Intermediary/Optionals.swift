@@ -6,7 +6,7 @@ struct Person {
     }
 }
 
-func optionalRunner() {
+func optionalRunner() async {
     let fulana = Person()
     // Force Unwrapping! (Perigoso, pq se o valor for nil vai disparar uma exceção)
     // so utilize se tiver certeza que o valor sempres sera preenchido.

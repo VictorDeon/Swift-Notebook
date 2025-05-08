@@ -25,7 +25,7 @@ enum Status: Int {
     case inactived = 0
 }
 
-func enumRunner() {
+func enumRunner() async {
     let today: WeekDay = .monday
     print(today)  // monday
     

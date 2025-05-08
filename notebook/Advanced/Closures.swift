@@ -30,7 +30,7 @@ func addOne(n1: Int) -> Int {
     return n1 + 1
 }
 
-func closureRunner() {
+func closureRunner() async {
     print(calculator(n1: 2, n2: 3, operation: add)) // 5
     print(calculator(n1: 2, n2: 3, operation: multiply)) // 6
     print(calculator(n1: 2, n2: 3, operation: sub)) // 1

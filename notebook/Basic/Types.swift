@@ -1,6 +1,6 @@
 // Tipos de dados
 
-func typeRunner() {
+func typeRunner() async {
     let string: String = "Ola mundo!"
     print(string) // Ola mundo!
     let inteiro: Int = 5

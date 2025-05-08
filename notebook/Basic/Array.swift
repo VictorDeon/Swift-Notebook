@@ -1,7 +1,7 @@
 // Arrays sao dados armazenados em um vetor ou matriz multidimensional
 // Arrays podem ter tipos diferentes dentro dele se a tipagem for [Any]
 
-func arrayRunner() {
+func arrayRunner() async {
     // [value1, value2, ...]
     let array1: [String] = ["Fulano 01", "Fulano 02", "Fulano 03"]
     print(array1) // ["Fulano 01", "Fulano 02", "Fulano 03"]

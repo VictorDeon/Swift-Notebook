@@ -1,7 +1,7 @@
 // Escopo
 var y = 5 // Escopo Global, var é para variaveis mutaveis.
 
-func scopeRunner() {
+func scopeRunner() async {
     print(y) // 5
     var x = 10 // Escopo Local
     

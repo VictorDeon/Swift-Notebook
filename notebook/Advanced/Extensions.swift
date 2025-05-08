@@ -14,7 +14,7 @@ extension Double {
     }
 }
 
-func extensionRunner() {
+func extensionRunner() async {
     let myDouble: Double = 3.14159
     
     // Arredonda sempre para o valor antes do decimal (.)

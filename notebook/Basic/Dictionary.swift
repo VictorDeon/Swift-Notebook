@@ -1,7 +1,7 @@
 // Dicionarios sao dados armazenados com tipo [chave: valor]
 // Dicionarios podem ter tipagens diferentes de usado [String: Any]
 
-func dictionaryRunner() {
+func dictionaryRunner() async {
     // [key: value]
     let dict1: [String: String] = ["zip_code": "111111", "city": "Paris"]
     print(dict1) // ["zip_code": "111111", "city": "Paris"]

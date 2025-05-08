@@ -31,7 +31,7 @@ class Logo {
     }
 }
 
-func timerRunner() {
+func timerRunnerSync() {
     let logo = Logo()
     let title = "FlashChat"
     for letter in title {
@@ -42,4 +42,20 @@ func timerRunner() {
     // Em aplicações de linha de comando você precisa rodar o loop:
     CFRunLoopRun()
     print("Titulo: \(logo.title)")  // Titulo: FlashChat
+}
+
+func timerRunnerAsync() async {
+    let title = "FlashChat"
+    var current = ""
+    
+    for (index, char) in title.enumerated() {
+        // espera 0.1s * (index+1)
+        let delay = UInt64(0.1 * Double(index + 1) * 1_000_000_000)
+        try? await Task.sleep(nanoseconds: delay)
+        
+        current.append(char)
+        print(current)
+    }
+    
+    print("Título completo: \(current)")
 }

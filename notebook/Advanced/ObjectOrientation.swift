@@ -76,7 +76,7 @@ struct Goblin {
 }
 
 
-func objectOrientationRunner() {
+func objectOrientationRunner() async {
     let skeleton1 = Enemy(health: 100)
     print("Esqueleto 01 = Vida: \(skeleton1.health)")   // Esqueleto 01 = Vide: 100
     print(skeleton1.move())                             // Monstro se movendo..

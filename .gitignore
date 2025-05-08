@@ -1,0 +1,45 @@
+# Build artefacts
+build/
+DerivedData/
+
+# Xcode
+*.xcworkspace
+!default.xcworkspace/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+*.pbxuser
+*.perspective
+
+# Swift Package Manager
+.build/
+Packages/
+.swiftpm/
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# JetBrains IDEs
+.idea/
+
+# Archives
+*.xcarchive
+
+# Playground
+timeline.xctimeline
+playground.xcworkspace
+
+# Misc
+*.swp
+*.DS_Store
+
