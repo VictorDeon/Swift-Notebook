@@ -1,5 +1,6 @@
 // Adicionando libs externas usando o Cocoapods
 // Vamos instalar e usas essa lib: https://github.com/Alamofire/Alamofire
+// Doc: https://github.com/Alamofire/Alamofire/blob/master/Documentation/Usage.md#making-requests
 // Instale o cocopod pelo terminal:
 //      $ sudo gem install cocoapods
 //      $ pod setup --verbose
@@ -17,15 +18,38 @@
 // Para saber se a lib é compativel com seu PodFile olhe o arquivo .podspec do github deles, olhe
 // a versão e a platform que é compativel
 // Com isso vamos poder usar a lib
+
 import Alamofire
 
+struct Login: Encodable {
+    let email: String
+    let password: String
+}
+
+let login = Login(email: "test@test.test", password: "testPassword")
+
+
 func thirdPartyLibraryRunner() async {
-    let response = await AF.request("https://httpbin.org/get")
+    let getResponse = await AF.request("https://httpbin.org/get")
         .serializingData()
         .response
+ 
+    debugPrint(getResponse)
     
-    print("Ola mundo!")
-    debugPrint(response)
+    let headers: HTTPHeaders = [
+        "Authorization": "Basic VXNlcm5hbWU6UGFzc3dvcmQ=",
+        "Accept": "application/json"
+    ]
+    
+    let postResponse = await AF.request(
+        "https://httpbin.org/post",
+        method: .post,
+        parameters: login,
+        encoder: JSONParameterEncoder.default,
+        headers: headers
+    ).serializingData().response
+
+    debugPrint(postResponse)
 }
 
 

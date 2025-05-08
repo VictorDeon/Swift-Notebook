@@ -18,7 +18,7 @@ let THIRD_PARTY_LIBRARY = thirdPartyLibraryRunner
 
 struct MyApp {
     static func run() async {
-        await TIMER()
+        await THIRD_PARTY_LIBRARY()
     }
 }
 
