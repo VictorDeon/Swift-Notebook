@@ -1,4 +1,5 @@
 // Arrays sao dados armazenados em um vetor ou matriz multidimensional
+// Arrays podem ter tipos diferentes dentro dele se a tipagem for [Any]
 
 func arrayRunner() {
     // [value1, value2, ...]

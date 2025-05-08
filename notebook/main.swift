@@ -12,9 +12,11 @@ let SCOPE = scopeRunner
 let TYPES = typeRunner
 let LOOPS = loopRunner
 let RANDOM = randomRunner
+let TIMER = timerRunner
+let ENUMS = enumRunner
 
 func execute(_ runner: () -> Void) -> Void {
     runner()
 }
 
-execute(RANDOM)
+execute(ENUMS)

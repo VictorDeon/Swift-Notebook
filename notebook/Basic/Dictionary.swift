@@ -1,4 +1,5 @@
 // Dicionarios sao dados armazenados com tipo [chave: valor]
+// Dicionarios podem ter tipagens diferentes de usado [String: Any]
 
 func dictionaryRunner() {
     // [key: value]

@@ -15,4 +15,8 @@ func typeRunner() {
     print(vetor) // [1, 2, 3, 4, 5]
     let dicionario: [String: Int] = ["age": 18, "weight": 70]
     print(dicionario) // ["age": 18, "weight": 70]
+    var qualquerCoisa: Any = "Oloko meu"
+    print(qualquerCoisa) // Oloko meu
+    qualquerCoisa = 10
+    print(qualquerCoisa) // x
 }

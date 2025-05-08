@@ -1,0 +1,45 @@
+// Estudando a lib Timer
+
+import Foundation
+
+class Logo {
+    var title: String = ""
+    private var delay: Double = 0.0
+    
+    func addChar(_ char: Character) {
+        self.delay += 1.0
+        Timer.scheduledTimer(withTimeInterval: 0.1 * delay, repeats: false) { _ in
+            self.title.append(char)
+            print(self.title)
+            // F
+            // Fl
+            // Fla
+            // Flas
+            // Flash
+            // FlashC
+            // FlashCh
+            // FlashCha
+            // FlashChat
+        }
+    }
+    
+    func closeTimer() {
+        Timer.scheduledTimer(withTimeInterval: 0.2 * delay, repeats: false) { _ in
+            // Encerra o RunLoop se estiver em CLI um pouco depois de o time acima executar
+             CFRunLoopStop(CFRunLoopGetMain())
+        }
+    }
+}
+
+func timerRunner() {
+    let logo = Logo()
+    let title = "FlashChat"
+    for letter in title {
+        logo.addChar(letter)
+    }
+    logo.closeTimer()
+
+    // Em aplicações de linha de comando você precisa rodar o loop:
+    CFRunLoopRun()
+    print("Titulo: \(logo.title)")  // Titulo: FlashChat
+}
