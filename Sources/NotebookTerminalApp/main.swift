@@ -1,6 +1,9 @@
 import SwiftUI
 
-if Apps.SWIFT_UI_ENABLED {
+let args = CommandLine.arguments
+print("Argumentos: \(args)")
+
+if Apps.SWIFT_UI_ENABLED || args.contains("--ui") {
     print("Vamos iniciar a criação da janela SwiftUI")
     let app = NSApplication.shared
 

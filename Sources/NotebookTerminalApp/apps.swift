@@ -1,7 +1,7 @@
 import AppKit
 
 struct Apps {
-    static let SWIFT_UI_ENABLED: Bool = true
+    static let SWIFT_UI_ENABLED: Bool = false
 
     struct basic {
         static let array = arrayRunner
