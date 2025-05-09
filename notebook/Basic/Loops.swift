@@ -8,11 +8,13 @@ func loopRunner() async {
     let end: Int = 5
     
     // Loop Range
-    for i in start...end {
+    for i in start...10 {
+        if i == 3 { continue } // Pula a iteração 3
+        if i > 5 { break }  // Ao passar da iteração 5 pare o loop
+
         print("Iteração \(i)")
         // Iteração 1
         // Iteração 2
-        // Iteração 3
         // Iteração 4
         // Iteração 5
     }

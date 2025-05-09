@@ -14,11 +14,14 @@ let LOOPS = loopRunner
 let RANDOM = randomRunner
 let TIMER = timerRunnerAsync
 let ENUMS = enumRunner
+let EXCEPTIONS = exceptionRunner
+let CONSTANTS = constantsRunner
+let CASTING = castingRunner
 let THIRD_PARTY_LIBRARY = thirdPartyLibraryRunner
 
 struct MyApp {
     static func run() async {
-        await THIRD_PARTY_LIBRARY()
+        await TYPES()
     }
 }
 

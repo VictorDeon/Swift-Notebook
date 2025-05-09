@@ -1,6 +1,7 @@
 
 struct Person {
     var name: String? = "Fulano de Tal"
+    var email: String? = "fulano@gmail.com"
     func speak() {
         print("Ola mundo!")
     }
@@ -18,8 +19,10 @@ func optionalRunner() async {
     }
     
     // Optional Binding (Forma mais rapida de se fazer a validação sem usar o force unwrapping)
-    if let name = fulana.name {
-        print(name)
+    let cicrana = Person()
+    if let name = fulana.name,
+       let email = cicrana.email {
+        print(name, email)
     }
     
     // Nil Coalescing Operator (Insere um valor defaul caso seja nil

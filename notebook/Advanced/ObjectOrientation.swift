@@ -32,10 +32,19 @@ class Enemy {
 }
 
 class Dragon: Enemy {
+    // Atributo de instancia
     var wingSpan: Int = 2
+    // Atributo de classe
+    static let eat: String = "Hora do rango"
 
+    // Metodo de instancia
     func talk(speech: String) {
         print("Dragão diz: \(speech)")
+    }
+    
+    // Método de classe
+    static func sing() {
+        print("Um rango legal, é o que precisamos...")
     }
 
     // sobrecarga
@@ -99,5 +108,6 @@ func objectOrientationRunner() async {
     print(dragon.talk(speech: "Graaaa...."))    // Dragão diz: Graaaa...
     print(dragon.attack())                      // Monstro atacando e dando 10 de dano
     print(dragon.attack(strength: 100))         // Dragão atacando com dano 100
-    
+    print(Dragon.eat)                           // Hora do rango
+    print(Dragon.sing())                        // Um rango legal, é o que precisamos...
 }

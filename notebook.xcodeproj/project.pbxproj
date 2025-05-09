@@ -32,8 +32,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BDCFFB9E2DC99503004123D7 /* notebook */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = notebook;
 			sourceTree = "<group>";
 		};
@@ -83,7 +81,6 @@
 				FDFD4142CDB5449AEB5F8895 /* Pods-notebook.debug.xcconfig */,
 				3BFEFC899208170444A3261C /* Pods-notebook.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

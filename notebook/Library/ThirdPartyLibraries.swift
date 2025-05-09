@@ -10,13 +10,16 @@
 // Va até o diretorio onde o arquivo .xcodeproj do seu projeto está e
 // execute o comando para criar o Podfile:
 //      $ pod init
-// Faça a integração do CPF-CNPJ-Validator no cocopod a partir do arquivo Podfile
+// Faça a integração do Alamofire no cocopod a partir do arquivo Podfile
 //      pod 'Alamofire'
 // Rode o comando:
 //      $ pod install
 // Agora saia da sessão que vc estas do xcode e utilize o .xcworkspace para abrir uma nova sessão.
 // Para saber se a lib é compativel com seu PodFile olhe o arquivo .podspec do github deles, olhe
 // a versão e a platform que é compativel
+// Para atualizar as libs do seu PodFile execute o comando:
+//      $ pod update
+// Se quiser remover alguma lib do PodFile é só remover ela do arquivo e executar o $ pod install
 // Com isso vamos poder usar a lib
 
 import Alamofire
@@ -27,7 +30,6 @@ struct Login: Encodable {
 }
 
 let login = Login(email: "test@test.test", password: "testPassword")
-
 
 func thirdPartyLibraryRunner() async {
     let getResponse = await AF.request("https://httpbin.org/get")
