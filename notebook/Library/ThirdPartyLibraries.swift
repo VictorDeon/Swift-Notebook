@@ -29,9 +29,9 @@ struct Login: Encodable {
     let password: String
 }
 
-let login = Login(email: "test@test.test", password: "testPassword")
-
 func thirdPartyLibraryRunner() async {
+    let login = Login(email: "test@test.test", password: "testPassword")
+
     let getResponse = await AF.request("https://httpbin.org/get")
         .serializingData()
         .response

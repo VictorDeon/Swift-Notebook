@@ -1,28 +1,15 @@
-let CLOSURES = closureRunner
-let DELEGATE = delegateRunner
-let FUNCTIONS = functionRunner
-let EXTENSIONS = extensionRunner
-let PROTOCOLS = protocolRunner
-let OPTIONALS = optionalRunner
-let OO = objectOrientationRunner
-let DICTIONARY = dictionaryRunner
-let ARRAY = arrayRunner
-let CONDITIONALS = conditionalRunner
-let SCOPE = scopeRunner
-let TYPES = typeRunner
-let LOOPS = loopRunner
-let RANDOM = randomRunner
-let TIMER = timerRunnerAsync
-let ENUMS = enumRunner
-let EXCEPTIONS = exceptionRunner
-let CONSTANTS = constantsRunner
-let CASTING = castingRunner
-let THIRD_PARTY_LIBRARY = thirdPartyLibraryRunner
+import SwiftUI
 
-struct MyApp {
-    static func run() async {
-        await TYPES()
-    }
+let SWIFT_UI_ENABLED: Bool = true
+
+if SWIFT_UI_ENABLED {
+    print("Vamos iniciar a criação da janela SwiftUI")
+    let app = NSApplication.shared
+
+    Apps.ui.hello_world(app)
+
+    print("Tudo feito, finalizando.")
+    exit(0)
+} else {
+    await Apps.basic.array()
 }
-
-await MyApp.run()

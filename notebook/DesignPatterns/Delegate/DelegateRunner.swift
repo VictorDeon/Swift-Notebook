@@ -15,5 +15,4 @@ func delegateRunner() async {
     emilio.medicalEmergency()
     // O médico fez uma compressa por 30 segundos.
     // Estou cantando 'Staying Alive' para manter o paciente vivo.
-
 }
