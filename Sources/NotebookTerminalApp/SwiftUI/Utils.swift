@@ -9,7 +9,7 @@ class WindowCloseDelegate: NSObject, NSWindowDelegate {
 }
 
 // Helper para criar e apresentar uma janela SwiftUI
-func showWindow<V: View>(_ view: V, title: String) {
+@MainActor func showWindow<V: View>(_ view: V, title: String) {
     let window = NSWindow(
         contentRect: NSRect(x: 0, y: 0, width: 300, height: 100),
         styleMask: [.titled, .closable, .resizable],

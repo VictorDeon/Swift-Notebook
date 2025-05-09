@@ -2,17 +2,19 @@
 
 Aqui será registrados alguns algoritmos de swift para consulta rapida.
 
-### Gerar o Binario
+### Gerar o Binario/Pacote Swift com o Swift Package Manager (SPM)
 
 ```sh
-swiftc \            
-  -target x86_64-apple-macos12 \
-  -framework SwiftUI \
-  -framework AppKit \
-  notebook/Main.swift \
-  notebook/**/*.swift \
-  -o NotebookTerminalApp
+// Execute o comando abaixo para gerar o Package.swift e a pasta Sources para inserir seu codigo.
+// Esse pode ser um executable (binario) ou uma library (pacote de importação em outros projetos)
+$ swift package init --type <executable|library>
+// Modifica o Package.swift para incluir as dependencias, nome do seu binario e etc
+// Mova seus *.swift para Sources/<NomeDoSeuBinario>/.
+// Execute o comando abaixo para compilar e gerar o binario
+$ swift build -c <debug|release>
+$ .build/<debug|release>/<NomeDoSeuBinario>
 ```
+Target Support Files
 
 ### IOS Lifecycle
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D33C40B5C16EBDE52F3C62D4 /* libPods-notebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E994B14CD5C9A5DEB04848 /* libPods-notebook.a */; };
+		8AEE175F3ACA15F5FFECA1AC /* libPods-notebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D2C46C2BB8603C31A1D85C5 /* libPods-notebook.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		3BFEFC899208170444A3261C /* Pods-notebook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notebook.release.xcconfig"; path = "Target Support Files/Pods-notebook/Pods-notebook.release.xcconfig"; sourceTree = "<group>"; };
-		97E994B14CD5C9A5DEB04848 /* libPods-notebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-notebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D2C46C2BB8603C31A1D85C5 /* libPods-notebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-notebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDCFFB9C2DC99503004123D7 /* notebook */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = notebook; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDFD4142CDB5449AEB5F8895 /* Pods-notebook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notebook.debug.xcconfig"; path = "Target Support Files/Pods-notebook/Pods-notebook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -32,6 +32,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BDCFFB9E2DC99503004123D7 /* notebook */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = notebook;
 			sourceTree = "<group>";
 		};
@@ -42,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D33C40B5C16EBDE52F3C62D4 /* libPods-notebook.a in Frameworks */,
+				8AEE175F3ACA15F5FFECA1AC /* libPods-notebook.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +54,7 @@
 		B18685610A0BCE42C24817B2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				97E994B14CD5C9A5DEB04848 /* libPods-notebook.a */,
+				5D2C46C2BB8603C31A1D85C5 /* libPods-notebook.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,7 +97,7 @@
 				BDCFFB982DC99503004123D7 /* Sources */,
 				BDCFFB992DC99503004123D7 /* Frameworks */,
 				BDCFFB9A2DC99503004123D7 /* CopyFiles */,
-				CDACFC4464912E365D7EBE3E /* [CP] Copy Pods Resources */,
+				DE747D6EF9CB753DE75E52D8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -166,7 +168,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CDACFC4464912E365D7EBE3E /* [CP] Copy Pods Resources */ = {
+		DE747D6EF9CB753DE75E52D8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

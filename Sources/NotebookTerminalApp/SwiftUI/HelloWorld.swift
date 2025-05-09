@@ -17,7 +17,7 @@ struct ContentView2: View {
     }
 }
 
-func swiftUIHelloWorldRunner(_ app: NSApplication) {
+@MainActor func swiftUIHelloWorldRunner(_ app: NSApplication) {
     showWindow(ContentView1(), title: "Janela 1")
     app.run()
     

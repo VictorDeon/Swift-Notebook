@@ -38,10 +38,10 @@ struct Apps {
     }
     
     static func run() async {
-        await basic.types()
+        await self.library.thirdPartyLibrary()
     }
     
-    static func run(_ app: NSApplication) {
-        ui.hello_world(app)
+    @MainActor static func run(_ app: NSApplication) {
+        self.ui.hello_world(app)
     }
 }
