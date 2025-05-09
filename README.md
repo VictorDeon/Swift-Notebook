@@ -14,7 +14,13 @@ $ swift package init --type <executable|library>
 $ swift build -c <debug|release> ou $ swift run
 $ .build/<debug|release>/<NomeDoSeuBinario>
 ```
-Target Support Files
+
+### Schemas do Swift
+
+1. Entre em Product/Scheme/Manage Shemes
+2. Adicione a quantidade de schemes que quiser com os parâmetros do terminal que desejar.
+3. Modifique o scheme no editor para ao clicar em run executar o scheme que desejar.
+// Lib de parametros de terminal: https://github.com/apple/swift-argument-parser
 
 ### IOS Lifecycle
 
