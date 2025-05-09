@@ -11,7 +11,7 @@ $ swift package init --type <executable|library>
 // Modifica o Package.swift para incluir as dependencias, nome do seu binario e etc
 // Mova seus *.swift para Sources/<NomeDoSeuBinario>/.
 // Execute o comando abaixo para compilar e gerar o binario
-$ swift build -c <debug|release>
+$ swift build -c <debug|release> ou $ swift run
 $ .build/<debug|release>/<NomeDoSeuBinario>
 ```
 Target Support Files
