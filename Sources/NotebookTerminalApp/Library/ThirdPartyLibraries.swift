@@ -23,21 +23,14 @@
 // Com isso vamos poder usar a lib
 
 import Alamofire
+import Foundation
 
 struct Login: Encodable {
     let email: String
     let password: String
 }
 
-func thirdPartyLibraryRunner() async {
-    let login = Login(email: "test@test.test", password: "testPassword")
-
-    let getResponse = await AF.request("https://httpbin.org/get")
-        .serializingData()
-        .response
- 
-    debugPrint(getResponse)
-    
+func makeRequest(login: Login) async -> Int? {
     let headers: HTTPHeaders = [
         "Authorization": "Basic VXNlcm5hbWU6UGFzc3dvcmQ=",
         "Accept": "application/json"
@@ -52,6 +45,30 @@ func thirdPartyLibraryRunner() async {
     ).serializingData().response
 
     debugPrint(postResponse)
+    
+    let getResponse = await AF.request("https://httpbin.org/get")
+        .serializingData()
+        .response
+    
+    debugPrint(getResponse)
+
+    return getResponse.response?.statusCode
+}
+
+func thirdPartyLibraryRunner() {
+    let login = Login(email: "test@test.test", password: "testPassword")
+    let semaphore = DispatchSemaphore(value: 0)
+    var resultado: Int? = 0
+
+    Task {
+        resultado = await makeRequest(login: login)
+        semaphore.signal()
+    }
+    
+    // Bloqueia até signal()
+    semaphore.wait()
+    debugPrint(resultado!)
+    
 }
 
 

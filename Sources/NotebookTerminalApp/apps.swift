@@ -37,8 +37,8 @@ struct Apps {
         static let hello_world = swiftUIHelloWorldRunner
     }
     
-    static func run() async {
-        await self.library.thirdPartyLibrary()
+    static func run() {
+        self.library.thirdPartyLibrary()
     }
     
     @MainActor static func run(_ app: NSApplication) {

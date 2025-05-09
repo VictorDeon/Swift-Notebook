@@ -9,6 +9,6 @@ if Apps.SWIFT_UI_ENABLED {
     print("Tudo feito, finalizando.")
     exit(0)
 } else {
-    await Apps.run()
+    Apps.run()
     exit(0)
 }
