@@ -1,5 +1,8 @@
+import AppKit
 
 struct Apps {
+    static let SWIFT_UI_ENABLED: Bool = true
+
     struct basic {
         static let array = arrayRunner
         static let conditionals = conditionalRunner
@@ -32,5 +35,13 @@ struct Apps {
     }
     struct ui {
         static let hello_world = swiftUIHelloWorldRunner
+    }
+    
+    static func run() async {
+        await basic.types()
+    }
+    
+    static func run(_ app: NSApplication) {
+        ui.hello_world(app)
     }
 }
