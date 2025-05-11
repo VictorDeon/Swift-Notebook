@@ -3,12 +3,12 @@ import SwiftUI
 
 class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
     // Cria a janela SwiftUI
-    init(rootView: V, title: String) {
+    init(rootView: V, title: String, x: Int, y: Int, width: Int, height: Int) {
         let win = NSWindow(
-          contentRect: NSRect(x: 0, y: 0, width: 300, height: 100),
-          styleMask: [.titled, .closable, .resizable],
-          backing: .buffered,
-          defer: false
+            contentRect: NSRect(x: x, y: y, width: width, height: height),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
         )
         win.title = title
         win.level = .floating
@@ -30,82 +30,49 @@ class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
     }
 }
 
+enum LogLevel: String, CaseIterable, ExpressibleByArgument {
+    case debug, info, warning, error
+}
+
+struct CommonOptions: ParsableArguments {
+    @Option(
+        name: [.short, .customLong("log")],  // -l ou --log
+        help: "Nível de logging (debug, info, warning, error)"
+    )
+    var logLevel: LogLevel = .info
+
+    @Option(
+        name: [.short, .customLong("plist")],  // -p ou --plist
+        help: "Caminho para o arquivo .plist",
+        completion: .file(extensions: [".plist"])
+    )
+    var plistPath: String?
+    
+    @Flag(
+        name: .shortAndLong,  // -s ou --simulate
+        help: "Só mostra o que seria feito, sem executar"
+    )
+    var simulate: Bool = false
+}
+
 @main
 struct TerminalApp: AsyncParsableCommand {
     @MainActor static var windowControllers: [Any] = []
-
+    
     static let configuration = CommandConfiguration(
-        abstract: "Executa exemplos Swift",
-        discussion: """
-            Exemplos disponíveis:
-            basic: array, conditionals, constants, dictionary, enums, loops, scope, types
-            intermediary: exceptions, functions, optionals, randoms
-            advanced: casting, closures, extensions, oo, protocols
-            designPatterns: delegate
-            library: timer, thirdPartyLibrary
-            ui: swiftUIHelloWold
-        """
+        commandName: "NotebookTerminalApp",
+        abstract: "Ferramenta Toolbox: escolhe um executável e passa os parâmetros certos",
+        version: "0.1.0",
+        subcommands: [
+            ArrayCommands.self,
+            ConditionalCommands.self,
+            SwiftUIHelloWorldCommands.self,
+        ]
     )
-    
-    @Argument(help: "Aplicação que será executada (ex: loops, array, hello_world).")
-    var executableApp: String
-    
-    @Flag(name: .shortAndLong, help: "Executar em modo SwiftUI.")
-    var ui: Bool = false
-    
-    // Executa as ferramentas na thread principal MainActor
-    mutating func run() async throws -> Void {
-        let args = CommandLine.arguments
-        print("Argumentos: \(args[1...])")
-        await MainActor.run {
-            if self.ui {
-                let app = NSApplication.shared
-                guard let runnersUI = TerminalApp.runnersUI[executableApp] else {
-                    print("🚫 Aplicação de UI desconhecida: \(executableApp)")
-                    return
-                }
-                
-                runnersUI(app)
-            } else {
-                guard let runner = TerminalApp.runners[executableApp] else {
-                    print("🚫 Aplicação desconhecida: \(executableApp)")
-                    return
-                }
-                runner()
-            }
-        }
-    }
-    
-    @MainActor static let runners: [String: () -> Void] = [
-        "array": arrayRunner,
-        "conditionals": conditionalRunner,
-        "constants": constantsRunner,
-        "dictionary": dictionaryRunner,
-        "enums": enumRunner,
-        "loops": loopRunner,
-        "scope": scopeRunner,
-        "types": typeRunner,
-        "exceptions": extensionRunner,
-        "functions": functionRunner,
-        "optionals": optionalRunner,
-        "randoms": randomRunner,
-        "casting": castingRunner,
-        "closures": closureRunner,
-        "extensions": extensionRunner,
-        "oo": objectOrientationRunner,
-        "protocols": protocolRunner,
-        "delegate": delegateRunner,
-        "timer": timerRunnerAsync,
-        "thirdPartyLibrary": thirdPartyLibraryRunner
-    ]
-    
-    @MainActor static let runnersUI: [String: @MainActor (_ app: NSApplication) -> Void] = [
-        "swiftUIHelloWorld": swiftUIHelloWorldRunner
-    ]
-    
+
     // Mostra a janela do SwiftUI
-    @MainActor static func showWindow<V: View>(_ view: V, title: String) {
-        let controller = HostingWindowController(rootView: view, title: title)
+    @MainActor static func showWindow<V: View>(_ view: V, title: String, x: Int = 0, y: Int = 0, width: Int = 300, height: Int = 100) {
+        let controller = HostingWindowController(rootView: view, title: title, x: x, y: y, width: width, height: height)
         windowControllers.append(controller)
         controller.showWindow(nil)
     }

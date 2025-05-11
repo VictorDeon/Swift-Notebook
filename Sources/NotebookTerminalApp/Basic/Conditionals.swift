@@ -10,10 +10,41 @@
 // !  NOT
 
 import AppKit
+import ArgumentParser
 
-func conditionalRunner() {
-    let age: Int = 20
+struct ConditionalCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "conditional",
+        abstract: "Tutorial sobre condicionais em swift"
+    )
 
+    @OptionGroup var common: CommonOptions
+    
+    @Option(
+        name: .long,  // age
+        help: "Idade para dirigir",
+        transform: { str in
+            // tenta converter, se falhar, lança ValidationError
+            guard let n = Int(str), n > 0 else {
+                throw ValidationError("Idade ‘\(str)’ não é um inteiro positivo")
+            }
+            return n
+        }
+    )
+    var age: Int = 20
+    
+    @Option(
+        name: .long,  // hardness
+        help: "Tipo da clara do ovo. Ex: Soft, Medium, Hard"
+    )
+    var hardness: String = "Medium"
+
+    func run() throws {
+        conditionalRunner(age: age, hardness: hardness)
+    }
+}
+
+func conditionalRunner(age: Int, hardness: String) {
     if age > 70 {
         print("Muito velho para dirigir.")
     } else if age > 18 {
@@ -32,8 +63,6 @@ func conditionalRunner() {
         default:
             print("Error, opção inválida.")
     }
-
-    let hardness: String = "Medium"
 
     switch hardness {
         case "Soft":
