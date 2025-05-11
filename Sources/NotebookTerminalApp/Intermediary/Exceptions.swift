@@ -1,6 +1,32 @@
 // Tratamento de exceçoes
 import Foundation
 import AppKit
+import ArgumentParser
+
+struct ExceptionCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "exceptions",
+        abstract: "Tutorial sobre tratamento de exceção em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+    
+    @Option(
+        name: .long,  // numerador
+        help: "numerador da divisão"
+    )
+    var numerador: Int
+    
+    @Option(
+        name: .long,  // denominador
+        help: "denominador da divisão"
+    )
+    var denominador: Int
+
+    func run() throws {
+        exceptionRunner(numerador: numerador, denominador: denominador)
+    }
+}
 
 enum MathError: Error {
     case divisionPerZero
@@ -20,9 +46,9 @@ func divide(_ numerador: Int, por denominador: Int) throws -> Int {
     return numerador / denominador
 }
 
-func exceptionRunner() {
+func exceptionRunner(numerador: Int, denominador: Int) {
     do {
-        let resultado = try divide(10, por: 0)
+        let resultado = try divide(numerador, por: denominador)
         print("Resultado: \(resultado)")
     } catch MathError.divisionPerZero, MathError.invalidInput {
         print("Erro: não é possível dividir por zero.")

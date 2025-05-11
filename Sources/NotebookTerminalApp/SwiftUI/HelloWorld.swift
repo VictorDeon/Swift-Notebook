@@ -40,7 +40,7 @@ struct ContentView1: View {
     var body: some View {
         Text("Ola mundo 01!")
             .padding()
-            .frame(width: 300, height: 100)
+            .frame(width: 500, height: 200)
     }
 }
 

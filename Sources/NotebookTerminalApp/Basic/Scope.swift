@@ -1,9 +1,23 @@
 // Escopo
 
 import AppKit
+import ArgumentParser
+
+struct ScopeCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "scope",
+        abstract: "Tutorial sobre escopo em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        scopeRunner()
+    }
+}
 
 func scopeRunner() {
-    var y = 5 // var é para variaveis mutaveis.
+    let y = 5 // var é para variaveis mutaveis.
     print(y) // 5
     var x = 10 // Escopo Local
     

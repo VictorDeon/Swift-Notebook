@@ -2,6 +2,32 @@
 
 import Foundation
 import AppKit
+import ArgumentParser
+
+struct TimeCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "timer",
+        abstract: "Tutorial sobre timer em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+    
+    @Flag(
+        name: .customLong("async"),  // --async
+        help: "Executa usando código assincrono."
+    )
+    var executeAsync: Bool = false
+
+    func run() throws {
+        if executeAsync {
+            print("Iniciando o timer assincrono.")
+            timerRunnerAsync()
+        } else {
+            print("Iniciando o timer sincrono.")
+            timerRunnerSync()
+        }
+    }
+}
 
 class Logo {
     var title: String = ""
@@ -31,6 +57,7 @@ class Logo {
         }
     }
 }
+extension Logo: @unchecked Sendable {}
 
 func timerRunnerSync() {
     let logo = Logo()

@@ -1,6 +1,20 @@
 // Tipos de dados
 
 import AppKit
+import ArgumentParser
+
+struct TypeCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "types",
+        abstract: "Tutorial sobre tipos em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        typeRunner()
+    }
+}
 
 class MyAnimal {
     let name: String = "gato"

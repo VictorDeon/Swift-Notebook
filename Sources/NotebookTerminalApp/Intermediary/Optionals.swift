@@ -1,4 +1,18 @@
 import AppKit
+import ArgumentParser
+
+struct OptionalCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "optionals",
+        abstract: "Tutorial sobre opcionais em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        optionalRunner()
+    }
+}
 
 struct Person {
     var name: String? = "Fulano de Tal"

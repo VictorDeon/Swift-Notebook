@@ -25,6 +25,20 @@
 import Alamofire
 import Foundation
 import AppKit
+import ArgumentParser
+
+struct RequestCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "requests",
+        abstract: "Tutorial sobre requisições http e pacotes de terceiros em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        thirdPartyLibraryRunner()
+    }
+}
 
 struct Login: Encodable {
     let email: String

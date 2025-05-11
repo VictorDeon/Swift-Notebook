@@ -6,6 +6,20 @@
 
 import Foundation
 import AppKit
+import ArgumentParser
+
+struct CastingCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "casting",
+        abstract: "Tutorial sobre casting em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        castingRunner()
+    }
+}
 
 class Animal {
     var name: String

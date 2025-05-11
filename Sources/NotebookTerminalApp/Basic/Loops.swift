@@ -4,6 +4,20 @@
 // One Sided Range: ...end
 
 import AppKit
+import ArgumentParser
+
+struct LoopCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "loops",
+        abstract: "Tutorial sobre loops em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        loopRunner()
+    }
+}
 
 func loopRunner() {
     let start: Int = 1

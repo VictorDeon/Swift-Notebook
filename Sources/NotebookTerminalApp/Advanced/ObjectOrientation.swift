@@ -6,6 +6,20 @@
 // Struct = Immutable (não é possível modificar seus valores internamente sem usar o mutating)
 
 import AppKit
+import ArgumentParser
+
+struct OOCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "oo",
+        abstract: "Tutorial sobre orientação a objetos em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        objectOrientationRunner()
+    }
+}
 
 class Enemy {
     // Atributos
@@ -90,8 +104,8 @@ struct Goblin {
 func objectOrientationRunner() {
     let skeleton1 = Enemy(health: 100)
     print("Esqueleto 01 = Vida: \(skeleton1.health)")   // Esqueleto 01 = Vide: 100
-    print(skeleton1.move())                             // Monstro se movendo..
-    print(skeleton1.attack())                           // Monstro atacando e dando 10 de dano
+    skeleton1.move()                                    // Monstro se movendo..
+    skeleton1.attack()                                  // Monstro atacando e dando 10 de dano
     
     let skeleton2 = Enemy(health: 100)
     print("Esqueleto 02 = Vida: \(skeleton2.health)")   // Esqueleto 02 = Vida: 100
@@ -106,10 +120,10 @@ func objectOrientationRunner() {
     let dragon = Dragon(health: 1000)
     // Dragão = Vida: 1000 e quantidade de asas: 2
     print("Dragão = Vida: \(dragon.health) e quantidade de asas: \(dragon.wingSpan)")
-    print(dragon.move())                        // Dragão voaando
-    print(dragon.talk(speech: "Graaaa...."))    // Dragão diz: Graaaa...
-    print(dragon.attack())                      // Monstro atacando e dando 10 de dano
-    print(dragon.attack(strength: 100))         // Dragão atacando com dano 100
-    print(Dragon.eat)                           // Hora do rango
-    print(Dragon.sing())                        // Um rango legal, é o que precisamos...
+    dragon.move()                        // Dragão voaando
+    dragon.talk(speech: "Graaaa....")    // Dragão diz: Graaaa...
+    dragon.attack()                      // Monstro atacando e dando 10 de dano
+    dragon.attack(strength: 100)         // Dragão atacando com dano 100
+    print(Dragon.eat)                    // Hora do rango
+    Dragon.sing()                        // Um rango legal, é o que precisamos...
 }

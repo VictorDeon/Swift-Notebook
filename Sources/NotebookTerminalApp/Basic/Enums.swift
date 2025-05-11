@@ -1,6 +1,66 @@
 import AppKit
+import ArgumentParser
 
-enum WeekDay {
+struct EnumCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "enums",
+        abstract: "Tutorial sobre enums em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+    
+    @Option(
+        name: .long,  // today
+        help: "Dia da semana. Ex: monday, tuesday, wednesday, thusdaym friday, saturday, sunday"
+    )
+    var today: WeekDay = .monday
+    
+    @Option(
+        name: .long,  // temperature
+        help: "Dia da semana. Ex: hot, cold"
+    )
+    var temperature: Temperature = .cold
+
+    @Option(
+        name: .customLong("test-result"),  // test-result
+        help: "Resultado do teste no formato success:mensagem ou fail:mensagem",
+        transform: { (arg: String) throws -> TestResult in
+            let parts = arg.split(separator: ":", maxSplits: 1).map(String.init)
+            guard parts.count == 2 else {
+              throw ValidationError("Use success:… ou fail:…")
+            }
+            switch parts[0].lowercased() {
+                case "success": return .success(parts[1])
+                case "fail":    return .fail(parts[1])
+                default:        throw ValidationError("Prefixo inválido: use success ou fail")
+            }
+          }
+    )
+    var testResult: TestResult = .success("Teste passou com sucesso!")
+    
+    @Option(
+        name: .long,  // temperature
+        help: "Status: 1 ou 0",
+            transform: { arg in
+                guard let i = Int(arg), let st = Status(rawValue: i) else {
+                    throw ValidationError("Use 1 (ativo) ou 0 (inativo)")
+                }
+                return st
+            }
+    )
+    var status: Status = .actived
+
+    func run() throws {
+        enumRunner(
+            today: today,
+            temperature: temperature,
+            status: status,
+            result: testResult
+        )
+    }
+}
+
+enum WeekDay: String, CaseIterable, ExpressibleByArgument {
     case monday, tuesday, wednesday, thusday, friday, saturday, sunday
 }
 
@@ -9,7 +69,7 @@ enum TestResult {
     case fail(String)
 }
 
-enum Temperature {
+enum Temperature: String, CaseIterable, ExpressibleByArgument {
     case hot, cold
 
     func description() -> String {
@@ -27,21 +87,17 @@ enum Status: Int {
     case inactived = 0
 }
 
-func enumRunner() {
-    let today: WeekDay = .monday
-    print(today)  // monday
-    
+func enumRunner(today: WeekDay, temperature: Temperature, status: Status, result: TestResult) {
     switch today {
         case .monday:
             print("Hoje é segunda-feira")  // Entra aqui
         case .tuesday:
             print("Hoje é terça-feira")
         default:
-            print("Outro dia da semana")
+            print("Outro dia da semana: \(today)")
     }
     
-    let result: TestResult = .success("Teste passou com sucesso!")
-    print(result)  // success("Teste passou com sucesso!")
+    let result: TestResult = result
 
     switch result {
         case .success(let mensagem):
@@ -50,10 +106,8 @@ func enumRunner() {
             print(erro)
     }
     
-    let clime = Temperature.hot
-    print(clime.description())  // Está quente.
+    print(temperature.description())  // Está quente.
     
-    let status = Status.actived
     print(status.rawValue)      // 1
 }
 

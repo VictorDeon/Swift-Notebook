@@ -3,6 +3,20 @@
 // Sintaxe: { (parameters) -> return type in statement }
 
 import AppKit
+import ArgumentParser
+
+struct ClosuresCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "closures",
+        abstract: "Tutorial sobre closures em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        closureRunner()
+    }
+}
 
 func calculator(n1: Int, n2: Int, operation: (Int, Int) -> Int) -> Int {
     return operation(n1, n2)

@@ -64,8 +64,32 @@ struct TerminalApp: AsyncParsableCommand {
         abstract: "Ferramenta Toolbox: escolhe um executável e passa os parâmetros certos",
         version: "0.1.0",
         subcommands: [
+            // Basic
             ArrayCommands.self,
             ConditionalCommands.self,
+            ConstantCommands.self,
+            DictionaryCommands.self,
+            EnumCommands.self,
+            LoopCommands.self,
+            ScopeCommands.self,
+            TypeCommands.self,
+            // Intermediary
+            ExceptionCommands.self,
+            FunctionCommands.self,
+            OptionalCommands.self,
+            RandomCommands.self,
+            // Advanced
+            CastingCommands.self,
+            ClosuresCommands.self,
+            ExtensionCommands.self,
+            OOCommands.self,
+            ProtocolCommands.self,
+            // Design Patterns
+            DelegateCommands.self,
+            // Libraries
+            RequestCommands.self,
+            TimeCommands.self,
+            // SwiftUI
             SwiftUIHelloWorldCommands.self,
         ]
     )

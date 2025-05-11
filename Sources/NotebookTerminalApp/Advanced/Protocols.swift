@@ -2,6 +2,20 @@
 // todo mundo que o implementar deve seguir.
 
 import AppKit
+import ArgumentParser
+
+struct ProtocolCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "protocols",
+        abstract: "Tutorial sobre protocolos em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        protocolRunner()
+    }
+}
 
 protocol CanFlyProtocol {
     func fly()
@@ -60,5 +74,5 @@ func protocolRunner() {
     let museum = FlyingMuseum()
     museum.flyingDemo(eagle)
     museum.flyingDemo(airplane)
-    print(penguin.swim())
+    penguin.swim()
 }

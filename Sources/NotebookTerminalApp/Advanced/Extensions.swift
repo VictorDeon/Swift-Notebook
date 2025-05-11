@@ -3,6 +3,20 @@
 
 import Foundation
 import AppKit
+import ArgumentParser
+
+struct ExtensionCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "extensions",
+        abstract: "Tutorial sobre extensions em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        extensionRunner()
+    }
+}
 
 extension Double {
     func round(to places: Int) -> Double {

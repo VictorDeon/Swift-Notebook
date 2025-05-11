@@ -1,6 +1,32 @@
 // Funções seguem a seguinte sintaxe: func MyFunc(external internal: type, ...) -> returnType { ...code }
 
 import AppKit
+import ArgumentParser
+
+struct FunctionCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "functions",
+        abstract: "Tutorial sobre funções em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+    
+    @Option(
+        name: .long,  // numerador
+        help: "valor 1"
+    )
+    var n1: Int = 1
+    
+    @Option(
+        name: .long,  // denominador
+        help: "valor 2"
+    )
+    var n2: Int = 2
+
+    func run() throws {
+        functionRunner(n1, n2)
+    }
+}
 
 // Parametros nomeados iguais Externamente e Internamente
 func sum1(n1: Int, n2: Int) -> Int {
@@ -28,10 +54,10 @@ func printHello() -> Void {
 }
 
 
-func functionRunner() {
-    print(sum1(n1: 1, n2: 2))   // 3
-    print(sum2(1, 2))           // 3
-    print(sum3(n1: 1, n2: 2))   // 3
-    print(sum4(1, n2: 2))       // 3
+func functionRunner(_ n1: Int, _ n2: Int) {
+    print(sum1(n1: n1, n2: n2))   // 3
+    print(sum2(n1, n2))           // 3
+    print(sum3(n1: n1, n2: n2))   // 3
+    print(sum4(n1, n2: n2))       // 3
     printHello()
 }

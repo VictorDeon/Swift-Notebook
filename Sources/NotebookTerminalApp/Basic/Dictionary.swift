@@ -2,6 +2,20 @@
 // Dicionarios podem ter tipagens diferentes de usado [String: Any]
 
 import AppKit
+import ArgumentParser
+
+struct DictionaryCommands: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        commandName: "dictionary",
+        abstract: "Tutorial sobre dicionarios em swift"
+    )
+
+    @OptionGroup var common: CommonOptions
+
+    func run() throws {
+        dictionaryRunner()
+    }
+}
 
 func dictionaryRunner() {
     // [key: value]
@@ -13,7 +27,7 @@ func dictionaryRunner() {
     print(dict3)
     
     // Acessando os dados de uma dict
-    print(dict1["city"])    // Optional("Paris")
+    print(dict1["city"] ?? "")    // Optional("Paris")
     print(dict1["city"]!)   // Paris
     print(dict2["age"]!)    // 22
     print(dict3["computer"]!["cpu"]!)   // 10
