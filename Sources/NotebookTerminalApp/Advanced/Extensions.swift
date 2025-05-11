@@ -2,6 +2,7 @@
 // Sintaxe: extension SomeType { ...add new functionality }
 
 import Foundation
+import AppKit
 
 extension Double {
     func round(to places: Int) -> Double {
@@ -14,7 +15,7 @@ extension Double {
     }
 }
 
-func extensionRunner() async {
+func extensionRunner() {
     let myDouble: Double = 3.14159
     
     // Arredonda sempre para o valor antes do decimal (.)

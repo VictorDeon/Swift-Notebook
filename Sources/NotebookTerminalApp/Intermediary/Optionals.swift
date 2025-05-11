@@ -1,3 +1,4 @@
+import AppKit
 
 struct Person {
     var name: String? = "Fulano de Tal"
@@ -7,7 +8,7 @@ struct Person {
     }
 }
 
-func optionalRunner() async {
+func optionalRunner() {
     let fulana = Person()
     // Force Unwrapping! (Perigoso, pq se o valor for nil vai disparar uma exceção)
     // so utilize se tiver certeza que o valor sempres sera preenchido.

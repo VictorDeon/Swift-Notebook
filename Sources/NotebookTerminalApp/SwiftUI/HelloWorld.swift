@@ -18,9 +18,11 @@ struct ContentView2: View {
 }
 
 @MainActor func swiftUIHelloWorldRunner(_ app: NSApplication) {
-    showWindow(ContentView1(), title: "Janela 1")
+    TerminalApp.showWindow(ContentView1(), title: "Janela 1")
     app.run()
     
-    showWindow(ContentView2(), title: "Janela 2")
+    TerminalApp.showWindow(ContentView2(), title: "Janela 2")
     app.run()
+    
+    print("Finalizado!")
 }

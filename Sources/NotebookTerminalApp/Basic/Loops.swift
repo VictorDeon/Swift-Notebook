@@ -3,7 +3,9 @@
 // Half Open Range: start..<end
 // One Sided Range: ...end
 
-func loopRunner() async {
+import AppKit
+
+func loopRunner() {
     let start: Int = 1
     let end: Int = 5
     

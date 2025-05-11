@@ -1,5 +1,6 @@
 // Tratamento de exceçoes
 import Foundation
+import AppKit
 
 enum MathError: Error {
     case divisionPerZero
@@ -19,7 +20,7 @@ func divide(_ numerador: Int, por denominador: Int) throws -> Int {
     return numerador / denominador
 }
 
-func exceptionRunner() async {
+func exceptionRunner() {
     do {
         let resultado = try divide(10, por: 0)
         print("Resultado: \(resultado)")

@@ -1,6 +1,7 @@
 // Estudando a lib Timer
 
 import Foundation
+import AppKit
 
 class Logo {
     var title: String = ""
@@ -44,15 +45,21 @@ func timerRunnerSync() {
     print("Titulo: \(logo.title)")  // Titulo: FlashChat
 }
 
-func timerRunnerAsync() async {
+func timerRunnerAsync() {
     let title = "FlashChat"
     var current = ""
+    let semaphore = DispatchSemaphore(value: 0)
     
     for (index, char) in title.enumerated() {
         // espera 0.1s * (index+1)
         let delay = UInt64(0.1 * Double(index + 1) * 1_000_000_000)
-        try? await Task.sleep(nanoseconds: delay)
+        Task {
+            try? await Task.sleep(nanoseconds: delay)
+            semaphore.signal()
+        }
         
+        semaphore.wait()
+
         current.append(char)
         print(current)
     }

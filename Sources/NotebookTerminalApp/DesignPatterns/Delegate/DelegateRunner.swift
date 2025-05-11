@@ -3,7 +3,9 @@
     e redirecionar para o local correto.
  */
 
-func delegateRunner() async {
+import AppKit
+
+func delegateRunner() {
     let emilio = EmergencyCallHandler()
     // Pegou o bleep e ficou por um tempo depois passou para a angela
     let peter = Paramedic(handler: emilio)

@@ -24,6 +24,7 @@
 
 import Alamofire
 import Foundation
+import AppKit
 
 struct Login: Encodable {
     let email: String

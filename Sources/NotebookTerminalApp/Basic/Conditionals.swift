@@ -9,7 +9,9 @@
 // || OR
 // !  NOT
 
-func conditionalRunner() async {
+import AppKit
+
+func conditionalRunner() {
     let age: Int = 20
 
     if age > 70 {

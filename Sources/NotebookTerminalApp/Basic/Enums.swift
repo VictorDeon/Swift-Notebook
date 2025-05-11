@@ -1,3 +1,5 @@
+import AppKit
+
 enum WeekDay {
     case monday, tuesday, wednesday, thusday, friday, saturday, sunday
 }
@@ -25,7 +27,7 @@ enum Status: Int {
     case inactived = 0
 }
 
-func enumRunner() async {
+func enumRunner() {
     let today: WeekDay = .monday
     print(today)  // monday
     

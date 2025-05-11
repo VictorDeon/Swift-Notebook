@@ -5,6 +5,7 @@
 // is   Valida o tipo do objeto.
 
 import Foundation
+import AppKit
 
 class Animal {
     var name: String
@@ -37,7 +38,7 @@ func findNemo(from animals: [Animal]) {
     }
 }
 
-func castingRunner() async {
+func castingRunner() {
     let angela = Human(n: "Angela Yu")
     let jack = Human(n: "Jack Bauer")
     let nemo = Fish(n: "Nemo")

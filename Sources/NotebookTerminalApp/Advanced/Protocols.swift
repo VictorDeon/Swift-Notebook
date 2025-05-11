@@ -1,6 +1,8 @@
 // Os protocolos sao iguais as interfaces de orientação ao objeto, nela vc define um contrato em que
 // todo mundo que o implementar deve seguir.
 
+import AppKit
+
 protocol CanFlyProtocol {
     func fly()
 }
@@ -50,7 +52,7 @@ struct FlyingMuseum {
     }
 }
 
-func protocolRunner() async {
+func protocolRunner() {
     let eagle = Eagle()
     let penguin = Penguin()
     let airplane = Airplane()

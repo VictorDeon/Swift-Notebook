@@ -5,6 +5,8 @@
 // Classes = Mutable (pode mudar seus valores sem problema)
 // Struct = Immutable (não é possível modificar seus valores internamente sem usar o mutating)
 
+import AppKit
+
 class Enemy {
     // Atributos
     var health: Int
@@ -85,7 +87,7 @@ struct Goblin {
 }
 
 
-func objectOrientationRunner() async {
+func objectOrientationRunner() {
     let skeleton1 = Enemy(health: 100)
     print("Esqueleto 01 = Vida: \(skeleton1.health)")   // Esqueleto 01 = Vide: 100
     print(skeleton1.move())                             // Monstro se movendo..

@@ -1,5 +1,7 @@
 // Funções seguem a seguinte sintaxe: func MyFunc(external internal: type, ...) -> returnType { ...code }
 
+import AppKit
+
 // Parametros nomeados iguais Externamente e Internamente
 func sum1(n1: Int, n2: Int) -> Int {
     return n1 + n2
@@ -26,7 +28,7 @@ func printHello() -> Void {
 }
 
 
-func functionRunner() async {
+func functionRunner() {
     print(sum1(n1: 1, n2: 2))   // 3
     print(sum2(1, 2))           // 3
     print(sum3(n1: 1, n2: 2))   // 3

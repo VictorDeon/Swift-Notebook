@@ -1,5 +1,8 @@
 // Escopo
-func scopeRunner() async {
+
+import AppKit
+
+func scopeRunner() {
     var y = 5 // var é para variaveis mutaveis.
     print(y) // 5
     var x = 10 // Escopo Local

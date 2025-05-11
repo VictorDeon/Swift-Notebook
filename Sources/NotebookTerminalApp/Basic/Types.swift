@@ -1,12 +1,14 @@
 // Tipos de dados
 
+import AppKit
+
 class MyAnimal {
     let name: String = "gato"
 }
 
 class MyFruit {}
 
-func typeRunner() async {
+func typeRunner() {
     let string: String = "Ola mundo!"
     print(string) // Ola mundo!
     
