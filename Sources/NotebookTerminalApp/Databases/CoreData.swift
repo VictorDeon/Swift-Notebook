@@ -111,8 +111,9 @@ func coreDataRunner() {
     saveContext(container: persistentContainer)
     
     // Delete
-    items.remove(at: 0)
     persistentContainer.viewContext.delete(items[0])
+    items.remove(at: 0)
+    saveContext(container: persistentContainer)
     
 }
 
