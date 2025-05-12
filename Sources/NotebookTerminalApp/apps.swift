@@ -93,6 +93,7 @@ struct TerminalApp: AsyncParsableCommand {
             // Databases
             UserDefaultCommands.self,
             NSCoderCommands.self,
+            SQLiteCommands.self,
             // SwiftUI
             SwiftUIHelloWorldCommands.self,
         ]
