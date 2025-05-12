@@ -51,25 +51,25 @@ Vamos para a proxima pagina
 Voltando para a tela inicial
 
 13. ViewController2 viewWillDisappear Called
-10. ViewController1 viewWillAppear Called
-11. ViewController1 viewDidAppear Called
-12. ViewController2 viewDidDisappear Called
+14. ViewController1 viewWillAppear Called
+15. ViewController1 viewDidAppear Called
+16. ViewController2 viewDidDisappear Called
 
 Vamos ir para a home page do celular ou só trocar de aplicativo (colocar o app em background)
 
-14. sceneWillResignActive(_:)
-15. sceneDidEnterBackground(_:)
+17. sceneWillResignActive(_:)
+18. sceneDidEnterBackground(_:)
 
 Vamos voltar para o nosso aplicativo (colocar ele em foreground novamente)
 
-16. sceneWillEnterForeground(_:)
-17. scenedidBecomeActive(_:)
+19. sceneWillEnterForeground(_:)
+20. scenedidBecomeActive(_:)
 
 Agora vamos desligar o app
 
-18. sceneWillResignActive(_:)
-19. sceneDidDisconnect(_:)
-20. application(_:didDiscardSceneSessions:)
+21. sceneWillResignActive(_:)
+22. sceneDidDisconnect(_:)
+23. application(_:didDiscardSceneSessions:)
 
 ### Versões
 
@@ -80,6 +80,7 @@ Macos 10.15
 
 TODO:
 
+- [ ] Sintaxe basica, intermediaria e avançada
 - [ ] Modulos
 - [ ] Empacotamento e geração do binario
 - [ ] Sistema de logging
@@ -96,9 +97,17 @@ TODO:
 - [ ] Inputs e Outputs
 - [ ] Execução por Terminal com Path Parameters
 - [ ] Firebase
+    - [ ] Firebase Auth: Solução em nuvem de autenticação.
+    - [ ] Firestore: Solução de banco de dados em nuvem NoSQL
 - [ ] Design Patterns
 - [ ] SwiftUI
-- [ ] Banco de Dados (SQLite e Local)
+- [ ] Banco de Dados
+    - [x] UserDefaults: Armazena pequenos bites de dados em plists, normalmente usado em configurações
+    - [x] Codable (NSCoder): Armazena pequenos objetos em plists
+    - [ ] Keychain: Armazena pequenos bites de dados de forma segura
+    - [ ] SQLite: Persiste grandes quantidades de dados em banco relacional SQL (FMDB)
+    - [ ] Core Data: Banco de dados SQL orientado a objeto, é uma ORM para o SQLite
+    - [ ] Realm: Solução de banco de dados (framework) mais rapida e facil de usar.
 - [ ] Assincronicidade igual ao python (Corotines)
 - [ ] Regex
 - [ ] Testes Automatizados

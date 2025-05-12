@@ -53,6 +53,10 @@ func conditionalRunner(age: Int, hardness: String) {
         print("Muito novo para dirigir")
     }
     
+    // if ternario
+    let printable = age > 18 ? "Pode dirigir" : "Não pode dirigir"
+    print(printable)
+    
     switch age {
         case 70...120:  // Closed Range
             print("Muito velho para dirigir")

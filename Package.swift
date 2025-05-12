@@ -6,6 +6,9 @@ import PackageDescription
 let package = Package(
     name: "NotebookTerminalApp",
     platforms: [.macOS(.v12)],
+    products: [
+        .executable(name: "NotebookTerminalApp", targets: ["NotebookTerminalApp"]),
+    ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.6.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0")
@@ -16,6 +19,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
+            ],
+            resources: [
+                // aponte para o xcdatamodeld dentro de Sources/NotebookTerminalApp
+                .process("Library/Databases/DataModel.xcdatamodeld"),
             ]
         )
     ]

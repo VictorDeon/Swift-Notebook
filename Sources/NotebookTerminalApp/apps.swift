@@ -86,9 +86,13 @@ struct TerminalApp: AsyncParsableCommand {
             ProtocolCommands.self,
             // Design Patterns
             DelegateCommands.self,
+            SingletonCommands.self,
             // Libraries
             RequestCommands.self,
             TimeCommands.self,
+            // Databases
+            UserDefaultCommands.self,
+            NSCoderCommands.self,
             // SwiftUI
             SwiftUIHelloWorldCommands.self,
         ]

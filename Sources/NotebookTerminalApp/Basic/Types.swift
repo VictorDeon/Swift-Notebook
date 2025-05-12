@@ -53,7 +53,7 @@ func typeRunner() {
     var qualquerCoisa: Any = "Oloko meu"
     print(qualquerCoisa) // Oloko meu
     qualquerCoisa = 10
-    print(qualquerCoisa) // x
+    print(qualquerCoisa) // 10
     
     let qualquerObjeto: [AnyObject] = [animal, MyFruit()]
     print(qualquerObjeto)  // [notebook.MyAnimal, notebook.MyFruit]
