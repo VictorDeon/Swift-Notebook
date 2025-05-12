@@ -100,12 +100,17 @@ func coreDataRunner() {
     
     // Read
     let request: NSFetchRequest<Item> = Item.fetchRequest()
+    let predicate = NSPredicate(format: "title CONTAINS %@", "Ola")
+    let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+    request.predicate = predicate
+    request.sortDescriptors = [sortDescriptor]
     do {
         items = try persistentContainer.viewContext.fetch(request)
         print(items)
     } catch {
         print("Error fetching data from context: \(error)")
     }
+
     // Update
     items[0].setValue("Titulo Atualizado", forKey: "title")
     saveContext(container: persistentContainer)
