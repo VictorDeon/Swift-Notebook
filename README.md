@@ -108,7 +108,8 @@ TODO:
     - [x] Codable (NSCoder): Armazena pequenos objetos em plists
     - [ ] Keychain: Armazena pequenos bites de dados de forma segura
     - [x] SQLite: Persiste grandes quantidades de dados em banco relacional SQL (FMDB)
-    - [ ] Realm: Solução de banco de dados (framework) mais rapida e facil de usar.
+    - [x] Realm: Solução de banco de dados (framework) mais rapida e facil de usar.
+    - [ ] Realizar um tutorial com todos os relacionamentos no SQLite e Realm
 - [ ] Assincronicidade igual ao python (Corotines)
 - [ ] Regex
 - [ ] Testes Automatizados

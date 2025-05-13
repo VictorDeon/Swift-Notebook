@@ -9,7 +9,7 @@ import AppKit
 import ArgumentParser
 import RealmSwift
 
-struct RealmCommands: ParsableCommand {
+struct RealmCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "realm",
         abstract: "Tutorial sobre realm store em swift"
