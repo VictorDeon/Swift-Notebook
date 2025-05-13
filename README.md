@@ -80,7 +80,7 @@ Macos 10.15
 
 TODO:
 
-- [ ] Sintaxe basica, intermediaria e avançada
+- [x] Sintaxe basica, intermediaria e avançada
 - [ ] Modulos
 - [ ] Empacotamento e geração do binario
 - [ ] Sistema de logging
@@ -95,18 +95,19 @@ TODO:
 - [ ] Requisições HTTP
 - [ ] Datetime
 - [ ] Inputs e Outputs
-- [ ] Execução por Terminal com Path Parameters
+- [x] Execução por Terminal com Path Parameters
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
     - [ ] Firestore: Solução de banco de dados em nuvem NoSQL
 - [ ] Design Patterns
+    - [x] Delegate
+    - [ ] Singleton
 - [ ] SwiftUI
 - [ ] Banco de Dados
     - [x] UserDefaults: Armazena pequenos bites de dados em plists, normalmente usado em configurações
     - [x] Codable (NSCoder): Armazena pequenos objetos em plists
     - [ ] Keychain: Armazena pequenos bites de dados de forma segura
-    - [ ] SQLite: Persiste grandes quantidades de dados em banco relacional SQL (FMDB)
-    - [ ] Core Data: Banco de dados SQL orientado a objeto, é uma ORM para o SQLite
+    - [x] SQLite: Persiste grandes quantidades de dados em banco relacional SQL (FMDB)
     - [ ] Realm: Solução de banco de dados (framework) mais rapida e facil de usar.
 - [ ] Assincronicidade igual ao python (Corotines)
 - [ ] Regex

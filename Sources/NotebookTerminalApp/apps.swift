@@ -94,6 +94,7 @@ struct TerminalApp: AsyncParsableCommand {
             UserDefaultCommands.self,
             NSCoderCommands.self,
             SQLiteCommands.self,
+            RealmCommands.self,
             // SwiftUI
             SwiftUIHelloWorldCommands.self,
         ]
