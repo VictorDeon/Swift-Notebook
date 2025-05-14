@@ -184,7 +184,7 @@ struct Aggregation {
 struct Composition {
     static func execute() {
         // O notebook pode existir sem um teclado
-        var notebook = Notebook(model: "HP")
+        let notebook = Notebook(model: "HP")
         // O teclado não pode existir sem o notebook
         let keyboard = Keyboard(model: "Logitech", notebook: notebook)
         print("Keyboard: " + notebook.keyboard!.model)

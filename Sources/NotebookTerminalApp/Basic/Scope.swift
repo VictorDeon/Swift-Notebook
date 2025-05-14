@@ -1,4 +1,5 @@
-// Escopo
+// No Swift, escopo determina onde uma variável ou constante é visível e acessível.
+// Variáveis declaradas dentro de um bloco ({ … }), função ou closure só podem ser usadas naquele contexto.
 
 import AppKit
 import ArgumentParser
@@ -12,25 +13,112 @@ struct ScopeCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        scopeRunner()
+        print("→ Escopo global vs. escopo local:")
+        EscopoGlobalVsLocal.run()
+        print("→ Funções aninhadas e escopo de bloco:")
+        FuncoesAninhadasEscopoDeBloco.run()
+        print("→ let vs. var no escopo:")
+        LetVsVarNoEscopo.run()
+        print("→ Shadowing (sombreamento):")
+        Shadowing.run()
+        print("→ Escopo de closures e captura de variáveis:")
+        EscopoDeClosure.run()
     }
 }
 
-func scopeRunner() {
-    let y = 5 // var é para variaveis mutaveis.
-    print(y) // 5
-    var x = 10 // Escopo Local
-    
-    func myLocalFunction() {
-        let z = 10  // Como o z não é modificado em local nenhum usamos o let para considera-lo uma constante imutavel.
-        print(x, y) // 10, 5
-        x = 20
-        print(x) // 20
-        print(z) // 10
+/// Global: declarado fora de qualquer função ou tipo, visível em todo o arquivo (e em módulos importados, se public).
+/// Local: dentro de func, if, for, etc. Morre quando o bloco termina.
+struct EscopoGlobalVsLocal {
+    static func run() {
+        // 1) Global (arquivo inteiro) se esse codigo estivesse em um arquivo separado
+        let globalValue = "👋 Olá, Swift!"
+
+        func showGlobal() {
+            print(globalValue) // ok -> 👋 Olá, Swift!
+        }
+        showGlobal()
+
+        // 2) Local (dentro de função/bloco)
+        func exampleLocal() {
+            let localValue = 42
+            print(localValue)   // ok -> 42
+        }
+        // print(localValue)    // ❌ Erro: 'localValue' não existe aqui
+        exampleLocal()
     }
-    
-    myLocalFunction()
-    
-    print(x) // 20
-    // print(z) // Não conseguimos ver a variavel z pois ela esta dentro do escopo da função.
+}
+
+/// Funçoes aninhadas e escopo de bloco
+struct FuncoesAninhadasEscopoDeBloco {
+    static func run() {
+        func outerFunction() {
+            var count = 0
+            
+            func innerFunction() {
+                count += 1        // inner “vê” e modifica 'count'
+                print("Count = \(count)")
+            }
+            
+            innerFunction()      // Count = 1
+            innerFunction()      // Count = 2
+        }
+
+        outerFunction()
+
+        // Cada bloco (if, while, { … }) também cria um novo escopo:
+        let x = 10
+        if x > 5 {
+            let x = 100           // sombreia (shadowing) o 'x' externo
+            print(x)              // 100 (dentro do bloco)
+        }
+        print(x)                  // 10  (fora do bloco)
+    }
+}
+
+/// let: cria constantes imutáveis — não podem mudar de valor.
+/// var: cria variáveis mutáveis — podem ser alteradas.
+struct LetVsVarNoEscopo {
+    static func run() {
+        let pi = 3.14
+        print(pi)               // 3.14
+        // pi = 3.1415          // ❌ Erro: não pode reatribuir
+        
+        var counter = 0
+        counter += 1            // ok
+        print(counter)          // 1
+    }
+}
+
+/// Declarar uma nova variável com mesmo nome dentro de um escopo interno “esconde” a externa
+/// Use shadowing com cuidado para não confundir quem lê.
+struct Shadowing {
+    static func run() {
+        let message = "Olá"
+        func greet() {
+            let message = "Oi, mundo!"
+            print(message)         // "Oi, mundo!"
+        }
+        greet()
+        print(message)             // "Olá"
+    }
+}
+
+/// Escopo de closures e captura de variáveis
+/// Closures herdam o escopo léxico onde foram criadas e capturam referências a variáveis externas
+/// total vive enquanto a closure existir, mesmo após makeIncrementer terminar.
+struct EscopoDeClosure {
+    static func run() {
+        func makeIncrementer(by amount: Int) -> () -> Int {
+            var total = 0
+            let incrementer: () -> Int = {
+                total += amount
+                return total
+            }
+            return incrementer
+        }
+
+        let incByTen = makeIncrementer(by: 10)
+        print(incByTen())  // 10
+        print(incByTen())  // 20
+    }
 }

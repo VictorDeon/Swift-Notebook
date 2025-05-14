@@ -25,80 +25,106 @@ struct ClosuresCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        closureRunner()
+        print("→ Sintaxe Básica:")
+        SintaxeBasica.run()
+        print("→ Closures como parâmetros de funções:")
+        ClosuresComoParametrosDeFuncoes.run()
+        print("→ Trailing closures & shorthand argument names:")
+        TrailingClosuresEShorthandArguments.run()
+        print("→ Aplicação em coleções: map, filter, reduce:")
+        AplicacoesEmColecoes.run()
+        print("→ Retornando closures e captura de valores:")
+        RetornandoClosuresECapturaDeValores.run()
     }
 }
 
-
-func closureRunner() {
-    // MARK: 1. Sintaxe básica
-    // { (parâmetros) -> TipoRetorno in corpo-da-closure }
-    let closureExemplo: (Int, Int) -> Int = { (a: Int, b: Int) -> Int in
-        return a + b
-    }
-    print(closureExemplo(2, 3))   // 5
-    
-    // MARK: 2. Closures como parâmetros de funções
-    // Podemos criar funções que recebem closures para executar diferentes operações:
-    func calculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
-        operation(n1, n2)
-    }
-
-    // Funções auxiliares
-    func add(_ a: Int, _ b: Int) -> Int { a + b }
-    func sub(_ a: Int, _ b: Int) -> Int { b - a }
-    func mul(_ a: Int, _ b: Int) -> Int { a * b }
-
-    // Uso com funções nomeadas
-    print(calculator(2, 3, operation: add))      // 5
-    print(calculator(2, 3, operation: mul))      // 6
-
-    // Uso com closure inline
-    print(calculator(2, 3, operation: { (a: Int, b: Int) -> Int in
-        return b - a
-    }))  // 1
-    
-    // MARK: 3. Trailing closures & shorthand argument names
-    // Quando a closure é o último parâmetro, podemos usar sintaxe de trailing closure e nomes abreviados ($0, $1, …):
-    // Trailing closure:
-    print(calculator(2, 3) { $1 - $0 })   // 1
-
-    // Sintaxe abreviada em diferentes níveis:
-    let subtração: (Int, Int) -> Int = { $1 - $0 }
-    print(subtração(10, 4))               // -6
-    
-    // MARK: 4. Aplicação em coleções: map, filter, reduce
-    // Swift padrão oferece métodos para transformar e filtrar arrays usando closures:
-    let números = [6, 2, 3, 9, 4, 1]
-
-    // map: aplica transformação a cada elemento
-    let maisUm = números.map { $0 + 1 }
-    print(maisUm)     // [7, 3, 4, 10, 5, 2]
-
-    // filter: seleciona elementos que satisfazem condição
-    let pares = números.filter { $0 % 2 == 0 }
-    print(pares)      // [6, 2, 4]
-
-    // reduce: acumula valores em um único resultado
-    let somaTotal = números.reduce(0) { acum, item in
-        acum + item
-    }
-    print(somaTotal) // 25
-    
-    // MARK: 5. Retornando closures e captura de valores
-    // Closures podem capturar e manter referências de variáveis externas:
-    func makeIncrementer(by amount: Int) -> () -> Int {
-        var total = 0
-        return {
-            total += amount
-            return total
+/// Sintaxe básica
+struct SintaxeBasica {
+    static func run() {
+        // { (parâmetros) -> TipoRetorno in corpo-da-closure }
+        let closureExemplo: (Int, Int) -> Int = { (a: Int, b: Int) -> Int in
+            return a + b
         }
+        print(closureExemplo(2, 3))   // 5
     }
+}
 
-    let incByTwo = makeIncrementer(by: 2)
-    print(incByTwo())   // 2
-    print(incByTwo())   // 4
-    print(incByTwo())   // 6
-    print(incByTwo())   // 8
-    // Aqui, a closure “lembra” da variável total mesmo após o fim da função.
+// Podemos criar funções que recebem closures para executar diferentes operações:
+func calculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
+    operation(n1, n2)
+}
+
+/// Closures como parâmetros de funções
+struct ClosuresComoParametrosDeFuncoes {
+    static func run() {
+        // Funções auxiliares
+        func add(_ a: Int, _ b: Int) -> Int { a + b }
+        func sub(_ a: Int, _ b: Int) -> Int { b - a }
+        func mul(_ a: Int, _ b: Int) -> Int { a * b }
+
+        // Uso com funções nomeadas
+        print(calculator(2, 3, operation: add))      // 5
+        print(calculator(2, 3, operation: mul))      // 6
+
+        // Uso com closure inline
+        print(calculator(2, 3, operation: { (a: Int, b: Int) -> Int in
+            return b - a
+        }))  // 1
+    }
+}
+
+/// Trailing closures & shorthand argument names
+struct TrailingClosuresEShorthandArguments {
+    static func run() {
+        // Quando a closure é o último parâmetro, podemos usar sintaxe de trailing closure e nomes abreviados ($0, $1, …):
+        // Trailing closure:
+        print(calculator(2, 3) { $1 - $0 })   // 1
+
+        // Sintaxe abreviada em diferentes níveis:
+        let subtração: (Int, Int) -> Int = { $1 - $0 }
+        print(subtração(10, 4))               // -6
+    }
+}
+
+/// Aplicação em coleções: map, filter, reduce
+struct AplicacoesEmColecoes {
+    static func run() {
+        // Swift padrão oferece métodos para transformar e filtrar arrays usando closures:
+        let números = [6, 2, 3, 9, 4, 1]
+
+        // map: aplica transformação a cada elemento
+        let maisUm = números.map { $0 + 1 }
+        print(maisUm)     // [7, 3, 4, 10, 5, 2]
+
+        // filter: seleciona elementos que satisfazem condição
+        let pares = números.filter { $0 % 2 == 0 }
+        print(pares)      // [6, 2, 4]
+
+        // reduce: acumula valores em um único resultado
+        let somaTotal = números.reduce(0) { acum, item in
+            acum + item
+        }
+        print(somaTotal) // 25
+    }
+}
+
+/// Retornando closures e captura de valores
+struct RetornandoClosuresECapturaDeValores {
+    static func run() {
+        // Closures podem capturar e manter referências de variáveis externas:
+        func makeIncrementer(by amount: Int) -> () -> Int {
+            var total = 0
+            return {
+                total += amount
+                return total
+            }
+        }
+
+        let incByTwo = makeIncrementer(by: 2)
+        print(incByTwo())   // 2
+        print(incByTwo())   // 4
+        print(incByTwo())   // 6
+        print(incByTwo())   // 8
+        // Aqui, a closure “lembra” da variável total mesmo após o fim da função.
+    }
 }

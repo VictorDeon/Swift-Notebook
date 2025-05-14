@@ -28,7 +28,16 @@ struct CastingCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        castingRunner()
+        print("→ Upcasting:")
+        Upcasting.run()
+        print("→ Verificando tipo:")
+        VerificandoTipo.run()
+        print("→ Downcasting Inseguro:")
+        DowncastingInseguro.run()
+        print("→ Downcasting Seguro:")
+        DowncastingSeguro.run()
+        print("→ Type Casting com Switch:")
+        TypeCastingComSwitch.run()
     }
 }
 
@@ -51,48 +60,71 @@ class Fish: Animal {
     }
 }
 
-// MARK: Exemplos
-func castingRunner() {
-    // MARK: Upcasting (sempre seguro)
-    let jack = Human(name: "Jack Bauer")
-    // Tratamos o 'jack' como Animal
-    let animal: Animal = jack as Animal
-    print("\(animal.name) como Animal")  // Jack Bauer como Animal
-    // Obs. O upcast com as nunca falha, pois toda subclasse herda de sua superclasse.
-    
-    
-    // MARK: Verificando tipo com is
-    let creatures: [Animal] = [jack, Fish(name: "Nemo")]
+/// Sempre seguro
+struct Upcasting {
+    static func run() {
+        let jack = Human(name: "Jack Bauer")
+        // Tratamos o 'jack' como Animal
+        let animal: Animal = jack as Animal
+        print("\(animal.name) como Animal")  // Jack Bauer como Animal
+        // Obs. O upcast com as nunca falha, pois toda subclasse herda de sua superclasse.
+    }
+}
 
-    for creature in creatures {
-        if creature is Fish {
-            print("\(creature.name) é um peixe!")
+/// Verificando tipo com is
+struct VerificandoTipo {
+    static func run() {
+        let jack = Human(name: "Jack Bauer")
+        let creatures: [Animal] = [jack, Fish(name: "Nemo")]
+
+        for creature in creatures {
+            if creature is Fish {
+                print("\(creature.name) é um peixe!")
+            }
         }
     }
-    
-    // MARK: Downcasting inseguro com as!
-    let nemo = creatures[1]
-    // Sabemos que creatures[1] é Fish, então:
-    let fish = nemo as! Fish
-    fish.breatheUnderWater()  // Nemo está respirando embaixo d’água.
-    
-    // MARK: Downcasting seguro com as?
-    if let maybeFish = creatures[0] as? Fish {
-        maybeFish.breatheUnderWater()
-    } else {
-        print("\(creatures[0].name) não é um peixe.")
+}
+
+/// Downcasting inseguro com as!
+struct DowncastingInseguro {
+    static func run() {
+        let jack = Human(name: "Jack Bauer")
+        let creatures: [Animal] = [jack, Fish(name: "Nemo")]
+        let nemo = creatures[1]
+        // Sabemos que creatures[1] é Fish, então:
+        let fish = nemo as! Fish
+        fish.breatheUnderWater()  // Nemo está respirando embaixo d’água.
     }
-    
-    // MARK: Type casting em switch
-    // Isso deixa o código mais limpo e evita vários if let … as? … else.
-    for creature in creatures {
-        switch creature {
-        case let human as Human:
-            human.code()
-        case let fish as Fish:
-            fish.breatheUnderWater()
-        default:
-            print("\(creature.name) é um Animal genérico")
+}
+
+/// Downcasting seguro com as?
+struct DowncastingSeguro {
+    static func run() {
+        let jack = Human(name: "Jack Bauer")
+        let creatures: [Animal] = [jack, Fish(name: "Nemo")]
+        if let maybeFish = creatures[0] as? Fish {
+            maybeFish.breatheUnderWater()
+        } else {
+            print("\(creatures[0].name) não é um peixe.")
+        }
+    }
+}
+
+/// Type Casting com switch
+struct TypeCastingComSwitch {
+    static func run() {
+        let jack = Human(name: "Jack Bauer")
+        let creatures: [Animal] = [jack, Fish(name: "Nemo")]
+        // Isso deixa o código mais limpo e evita vários if let … as? … else.
+        for creature in creatures {
+            switch creature {
+            case let human as Human:
+                human.code()
+            case let fish as Fish:
+                fish.breatheUnderWater()
+            default:
+                print("\(creature.name) é um Animal genérico")
+            }
         }
     }
 }

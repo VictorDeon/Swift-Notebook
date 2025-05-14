@@ -91,7 +91,7 @@ TODO:
 	- [ ] CSV
 	- [ ] PLIST
     - [ ] XML
-- [ ] Finalizar OO
+- [x] Finalizar OO
 - [ ] Requisições HTTP
 - [ ] Datetime
 - [ ] Inputs e Outputs
