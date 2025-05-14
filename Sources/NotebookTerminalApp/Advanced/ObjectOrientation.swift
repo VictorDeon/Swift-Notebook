@@ -53,7 +53,8 @@ class Enemy {
     }
 }
 
-class Dragon: Enemy {
+// final Define que Dragon não pode ser herdado.
+final class Dragon: Enemy {
     // Atributo de instancia
     var wingSpan: Int = 2
     // Atributo de classe

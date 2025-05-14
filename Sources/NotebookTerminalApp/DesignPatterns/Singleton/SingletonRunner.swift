@@ -32,6 +32,16 @@ class Car {
     @MainActor static let singletonCar = Car()
 }
 
+class SingletonSettings {
+    let lang: String = "pt-BR"
+    
+    // Definie a forma de acesso as configurações
+    @MainActor static let shared = Settings()
+    
+    // Impede de inicializar uma nova instancia das configurações.
+    private init() {}
+}
+
 @MainActor func singletonRunner() {
     let myCar = Car()
     myCar.colour = "Blue"
@@ -46,4 +56,7 @@ class Car {
     let yourCarSingleton = Car.singletonCar
     print("My Car Singleton Colour: \(myCarSingleton.colour)")      // Blue
     print("Your Car Singleton Colour: \(yourCarSingleton.colour)")  // Blue (é a mesma instancia singleton)
+    
+    let settings = SingletonSettings.shared
+    print(settings.lang!)
 }

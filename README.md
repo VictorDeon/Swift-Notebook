@@ -103,10 +103,10 @@ TODO:
     - [x] Delegate
     - [ ] Singleton
 - [ ] SwiftUI
-- [ ] Banco de Dados
+- [x] Banco de Dados
     - [x] UserDefaults: Armazena pequenos bites de dados em plists, normalmente usado em configurações
     - [x] Codable (NSCoder): Armazena pequenos objetos em plists
-    - [ ] Keychain: Armazena pequenos bites de dados de forma segura
+    - [x] Keychain: Armazena pequenos bites de dados de forma segura
     - [x] SQLite: Persiste grandes quantidades de dados em banco relacional SQL (FMDB)
     - [x] Realm: Solução de banco de dados (framework) mais rapida e facil de usar.
 - [ ] Assincronicidade igual ao python (Corotines)
