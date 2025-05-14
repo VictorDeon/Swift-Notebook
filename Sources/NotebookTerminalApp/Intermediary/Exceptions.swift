@@ -41,6 +41,7 @@ func divide(_ numerador: Int, por denominador: Int) throws -> Int {
     // seja retornando de uma função, lançando um erro, dando um break num loop.
     guard denominador != 0 else {
         throw MathError.divisionPerZero
+        // fatalError("Não divida por zero!")
         // throw MathError.other("Não divida por zero!")
     }
     return numerador / denominador

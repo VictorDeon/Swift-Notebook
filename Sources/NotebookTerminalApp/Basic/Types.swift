@@ -57,4 +57,8 @@ func typeRunner() {
     
     let qualquerObjeto: [AnyObject] = [animal, MyFruit()]
     print(qualquerObjeto)  // [notebook.MyAnimal, notebook.MyFruit]
+    
+    let tuple: (name: String, age: Int) = (name: "Victor", age: 12)
+    print(tuple.name) // Victor
+    print(tuple.age) // 12
 }

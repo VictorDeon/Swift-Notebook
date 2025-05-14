@@ -21,6 +21,8 @@
 //      $ pod update
 // Se quiser remover alguma lib do PodFile é só remover ela do arquivo e executar o $ pod install
 // Com isso vamos poder usar a lib
+// Para adicionar usando o Packages do xcode é bem mais simples só adicionar as informações necessarias
+// disponibilizada pela lib dentro do Package.swift e automaticamente a lib sera inserida.
 
 import Alamofire
 import Foundation

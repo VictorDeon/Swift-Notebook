@@ -1,5 +1,7 @@
 // Classes = Passagem por referência, ou seja, o proprio objeto.
 // Struct = Passagem por valor, ou seja, uma copia.
+// Classes = Guardado em formato de Heap (aleatorio) na memoria
+// Struct = Guardado em formato de Stacks (um em cima do outro) na memoria
 // Classes = Pode ter herança e implementar protocolos.
 // Struct = Não pode haver herança, mas pode implementar protocolos.
 // Classes = Mutable (pode mudar seus valores sem problema)
@@ -24,7 +26,11 @@ struct OOCommands: ParsableCommand {
 class Enemy {
     // Atributos
     var health: Int
-    var atkStrength: Int
+    private var atkStrength: Int             // (acessado somente nesta classe)
+    // fileprivate var atkStrength: Int         (acessado somente no arquivo)
+    // internal var atkStrength: Int            (acessado somente no seu modulo/projeto - default)
+    // public var atkStrength: Int              (acessado em qualquer modulo/projeto, usado bastante em API)
+    // open var atkStrength: Int                (acessado em qualquer modulo/projeto, usado para herança ou overridden)
     
     // Construtor
     init(health: Int, atk: Int = 10) {
@@ -33,7 +39,7 @@ class Enemy {
     }
     
     // Metodos
-    func move() {
+    fileprivate func move() {
         print("Monstro se movendo...")
     }
     
@@ -74,6 +80,7 @@ class Dragon: Enemy {
     }
 }
 
+
 struct Goblin {
     var health: Int
     var atkStrength: Int
@@ -109,12 +116,12 @@ func objectOrientationRunner() {
     
     let skeleton2 = Enemy(health: 100)
     print("Esqueleto 02 = Vida: \(skeleton2.health)")   // Esqueleto 02 = Vida: 100
-    skeleton2.takeDamage(amount: skeleton1.atkStrength) // Monstro tomou dano de 10
+    skeleton2.takeDamage(amount: 10)                    // Monstro tomou dano de 10
     print("Esqueleto 02 = Vida: \(skeleton2.health)")   // Esqueleto 02 = Vide: 90
     
     var goblin = Goblin(health: 150, atk: 20)
     print("Goblin = Vida: \(goblin.health)")            // Goblin = Vida: 150
-    goblin.takeDamage(amount: skeleton1.atkStrength)    // Goblin struct tomou dano de 10
+    goblin.takeDamage(amount: 10)                       // Goblin struct tomou dano de 10
     print("Goblin = Vida: \(goblin.health)")            // Goblin = Vida: 140
     
     let dragon = Dragon(health: 1000)

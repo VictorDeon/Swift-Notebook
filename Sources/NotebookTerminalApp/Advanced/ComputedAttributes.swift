@@ -70,6 +70,6 @@ func computerAttributesRunner(_ pizza: Int, _ persons: Int, _ slices: Int) {
     // Precisamos comprar 27 pizzas para 30 pessoas.
 
     // Executa o setter
-    numberOfPizza = 12
+    numberOfPizza = numberOfPizza
 }
 

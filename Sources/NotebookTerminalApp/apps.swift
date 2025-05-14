@@ -85,6 +85,7 @@ struct TerminalApp: AsyncParsableCommand {
             OOCommands.self,
             ProtocolCommands.self,
             ComputedAttributesCommands.self,
+            ReferenceVsValueCommands.self,
             // Design Patterns
             DelegateCommands.self,
             SingletonCommands.self,
@@ -96,6 +97,8 @@ struct TerminalApp: AsyncParsableCommand {
             NSCoderCommands.self,
             SQLiteCommands.self,
             RealmCommands.self,
+            // Algoritmos
+            PaintingBucketsCommands.self,
             // SwiftUI
             SwiftUIHelloWorldCommands.self,
         ]
