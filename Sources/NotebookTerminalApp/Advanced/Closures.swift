@@ -1,9 +1,20 @@
-// Closures sao funçoes anonimas, igual ao lambda do python
-// Podemos enviar funções como input e receber funçoes como output
-// Sintaxe: { (parameters) -> return type in statement }
+/*
+ Em Swift, closures são blocos de código auto-contidos que podem ser:
+    - Atribuídos a variáveis ou constantes;
+    - Passados como parâmetros para funções;
+    - Devolvidos como resultado de funções.
+ Elas funcionam de maneira semelhante às lambdas de Python ou aos anonymous functions de JavaScript,
+ mas oferecem sintaxe e recursos poderosos, como captura de valores.
+ Dicas e boas práticas:
+    1. Prefira trailing closures quando tiver código mais longo dentro da closure.
+    2. Use parâmetros abreviados ($0, $1) em closures curtas; declare nomes explícitos em closures complexas para clareza.
+    3. Evite lógica pesada dentro de closures — extraia em funções nomeadas se ficar extenso.
+    4. Atenção à captura de valores: para closures que vão viver além do escopo atual (por exemplo, stored properties), considere [weak self] ou [unowned self] para evitar ciclos de referência.
+*/
 
 import AppKit
 import ArgumentParser
+import Foundation
 
 struct ClosuresCommands: ParsableCommand {
     static let configuration = CommandConfiguration(
@@ -18,47 +29,76 @@ struct ClosuresCommands: ParsableCommand {
     }
 }
 
-func calculator(n1: Int, n2: Int, operation: (Int, Int) -> Int) -> Int {
-    return operation(n1, n2)
-}
-
-func add(n1: Int, n2: Int) -> Int {
-    return n1 + n2
-}
-
-func sub(n1: Int, n2: Int) -> Int {
-    return n2 - n1
-}
-
-func multiply(n1: Int, n2: Int) -> Int {
-    return n1 * n2
-}
-
-func division(d1: Int, d2: Int) -> Float? {
-    if d2 == 0 {
-        return nil
-    }
-
-    return Float(d1) / Float(d2)
-}
-
-func addOne(n1: Int) -> Int {
-    return n1 + 1
-}
 
 func closureRunner() {
-    print(calculator(n1: 2, n2: 3, operation: add)) // 5
-    print(calculator(n1: 2, n2: 3, operation: multiply)) // 6
-    print(calculator(n1: 2, n2: 3, operation: sub)) // 1
-    print(calculator(n1: 2, n2: 3, operation: {(n1: Int, n2: Int) -> Int in return n2 - n1})) // 1
-    print(calculator(n1: 2, n2: 3, operation: {(n1, n2) in n2 - n1})) // 1
-    print(calculator(n1: 2, n2: 3, operation: {$1 - $0})) // 1
-    print(calculator(n1: 2, n2: 3) {$1 - $0})  // 1 Se o closure for o ultimo parametro podemos escrever assim.
+    // MARK: 1. Sintaxe básica
+    // { (parâmetros) -> TipoRetorno in corpo-da-closure }
+    let closureExemplo: (Int, Int) -> Int = { (a: Int, b: Int) -> Int in
+        return a + b
+    }
+    print(closureExemplo(2, 3))   // 5
     
-    // Closure usando arrays
-    let array = [6, 2, 3, 9, 4, 1]
-    print(array.map(addOne))   // [7, 3, 4, 10, 5, 2]
-    print(array.map({$0 + 1})) // [7, 3, 4, 10, 5, 2]
-    print(array.map{$0 + 1})   // [7, 3, 4, 10, 5, 2]
-    print(array)               // [6, 2, 3, 9, 4, 1]
+    // MARK: 2. Closures como parâmetros de funções
+    // Podemos criar funções que recebem closures para executar diferentes operações:
+    func calculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
+        operation(n1, n2)
+    }
+
+    // Funções auxiliares
+    func add(_ a: Int, _ b: Int) -> Int { a + b }
+    func sub(_ a: Int, _ b: Int) -> Int { b - a }
+    func mul(_ a: Int, _ b: Int) -> Int { a * b }
+
+    // Uso com funções nomeadas
+    print(calculator(2, 3, operation: add))      // 5
+    print(calculator(2, 3, operation: mul))      // 6
+
+    // Uso com closure inline
+    print(calculator(2, 3, operation: { (a: Int, b: Int) -> Int in
+        return b - a
+    }))  // 1
+    
+    // MARK: 3. Trailing closures & shorthand argument names
+    // Quando a closure é o último parâmetro, podemos usar sintaxe de trailing closure e nomes abreviados ($0, $1, …):
+    // Trailing closure:
+    print(calculator(2, 3) { $1 - $0 })   // 1
+
+    // Sintaxe abreviada em diferentes níveis:
+    let subtração: (Int, Int) -> Int = { $1 - $0 }
+    print(subtração(10, 4))               // -6
+    
+    // MARK: 4. Aplicação em coleções: map, filter, reduce
+    // Swift padrão oferece métodos para transformar e filtrar arrays usando closures:
+    let números = [6, 2, 3, 9, 4, 1]
+
+    // map: aplica transformação a cada elemento
+    let maisUm = números.map { $0 + 1 }
+    print(maisUm)     // [7, 3, 4, 10, 5, 2]
+
+    // filter: seleciona elementos que satisfazem condição
+    let pares = números.filter { $0 % 2 == 0 }
+    print(pares)      // [6, 2, 4]
+
+    // reduce: acumula valores em um único resultado
+    let somaTotal = números.reduce(0) { acum, item in
+        acum + item
+    }
+    print(somaTotal) // 25
+    
+    // MARK: 5. Retornando closures e captura de valores
+    // Closures podem capturar e manter referências de variáveis externas:
+    func makeIncrementer(by amount: Int) -> () -> Int {
+        var total = 0
+        return {
+            total += amount
+            return total
+        }
+    }
+
+    let incByTwo = makeIncrementer(by: 2)
+    print(incByTwo())   // 2
+    print(incByTwo())   // 4
+    print(incByTwo())   // 6
+    print(incByTwo())   // 8
+    // Aqui, a closure “lembra” da variável total mesmo após o fim da função.
 }
