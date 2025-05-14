@@ -347,11 +347,11 @@ func realmRunner() {
     do {
         // 1. Criar Settings
         let settings = try settingsRepository.add(volume: 5, lang: "pt-BR")
-        print("🔧 Settings criadas:", settings)
+        print("🔧 Settings criadas:", settings.id)
         
         // 2. Criar Usuário com Settings
         let user = try userRepository.add(name: "Alice", document: "123.456.789-00", settings: settings)
-        print("👤 Usuário criado:", user)
+        print("👤 Usuário criado:", user.name)
         
         // 3. Criar Veículos para o Usuário
         let vehicle1 = try vehicleRepository.add(
@@ -368,7 +368,7 @@ func realmRunner() {
             manufacture: "Toyota",
             year: 2021
         )
-        print("🚗 Veículos criados para \(user.name):", vehicle1.model, vehicle2.model)
+        print("🚗 Veículos criados para \(user.name): \(vehicle1.model) & \(vehicle2.model)")
         
         // 4. Criar Grupos e adicionar Usuário
         let group1 = try groupRepository.add(name: "Admins", description: "Grupo de administradores")
@@ -382,9 +382,9 @@ func realmRunner() {
         let allVehicles = try vehicleRepository.all(by: user)
         let allGroups   = try groupRepository.all()
 
-        print("📋 Usuários:", allUsers)
-        print("📋 Veículos de \(user.name):", allVehicles)
-        print("📋 Grupos:", allGroups)
+        print("📋 Usuários:", allUsers.map { $0.name }.joined(separator: ", "))
+        print("📋 Veículos de \(user.name):", allVehicles.map{ $0.model }.joined(separator: ", "))
+        print("📋 Grupos:", allGroups.map { $0.name }.joined(separator: ", "))
         
         // 6. Atualizar alguns registros
         try settingsRepository.update(settings, volume: 8, lang: "en-US")
@@ -393,14 +393,14 @@ func realmRunner() {
         try groupRepository.update(group2, name: "Quality Testers", description: "Equipe de QA")
         
         print("✏️ Atualizações aplicadas:")
-        print("   • Settings:", settings)
-        print("   • Usuário:", user)
-        print("   • Veículo v1:", vehicle1)
-        print("   • Grupo g2:", group2)
+        print("   • Settings lang:", settings.lang!)
+        print("   • Usuário name:", user.name)
+        print("   • Veículo model:", vehicle1.model)
+        print("   • Grupo name:", group2.name)
         
         // 7. Buscar por filtro (ex.: usuário por nome)
         let filteredUsers = try userRepository.fetch(name: "Alice")
-        print("🔍 Usuários filtrados (\"Alice\"):", filteredUsers)
+        print("🔍 Usuários filtrados (\"Alice\"):", filteredUsers.map { $0.name }.joined(separator: ", "))
         
         // 8. Remoções
         //    a) remover vehicle2 do usuário e deletar vehicle2
@@ -416,8 +416,8 @@ func realmRunner() {
         let finalVehicles = try vehicleRepository.all(by: user)
         let finalGroups   = try groupRepository.all()
         
-        print("📋 Veículos finais de \(user.name):", finalVehicles)
-        print("📋 Grupos finais:", finalGroups)
+        print("📋 Veículos finais de \(user.name):", finalVehicles.map { $0.model }.joined(separator: ", "))
+        print("📋 Grupos finais:", finalGroups.map { $0.name }.joined(separator: ", "))
         
         print("Limpando banco")
         try groupRepository.delete(group2)
