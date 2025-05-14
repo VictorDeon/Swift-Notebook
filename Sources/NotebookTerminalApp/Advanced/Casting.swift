@@ -1,8 +1,19 @@
-// Realiza a conversão de um tipo para outro (as, as?, as!, is)
-// as   Retorna o objeto ao tipo de sua superclasse
-// as!  Transforma o objeto em outra classe tendo certeza que ela é daquele tipo
-// as?  Transforma o objeto em outra classe não tendo certeza que ela é daquele tipo
-// is   Valida o tipo do objeto.
+/*
+ Em Swift, às vezes trabalhamos com coleções de objetos de uma classe base (por exemplo, Animal),mas precisamos
+ chamar métodos específicos de subclasses (por exemplo, Human.code() ou Fish.breatheUnderWater()). Para isso, usamos:
+    * Upcast: tratar um objeto como sendo de sua superclasse.
+    * Downcast: converter um Animal de volta para Human ou Fish.
+ Swift oferece três operadores:
+    is:  Verifica em tempo de execução se o objeto é de um tipo específico
+    as:  Upcast             - converte para um tipo de superclasse (sempre seguro)
+    as?: Downcast opcional  - retorna nil se falhar (safe cast)
+    as!: Downcast forçado   - causa runtime crash se falhar (force cast)
+ Boas Práticas:
+    1. Evite as! sempre que possível. Prefira as? e trate o nil.
+    2. Use switch para centralizar a lógica de type casting.
+    3. Mantenha seu modelo de classes claro: quanto menos herança profunda, menores as chances de erro.
+    4. Considere protocolos em vez de herança para compartilhar comportamentos (ex, protocol Coder { func code() }).
+*/
 
 import Foundation
 import AppKit
@@ -21,61 +32,67 @@ struct CastingCommands: ParsableCommand {
     }
 }
 
+// MARK: - Classes de exemplo
+
 class Animal {
-    var name: String
-    
-    init(n: String) {
-        name = n
-    }
+    let name: String
+    init(name: String) { self.name = name }
 }
 
 class Human: Animal {
     func code() {
-        print("Estou codando.")
+        print("\(name) está codando.")
     }
 }
 
 class Fish: Animal {
     func breatheUnderWater() {
-        print("Respirando em baixo da agua.")
+        print("\(name) está respirando embaixo d’água.")
     }
 }
 
-func findNemo(from animals: [Animal]) {
-    for animal in animals {
-        if animal is Fish {
-            print(animal.name)          // Nemo
-            // Para ter acesso aos atributos e metodos de um peixe temos que fazer o casting. (Force Downcast)
-            let fish = animal as! Fish
-            fish.breatheUnderWater()    // Respirando em baixo da agua.
+// MARK: Exemplos
+func castingRunner() {
+    // MARK: Upcasting (sempre seguro)
+    let jack = Human(name: "Jack Bauer")
+    // Tratamos o 'jack' como Animal
+    let animal: Animal = jack as Animal
+    print("\(animal.name) como Animal")  // Jack Bauer como Animal
+    // Obs. O upcast com as nunca falha, pois toda subclasse herda de sua superclasse.
+    
+    
+    // MARK: Verificando tipo com is
+    let creatures: [Animal] = [jack, Fish(name: "Nemo")]
+
+    for creature in creatures {
+        if creature is Fish {
+            print("\(creature.name) é um peixe!")
         }
     }
-}
-
-func castingRunner() {
-    let angela = Human(n: "Angela Yu")
-    let jack = Human(n: "Jack Bauer")
-    let nemo = Fish(n: "Nemo")
     
-    let neighbours: [Animal] = [angela, jack, nemo]
+    // MARK: Downcasting inseguro com as!
+    let nemo = creatures[1]
+    // Sabemos que creatures[1] é Fish, então:
+    let fish = nemo as! Fish
+    fish.breatheUnderWater()  // Nemo está respirando embaixo d’água.
     
-    // O is verifica qual a tipagem real de um objeto (Type Checking)
-    if neighbours[0] is Human {
-        print("O primeiro vizinho é um humano")
-        // Para codifica o neighbours precisa ser um Humano de fato (Force Downcast)
-        let human = neighbours[0] as! Human
-        human.code()  // Estou codando.
-        // Vamos tranformar o humano em animal novamente. (Upcast)
-        let animal = human as Animal
-        print(animal.name + " agora é um animal")  // Angela Yu é um animal
+    // MARK: Downcasting seguro com as?
+    if let maybeFish = creatures[0] as? Fish {
+        maybeFish.breatheUnderWater()
+    } else {
+        print("\(creatures[0].name) não é um peixe.")
     }
     
-    findNemo(from: neighbours)
-    
-    // Se não tiver certeza do que é o tipo do objeto temos que fazer o cast opcional.
-    if let fish = neighbours[1] as? Fish {
-        print(fish.breatheUnderWater())
-    } else {
-        print(neighbours[1].name + " não é um peixe")  // Jack Bauer não é um peixe
+    // MARK: Type casting em switch
+    // Isso deixa o código mais limpo e evita vários if let … as? … else.
+    for creature in creatures {
+        switch creature {
+        case let human as Human:
+            human.code()
+        case let fish as Fish:
+            fish.breatheUnderWater()
+        default:
+            print("\(creature.name) é um Animal genérico")
+        }
     }
 }
