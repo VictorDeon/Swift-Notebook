@@ -15,8 +15,16 @@ struct AssociationCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        let runner = AssociationRunner()
-        runner.execute()
+        print("→ Associação 1x1 entre Pessoa e Endereço")
+        Association1x1.execute()
+        print("→ Associação 1xN entre Pessoa e Telefones")
+        Association1xN.execute()
+        print("→ Associação NxM entre Pessoas e Grupos")
+        AssociationNxM.execute()
+        print("→ Agregação entre Pedido e Items do pedido")
+        Aggregation.execute()
+        print("→ Composição entre Notebook e seu teclado")
+        Composition.execute()
     }
 }
 
@@ -192,17 +200,3 @@ struct Composition {
     }
 }
 
-struct AssociationRunner {
-    func execute() {
-        print("→ Associação 1x1 entre Pessoa e Endereço")
-        Association1x1.execute()
-        print("→ Associação 1xN entre Pessoa e Telefones")
-        Association1xN.execute()
-        print("→ Associação NxM entre Pessoas e Grupos")
-        AssociationNxM.execute()
-        print("→ Agregação entre Pedido e Items do pedido")
-        Aggregation.execute()
-        print("→ Composição entre Notebook e seu teclado")
-        Composition.execute()
-    }
-}

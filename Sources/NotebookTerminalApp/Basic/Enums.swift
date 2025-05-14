@@ -51,12 +51,11 @@ struct EnumCommands: ParsableCommand {
     var status: Status = .actived
 
     func run() throws {
-        enumRunner(
-            today: today,
-            temperature: temperature,
-            status: status,
-            result: testResult
-        )
+        print("→ Enums")
+        EnumRunner.run(today: today)
+        EnumRunner.run(temperature: temperature)
+        EnumRunner.run(status: status)
+        EnumRunner.run(result: testResult)
     }
 }
 
@@ -87,28 +86,31 @@ enum Status: Int {
     case inactived = 0
 }
 
-func enumRunner(today: WeekDay, temperature: Temperature, status: Status, result: TestResult) {
-    switch today {
-        case .monday:
-            print("Hoje é segunda-feira")  // Entra aqui
-        case .tuesday:
-            print("Hoje é terça-feira")
-        default:
-            print("Outro dia da semana: \(today)")
+struct EnumRunner {
+    static func run(today: WeekDay) {
+        switch today {
+            case .monday:
+                print("Hoje é segunda-feira")  // Entra aqui
+            case .tuesday:
+                print("Hoje é terça-feira")
+            default:
+                print("Outro dia da semana: \(today)")
+        }
     }
-    
-    let result: TestResult = result
+    static func run(result: TestResult) {
+        let result: TestResult = result
 
-    switch result {
-        case .success(let mensagem):
-            print(mensagem) // Teste passou com sucesso!
-        case .fail(let erro):
-            print(erro)
+        switch result {
+            case .success(let mensagem):
+                print(mensagem) // Teste passou com sucesso!
+            case .fail(let erro):
+                print(erro)
+        }
     }
-    
-    print(temperature.description())  // Está quente.
-    
-    print(status.rawValue)      // 1
+    static func run(temperature: Temperature) {
+        print(temperature.description())  // Está quente.
+    }
+    static func run(status: Status) {
+        print(status.rawValue)      // 1
+    }
 }
-
-

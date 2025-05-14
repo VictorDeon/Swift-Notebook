@@ -30,7 +30,20 @@ struct CicloDeReferenciaCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        cicloDeReferenciaRunner()
+        runLeakyExample()
+        // Ana está executando a tarefa (Leaky).
+        // Referência externa a PessoaLeaky zerada.
+
+        // Uma espera curta para garantir ordem de prints
+        Thread.sleep(forTimeInterval: 1)
+
+        runSafeExample()
+        // Bruno está executando a tarefa (Safe).
+        // Referência externa a PessoaSafe zerada.
+        // PessoaSafe Bruno foi desalocada.
+
+        // Mais uma espera para ver tudo antes de sair
+        Thread.sleep(forTimeInterval: 1)
     }
 }
 
@@ -97,19 +110,3 @@ func runSafeExample() {
     // Agora sim o deinit será chamado, porque não há retain cycle
 }
 
-func cicloDeReferenciaRunner() {
-    runLeakyExample()
-    // Ana está executando a tarefa (Leaky).
-    // Referência externa a PessoaLeaky zerada.
-
-    // Uma espera curta para garantir ordem de prints
-    Thread.sleep(forTimeInterval: 1)
-
-    runSafeExample()
-    // Bruno está executando a tarefa (Safe).
-    // Referência externa a PessoaSafe zerada.
-    // PessoaSafe Bruno foi desalocada.
-
-    // Mais uma espera para ver tudo antes de sair
-    Thread.sleep(forTimeInterval: 1)
-}

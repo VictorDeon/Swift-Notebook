@@ -24,7 +24,11 @@ struct FunctionCommands: ParsableCommand {
     var n2: Int = 2
 
     func run() throws {
-        functionRunner(n1, n2)
+        print(sum1(n1: n1, n2: n2))   // 3
+        print(sum2(n1, n2))           // 3
+        print(sum3(n1: n1, n2: n2))   // 3
+        print(sum4(n1, n2: n2))       // 3
+        printHello()
     }
 }
 
@@ -51,13 +55,4 @@ func sum4(_ n1: Int, n2: Int) -> Int {
 // Função sem retorno e sem parâmetros
 func printHello() -> Void {
     print("Hello World!")
-}
-
-
-func functionRunner(_ n1: Int, _ n2: Int) {
-    print(sum1(n1: n1, n2: n2))   // 3
-    print(sum2(n1, n2))           // 3
-    print(sum3(n1: n1, n2: n2))   // 3
-    print(sum4(n1, n2: n2))       // 3
-    printHello()
 }

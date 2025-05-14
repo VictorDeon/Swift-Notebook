@@ -40,42 +40,59 @@ struct ConditionalCommands: ParsableCommand {
     var hardness: String = "Medium"
 
     func run() throws {
-        conditionalRunner(age: age, hardness: hardness)
+        print("→ Condicionais:")
+        Conditional.run(age: age)
+        print("→ Condicional Ternario")
+        CondicionalTernario.run(age: age)
+        print("→ Condicional Switch Case:")
+        CondicionalSwitch.run(age: age)
+        CondicionalSwitch.run(hardness: hardness)
     }
 }
 
-func conditionalRunner(age: Int, hardness: String) {
-    if age > 70 {
-        print("Muito velho para dirigir.")
-    } else if age > 18 {
-        print("Pode dirigir")
-    } else {
-        print("Muito novo para dirigir")
-    }
-    
-    // if ternario
-    let printable = age > 18 ? "Pode dirigir" : "Não pode dirigir"
-    print(printable)
-    
-    switch age {
-        case 70...120:  // Closed Range
-            print("Muito velho para dirigir")
-        case 18..<70: // Half Open Range
+struct Conditional {
+    static func run(age: Int) {
+        if age > 70 {
+            print("Muito velho para dirigir.")
+        } else if age > 18 {
             print("Pode dirigir")
-        case ...17:   // One Sided Range
+        } else {
             print("Muito novo para dirigir")
-        default:
-            print("Error, opção inválida.")
-    }
-
-    switch hardness {
-        case "Soft":
-            print("Ovo ta cru")
-        case "Medium":
-            print("Ovo perfeito")
-        case "Hard":
-            print("Ovo ta queimado")
-        default:
-            print("Error, opção inválida.")
+        }
     }
 }
+
+struct CondicionalTernario {
+    static func run(age: Int) {
+        let printable = age > 18 ? "Pode dirigir" : "Não pode dirigir"
+        print(printable)
+    }
+}
+
+struct CondicionalSwitch {
+    static func run(age: Int) {
+        switch age {
+            case 70...120:  // Closed Range
+                print("Muito velho para dirigir")
+            case 18..<70: // Half Open Range
+                print("Pode dirigir")
+            case ...17:   // One Sided Range
+                print("Muito novo para dirigir")
+            default:
+                print("Error, opção inválida.")
+        }
+    }
+    static func run(hardness: String) {
+        switch hardness {
+            case "Soft":
+                print("Ovo ta cru")
+            case "Medium":
+                print("Ovo perfeito")
+            case "Hard":
+                print("Ovo ta queimado")
+            default:
+                print("Error, opção inválida.")
+        }
+    }
+}
+

@@ -24,8 +24,16 @@ struct ExtensionCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        let runner = ExtensionsRunner()
-        runner.execute()
+        let original: Double = 3.14159
+
+        // 1) Arredondamento padrão (sem extension)
+        print("Rounded padrão:", original.rounded())        // → 3.0
+
+        // 2) Arredondamento customizado via extension
+        print("1 casa decimal:", original.rounded(to: 1))   // → 3.1
+        print("2 casas decimais:", original.rounded(to: 2)) // → 3.14
+        print("3 casas decimais:", original.rounded(to: 3)) // → 3.142
+        print("4 casas decimais:", original.rounded(to: 4)) // → 3.1416
     }
 }
 
@@ -42,17 +50,3 @@ extension Double {
     }
 }
 
-struct ExtensionsRunner {
-    func execute() {
-        let original: Double = 3.14159
-
-        // 1) Arredondamento padrão (sem extension)
-        print("Rounded padrão:", original.rounded())        // → 3.0
-
-        // 2) Arredondamento customizado via extension
-        print("1 casa decimal:", original.rounded(to: 1))   // → 3.1
-        print("2 casas decimais:", original.rounded(to: 2)) // → 3.14
-        print("3 casas decimais:", original.rounded(to: 3)) // → 3.142
-        print("4 casas decimais:", original.rounded(to: 4)) // → 3.1416
-    }
-}

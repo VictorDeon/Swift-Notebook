@@ -3,6 +3,24 @@ import Foundation
 import AppKit
 import ArgumentParser
 
+// 1) Definição de erros, agora conformando a LocalizedError
+enum MathError: LocalizedError {
+    case divisionByZero
+    case negativeNumerator
+    case other(message: String)
+    
+    var errorDescription: String? {
+        switch self {
+            case .divisionByZero:
+                return "Erro: tentativa de divisão por zero."
+            case .negativeNumerator:
+                return "Erro: o numerador não pode ser negativo."
+            case .other(let message):
+                return message
+        }
+    }
+}
+
 struct ExceptionCommands: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "exceptions",
@@ -12,50 +30,58 @@ struct ExceptionCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
     
     @Option(
-        name: .long,  // numerador
+        name: .shortAndLong,  // -n --numerador
         help: "numerador da divisão"
     )
     var numerador: Int
     
     @Option(
-        name: .long,  // denominador
+        name: .shortAndLong,  // -d --denominador
         help: "denominador da divisão"
     )
     var denominador: Int
 
     func run() throws {
-        exceptionRunner(numerador: numerador, denominador: denominador)
+        // Exemplo de uso de try? para receber resultado opcional
+        if let resultadoOpcional = try? divide(numerador, by: denominador) {
+            print("→ Resultado (try?): \(resultadoOpcional)")
+        }
+        
+        // Uso completo de do-catch
+        do {
+            let resultado = try divide(numerador, by: denominador)
+            print("→ Resultado (do-catch): \(resultado)")
+        } catch let error as MathError {
+            // captura erros específicos de MathError
+            print(error.localizedDescription)
+        } catch {
+            // fallback para qualquer outro Error
+            print("Erro inesperado: \(error.localizedDescription)")
+        }
+        
+        do {
+            let r = try applyOperation(numerador, denominador, operation: divide)
+            print("→ Resultado (rethrowing): \(r)")
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
-enum MathError: Error {
-    case divisionPerZero
-    case invalidInput
-    case other(String)
-}
-
-func divide(_ numerador: Int, por denominador: Int) throws -> Int {
-    // O guard em Swift é usado para fazer verificações de pré-condição,
-    // garantindo que uma certa condição seja verdadeira antes de continuar a execução do bloco de código.
-    // Se essa condição falhar, você é obrigado a sair do escopo atual
-    // seja retornando de uma função, lançando um erro, dando um break num loop.
+// 3) Função de divisão com múltiplas validações
+func divide(_ numerador: Int, by denominador: Int) throws -> Int {
+    // pré-condição: denominador não pode ser zero
     guard denominador != 0 else {
-        throw MathError.divisionPerZero
-        // fatalError("Não divida por zero!")
-        // throw MathError.other("Não divida por zero!")
+        throw MathError.divisionByZero
+    }
+    // pré-condição adicional: numerador não negativo (exemplo)
+    guard numerador >= 0 else {
+        throw MathError.negativeNumerator
     }
     return numerador / denominador
 }
 
-func exceptionRunner(numerador: Int, denominador: Int) {
-    do {
-        let resultado = try divide(numerador, por: denominador)
-        print("Resultado: \(resultado)")
-    } catch MathError.divisionPerZero, MathError.invalidInput {
-        print("Erro: não é possível dividir por zero.")
-    } catch MathError.other(let message) {
-        print(message)
-    } catch {
-        print("Erro desconhecido: \(error)")
-    }
+// 4) Exemplo de função rethrowing, para mostrar como propagar erros
+func applyOperation<T>(_ a: Int, _ b: Int, operation: (Int, Int) throws -> T) rethrows -> T {
+    return try operation(a, b)
 }
