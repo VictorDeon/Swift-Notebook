@@ -1,3 +1,32 @@
+/*
+ Em Swift, podemos aplicar os princípios de Orientação a Objetos (OO) para organizar e estruturar melhor nosso código.
+ Os quatro pilares clássicos de OO são:
+    1. Encapsulamento – agrupar dados e comportamentos em uma mesma unidade (classe/struct) e controlar o acesso a eles.
+    2. Abstração – expor apenas o que é relevante, escondendo detalhes de implementação.
+    3. Herança – criar hierarquias de tipos para reutilizar e especializar comportamento.
+    4. Polimorfismo – permitir que diferentes tipos sejam tratados de forma uniforme, geralmente via protocolos.
+ Além disso, em Swift:
+    - Classes são passadas por referência e podem herdar de outras classes.
+    - Structs são passadas por valor, mais leves e seguras, mas não suportam herança de implementação.
+    - Protocolos definem contratos (métodos/propriedades) sem fornecer implementação — viabilizam o polimorfismo.
+ Pontos-Chave de OO em Swift:
+    1. Encapsulamento: use private/fileprivate para esconder detalhes.
+    2. Abstração: exponha apenas interfaces (protocolos) e hide implementações.
+    3. Herança: classes suportam herança simples; structs não.
+    4. Polimorfismo: protocole-oriented programming facilita o uso de múltiplas hierarquias.
+    5. Value vs Reference: structs (valor) são copiados; classes (referência) compartilham instância.
+    6. Final Classes: use final para impedir novas heranças quando desejar imutabilidade de design.
+    7. Computed Properties e Property Observers podem coexistir para enriquecer comportamento de seus modelos
+ Controle de Acesso (Access Control):
+    - open:     É visivel em qualquer módulo, e permite subclass & override, usado em bibliotecas públicas que
+                querem ser extensíveis.
+    - public:   É visivel em qualquer módulo, mas não permite override fora, usado em APIs públicas somente
+                leitura da herança
+    - internal: É visivel dentro do mesmo módulo (padrão), usado em código do app ou framework.
+    - fileprivate: É visivel apenas neste arquivo Swift, usado para agrupar tipos relacionados no mesmo arquivo
+    - private:  É visivel apenas no escopo da declaração, usado para esconder detalhes dentro de uma classe/struct
+*/
+
 // Classes = Passagem por referência, ou seja, o proprio objeto.
 // Struct = Passagem por valor, ou seja, uma copia.
 // Classes = Guardado em formato de Heap (aleatorio) na memoria
@@ -19,119 +48,182 @@ struct OOCommands: ParsableCommand {
     @OptionGroup var common: CommonOptions
 
     func run() throws {
-        objectOrientationRunner()
+        OORunner().execute()
     }
 }
 
-class Enemy {
-    // Atributos
+// MARK: 1. Modelagem de Personagens
+// 1.1 Protocolos e Encapsulamento
+// Definimos dois protocolos para reforçar abstração e polimorfismo:
+/// Contrato para quem pode atacar
+protocol Attackable {
+    var health: Int { get set }
+    func attack() -> Int
+    mutating func takeDamage(_ amount: Int)
+}
+
+/// Contrato para quem pode se mover
+protocol Movable {
+    func move()
+}
+
+// 1.2 Classe Base: Character
+// Usamos uma classe para demonstrar passagem por referência, herança e encapsulamento:
+class GameCharacter: Attackable, Movable {
+    // público para leitura, privado para escrita
+    private(set) var name: String             // name é read-only fora da classe
     var health: Int
-    private var atkStrength: Int             // (acessado somente nesta classe)
-    // fileprivate var atkStrength: Int         (acessado somente no arquivo)
-    // internal var atkStrength: Int            (acessado somente no seu modulo/projeto - default)
-    // public var atkStrength: Int              (acessado em qualquer modulo/projeto, usado bastante em API)
-    // open var atkStrength: Int                (acessado em qualquer modulo/projeto, usado para herança ou overridden)
     
-    // Construtor
-    init(health: Int, atk: Int = 10) {
+    init(name: String, health: Int) {
+        self.name = name
         self.health = health
-        self.atkStrength = atk
     }
     
-    // Metodos
-    fileprivate func move() {
-        print("Monstro se movendo...")
+    // Computed Property para ver % de vida
+    var healthPercentage: Double {
+        return Double(health) / 100.0 * 100.0
     }
     
-    func attack() {
-        print("Monstro atacando e dando \(atkStrength) de dano.")
+    // Attackable
+    func attack() -> Int {
+        // implementação genérica, subclasses podem sobrescrever
+        return 5
     }
     
-    func takeDamage(amount: Int) {
-        print("Monstro tomou dano de \(amount)")
-        health -= amount
+    func takeDamage(_ amount: Int) {
+        health = max(health - amount, 0)
+        print("\(name) tomou \(amount) de dano. Vida agora: \(health).")
+    }
+    
+    // Movable
+    func move() {
+        print("\(name) se move.")
     }
 }
 
-// final Define que Dragon não pode ser herdado.
-final class Dragon: Enemy {
-    // Atributo de instancia
-    var wingSpan: Int = 2
-    // Atributo de classe
-    static let eat: String = "Hora do rango"
+// MARK: 2. Herança e Especialização
+// 2.1 Inimigo Genérico: Enemy
+class Enemy: GameCharacter {
+    private var attackStrength: Int
+    
+    init(name: String, health: Int = 100, attackStrength: Int = 10) {
+        self.attackStrength = attackStrength
+        super.init(name: name, health: health)
+    }
+    
+    override func attack() -> Int {
+        print("\(name) ataca causando \(attackStrength) de dano.")
+        return attackStrength
+    }
+    
+    override func move() {
+        print("\(name) se arrasta pelo chão.")
+    }
+}
 
-    // Metodo de instancia
-    func talk(speech: String) {
-        print("Dragão diz: \(speech)")
+// 2.2 Inimigo Especial: Dragon
+final class Dragon: Enemy {
+    let wingSpan: Int
+    
+    init(name: String, health: Int = 300, attackStrength: Int = 50, wingSpan: Int = 5) {
+        self.wingSpan = wingSpan
+        super.init(name: name, health: health, attackStrength: attackStrength)
+    }
+    
+    // Sobrecarga de método
+    func attack(withFire intensity: Int) -> Int {
+        let damage = intensity * 2
+        print("\(name) cospe fogo e causa \(damage) de dano.")
+        return damage
+    }
+    
+    // Sobrescrita de comportamento de movimento
+    override func move() {
+        print("\(name) voa majestoso com envergadura de \(wingSpan)m.")
     }
     
     // Método de classe
-    static func sing() {
-        print("Um rango legal, é o que precisamos...")
-    }
-
-    // sobrecarga
-    func attack(strength: Int) {
-        print("Dragão atacando com dano \(strength)")
-    }
-
-    // sobrescrita
-    override func move() {
-        print("Dragão voaando")
+    static func roar() {
+        print("🗣️ Dragões rugem para anunciar seu poder!")
     }
 }
 
-
-struct Goblin {
+// MARK: 3. Value Type: Struct Goblin
+// Para comparar, um Goblin como struct — passagem por valor e necessidade de mutating para mutar estado
+struct Goblin: Attackable, Movable {
+    var name: String
     var health: Int
-    var atkStrength: Int
-
-    // Construtor
-    init(health: Int, atk: Int = 10) {
-        self.health = health
-        self.atkStrength = atk
+    var attackStrength: Int
+    
+    func attack() -> Int {
+        print("\(name) ataca com clava e causa \(attackStrength) de dano.")
+        return attackStrength
     }
     
-    // Metodos
+    mutating func takeDamage(_ amount: Int) {
+        health = max(health - amount, 0)
+        print("\(name) recebeu \(amount) de dano. Vida: \(health).")
+    }
+    
     func move() {
-        print("Goblin struct se movendo...")
-    }
-    
-    func attack() {
-        print("Goblin struct atacando e dando \(atkStrength) de dano.")
-    }
-    
-    // Precisa inserir o mutating para poder modificar seus valores internamente
-    mutating func takeDamage(amount: Int) {
-        print("goblin struct Tomou dano de \(amount)")
-        health -= amount
+        print("\(name) corre entre as rochas.")
     }
 }
 
-
-func objectOrientationRunner() {
-    let skeleton1 = Enemy(health: 100)
-    print("Esqueleto 01 = Vida: \(skeleton1.health)")   // Esqueleto 01 = Vide: 100
-    skeleton1.move()                                    // Monstro se movendo..
-    skeleton1.attack()                                  // Monstro atacando e dando 10 de dano
-    
-    let skeleton2 = Enemy(health: 100)
-    print("Esqueleto 02 = Vida: \(skeleton2.health)")   // Esqueleto 02 = Vida: 100
-    skeleton2.takeDamage(amount: 10)                    // Monstro tomou dano de 10
-    print("Esqueleto 02 = Vida: \(skeleton2.health)")   // Esqueleto 02 = Vide: 90
-    
-    var goblin = Goblin(health: 150, atk: 20)
-    print("Goblin = Vida: \(goblin.health)")            // Goblin = Vida: 150
-    goblin.takeDamage(amount: 10)                       // Goblin struct tomou dano de 10
-    print("Goblin = Vida: \(goblin.health)")            // Goblin = Vida: 140
-    
-    let dragon = Dragon(health: 1000)
-    // Dragão = Vida: 1000 e quantidade de asas: 2
-    print("Dragão = Vida: \(dragon.health) e quantidade de asas: \(dragon.wingSpan)")
-    dragon.move()                        // Dragão voaando
-    dragon.talk(speech: "Graaaa....")    // Dragão diz: Graaaa...
-    dragon.attack()                      // Monstro atacando e dando 10 de dano
-    dragon.attack(strength: 100)         // Dragão atacando com dano 100
-    print(Dragon.eat)                    // Hora do rango
-    Dragon.sing()                        // Um rango legal, é o que precisamos...
+// MARK: 4. Demonstração de Polimorfismo
+// No OORunner, usamos arrays de Attackable e Movable para mostrar tratamento uniforme:
+struct OORunner {
+    func execute() {
+        // Instâncias
+        let skeleton = Enemy(name: "Esqueleto")
+        let goblin = Goblin(name: "Goblin", health: 60, attackStrength: 8)
+        let dragon = Dragon(name: "Drako", wingSpan: 7)
+        
+        // Polimorfismo: trate todos como Attackable
+        let combatants: [Attackable] = [skeleton, goblin, dragon]
+        print("\n--- Início do Combate ---")
+        for var char in combatants {
+            let damage = char.attack()
+            // todos podem takeDamage; goblin precisa ser var
+            char.takeDamage(damage / 2)
+        }
+        // --- Início do Combate ---
+        // Esqueleto ataca causando 10 de dano.
+        // Esqueleto tomou 5 de dano. Vida agora: 95.
+        // Goblin ataca com clava e causa 8 de dano.
+        // Goblin recebeu 4 de dano. Vida: 56.
+        // Drako ataca causando 50 de dano.
+        // Drako tomou 25 de dano. Vida agora: 275.
+        
+        // Movimentação genérica
+        print("\n--- Movimentação ---")
+        let movers: [Movable] = [skeleton, goblin, dragon]
+        movers.forEach { $0.move() }
+        // --- Movimentação ---
+        // Esqueleto se arrasta pelo chão.
+        // Goblin corre entre as rochas.
+        // Drako voa majestoso com envergadura de 7m.
+        
+        // Comerciando métodos específicos
+        print("\n--- Habilidades Específicas ---")
+        _ = dragon.attack(withFire: 20)
+        Dragon.roar()
+        // --- Habilidades Específicas ---
+        // Drako cospe fogo e causa 40 de dano.
+        // 🗣️ Dragões rugem para anunciar seu poder!
+        
+        // Mostrar referência vs valor
+        print("\n--- Referência vs Valor ---")
+        let enemyCopy = skeleton
+        enemyCopy.takeDamage(20)
+        print("Esqueleto original agora tem \(skeleton.health) de vida (referência)")
+        // Esqueleto tomou 20 de dano. Vida agora: 75.
+        // Esqueleto original agora tem 75 de vida (referência)
+        
+        var goblinCopy = goblin
+        goblinCopy.takeDamage(10)
+        print("Goblin original tem \(goblin.health) (valor imutado)")
+        // Goblin recebeu 10 de dano. Vida: 46.
+        // Goblin original tem 56 (valor imutado)
+    }
 }
