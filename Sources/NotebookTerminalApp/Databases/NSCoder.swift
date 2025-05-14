@@ -68,7 +68,7 @@ func nscodeRunner() {
         }
     }
     
-    
+    try? FileManager.default.removeItem(at: dataFilePath!)
 }
 
 

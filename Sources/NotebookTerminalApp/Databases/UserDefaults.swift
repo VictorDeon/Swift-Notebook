@@ -49,5 +49,7 @@ func userDefaultRunner() {
     let dictionary: [String: Any] = ["name": "Victor", "age": 31]
     defaults.set(dictionary, forKey: "playerData")
     print(defaults.dictionary(forKey: "playerData")!) // ["age": 31, "name": Victor]
+    
+    defaults.removeObject(forKey: "playerData")
 }
 
