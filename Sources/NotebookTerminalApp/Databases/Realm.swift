@@ -40,7 +40,7 @@ class Vehicle: Object {
     @objc dynamic var model: String = ""
     @objc dynamic var manufacture: String = ""
     @objc dynamic var year: Int = 0
-    let owner = LinkingObjects(fromType: User.self, property: "vehicles")
+    @objc dynamic var owner: User?
 
     override static func primaryKey() -> String? {
         return "id"
@@ -214,6 +214,7 @@ struct RealmVehicleRepository {
         vehicle.model = model
         vehicle.manufacture = manufacture
         vehicle.year = year
+        vehicle.owner = user
 
         do {
             try realm.write {
@@ -229,7 +230,7 @@ struct RealmVehicleRepository {
     // Read all
     func all(by user: User) throws -> Results<Vehicle> {
         let vehicles = realm.objects(Vehicle.self)
-        return vehicles.filter("ANY owner.id == %@", user.id)
+        return vehicles.filter("owner.id == %@", user.id)
     }
     
     func get(by id: String) throws -> Vehicle? {
