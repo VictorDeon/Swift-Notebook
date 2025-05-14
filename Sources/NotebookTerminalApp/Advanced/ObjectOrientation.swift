@@ -4,7 +4,8 @@
     1. Encapsulamento – agrupar dados e comportamentos em uma mesma unidade (classe/struct) e controlar o acesso a eles.
     2. Abstração – expor apenas o que é relevante, escondendo detalhes de implementação.
     3. Herança – criar hierarquias de tipos para reutilizar e especializar comportamento.
-    4. Polimorfismo – permitir que diferentes tipos sejam tratados de forma uniforme, geralmente via protocolos.
+    4. Polimorfismo – permitir que diferentes tipos sejam tratados de forma uniforme, geralmente via PROTOCOLOS.
+    5. Protocol - Em OO também é conhecido como Interface.
  Além disso, em Swift:
     - Classes são passadas por referência e podem herdar de outras classes.
     - Structs são passadas por valor, mais leves e seguras, mas não suportam herança de implementação.
@@ -17,6 +18,8 @@
     5. Value vs Reference: structs (valor) são copiados; classes (referência) compartilham instância.
     6. Final Classes: use final para impedir novas heranças quando desejar imutabilidade de design.
     7. Computed Properties e Property Observers podem coexistir para enriquecer comportamento de seus modelos
+    8. Classe Abstrata: Não é implementado por padrai em swift, mas você pode criar um Protocol e usa o Extension
+        para colocar um fatalError("funcaoXYZ() precisa ser implementado pela subclasse")
  Controle de Acesso (Access Control):
     - open:     É visivel em qualquer módulo, e permite subclass & override, usado em bibliotecas públicas que
                 querem ser extensíveis.
@@ -26,15 +29,6 @@
     - fileprivate: É visivel apenas neste arquivo Swift, usado para agrupar tipos relacionados no mesmo arquivo
     - private:  É visivel apenas no escopo da declaração, usado para esconder detalhes dentro de uma classe/struct
 */
-
-// Classes = Passagem por referência, ou seja, o proprio objeto.
-// Struct = Passagem por valor, ou seja, uma copia.
-// Classes = Guardado em formato de Heap (aleatorio) na memoria
-// Struct = Guardado em formato de Stacks (um em cima do outro) na memoria
-// Classes = Pode ter herança e implementar protocolos.
-// Struct = Não pode haver herança, mas pode implementar protocolos.
-// Classes = Mutable (pode mudar seus valores sem problema)
-// Struct = Immutable (não é possível modificar seus valores internamente sem usar o mutating)
 
 import AppKit
 import ArgumentParser
@@ -67,9 +61,24 @@ protocol Movable {
     func move()
 }
 
+/// Classe Abstrata que só classes podem usar (protocol + extension = abstract class)
+protocol Game: AnyObject {
+    func attack()
+    func move()
+}
+/// Extensão a classe abstrata
+extension Game {
+    func attack() {
+        fatalError("attack() precisa ser implementado pela subclasse")
+    }
+    func move() {
+        fatalError("move() precisa ser implementado pela subclasse")
+    }
+}
+
 // 1.2 Classe Base: Character
 // Usamos uma classe para demonstrar passagem por referência, herança e encapsulamento:
-class GameCharacter: Attackable, Movable {
+class GameCharacter: Attackable, Movable, Game {
     // público para leitura, privado para escrita
     private(set) var name: String             // name é read-only fora da classe
     var health: Int
