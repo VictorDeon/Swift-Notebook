@@ -418,6 +418,12 @@ func realmRunner() {
         
         print("📋 Veículos finais de \(user.name):", finalVehicles)
         print("📋 Grupos finais:", finalGroups)
+        
+        print("Limpando banco")
+        try groupRepository.delete(group2)
+        try vehicleRepository.delete(vehicle1)
+        try settingsRepository.delete(settings)
+        try userRepository.delete(user)
     } catch {
         print("❌ Erro durante CRUD demo:", error)
     }
