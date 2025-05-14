@@ -24,17 +24,51 @@ struct RealmCommands: AsyncParsableCommand {
     }
 }
 
-/// Modelo de Todo
-class ToDo: Object {
-    // dynamic monitora por mudanças nesses atributos em tempo real
-    @objc dynamic var title: String = ""
-    @objc dynamic var done: Bool = false
-    var category = LinkingObjects(fromType: Category.self, property: "items")
+class Settings: Object {
+    @objc dynamic var id: String = UUID().uuidString
+    @objc dynamic var volume: Int = 0
+    @objc dynamic var lang: String?
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
-class Category: Object {
+class Vehicle: Object {
+    @objc dynamic var id: String = UUID().uuidString
+    @objc dynamic var licensePlate: String = ""
+    @objc dynamic var model: String = ""
+    @objc dynamic var manufacture: String = ""
+    @objc dynamic var year: Int = 0
+    let owner = LinkingObjects(fromType: User.self, property: "vehicles")
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class Group: Object {
+    @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
-    let items = List<ToDo>()
+    @objc dynamic var descriptions: String?
+    let users = LinkingObjects(fromType: User.self, property: "groups")
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+class User: Object {
+    @objc dynamic var id: String = UUID().uuidString
+    @objc dynamic var name: String = ""
+    @objc dynamic var document: String = ""
+    @objc dynamic var settings: Settings?
+    let vehicles = List<Vehicle>()
+    let groups = List<Group>()
+
+    override static func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 /// Singleton para abrir o banco
@@ -51,150 +85,340 @@ class RealmDatabaseManager {
 }
 
 @MainActor
-struct RealmCategoryRepository {
+struct RealmSettingsRepository {
     private let realm = RealmDatabaseManager.shared.realm
 
     // Create
-    func add(name: String) throws -> Category {
-        let category = Category()
-        category.name = name
-        
+    @discardableResult
+    func add(volume: Int?, lang: String?) throws -> Settings {
+        let settings = Settings()
+        settings.volume = volume ?? 0
+        settings.lang = lang
         do {
             try realm.write {
-                realm.add(category)
+                realm.add(settings)
             }
         } catch {
             print("Deu error na criação da categoria: \(error)")
         }
-        return category
-    }
 
-    // Read all
-    func all() throws -> Results<Category> {
-        return realm.objects(Category.self)
+        return settings
     }
-
+    
     // Update
-    func update(_ category: Category, name: String) throws -> Void {
+    func update(_ settings: Settings, volume: Int?, lang: String?) throws -> Void {
         do {
             try realm.write {
-                category.name = name
+                settings.volume = volume ?? 0
+                settings.lang = lang
             }
         } catch {
-            print("Deu error na atualização da categoria: \(error)")
+            fatalError("Deu error na atualização do usuario: \(error)")
         }
     }
-
+    
     // Delete
-    func delete(_ category: Category) throws -> Bool {
+    func delete(_ setting: Settings) throws -> Void {
         do {
             try realm.write {
-                realm.delete(category)
+                realm.delete(setting)
             }
         } catch {
-            print("Deu error na deleção da categoria: \(error)")
-            return false
+            fatalError("Deu error na deleção das configuraçoes do usuario: \(error)")
         }
-        return true
     }
 }
 
 @MainActor
-struct RealmTodoRepository {
+struct RealmUserRepository {
     private let realm = RealmDatabaseManager.shared.realm
 
     // Create
-    func add(title: String) throws -> ToDo {
-        let todo = ToDo()
-        todo.title = title
-        
+    func add(name: String, document: String, settings: Settings? = nil) throws -> User {
+        let user = User()
+        user.name = name
+        user.document = document
+        user.settings = settings
+
         do {
             try realm.write {
-                realm.add(todo)
+                realm.add(user)
             }
         } catch {
-            print("Deu error na criação do todo: \(error)")
+            fatalError("Deu error na criação do usuario: \(error)")
         }
-        return todo
+        return user
     }
 
     // Read all
-    func all() throws -> Results<ToDo> {
-        return realm.objects(ToDo.self)
+    func all() throws -> Results<User> {
+        return realm.objects(User.self)
+    }
+    
+    func get(by id: String) throws -> User? {
+        return realm.object(ofType: User.self, forPrimaryKey: id)
     }
     
     // Filter by title
-    func fetch(title: String) throws -> Results<ToDo> {
-        let items = realm.objects(ToDo.self)
-        return items.filter("title CONTAINS[cd] %@", title).sorted(byKeyPath: "title", ascending: true)
+    func fetch(name: String) throws -> Results<User> {
+        let users = realm.objects(User.self)
+        return users.filter("name CONTAINS[cd] %@", name).sorted(byKeyPath: "name", ascending: true)
     }
 
     // Update
-    func update(_ todo: ToDo, title: String, done: Bool) throws -> Void {
+    func update(_ user: User, name: String? = nil, document: String? = nil) throws -> Void {
         do {
             try realm.write {
-                todo.title = title
-                todo.done = done
+                if let n = name { user.name = n }
+                if let d = document { user.document = d }
             }
         } catch {
-            print("Deu error na atualização do todo: \(error)")
+            fatalError("Deu error na atualização do usuario: \(error)")
         }
     }
 
     // Delete
-    func delete(_ todo: ToDo) throws -> Bool {
+    func delete(_ user: User) throws -> Void {
         do {
             try realm.write {
-                realm.delete(todo)
+                realm.delete(user)
             }
         } catch {
-            print("Deu error na deleção do todo: \(error)")
-            return false
+            fatalError("Deu error na deleção do usuario: \(error)")
         }
-        return true
+    }
+    
+    func removeVehicle(_ vehicle: Vehicle, from user: User) {
+        try! realm.write {
+            if let idx = user.vehicles.index(of: vehicle) {
+                user.vehicles.remove(at: idx)
+            }
+            realm.delete(vehicle)
+        }
     }
 }
 
-@MainActor func realmRunner() {
-    let repo = RealmTodoRepository()
+@MainActor
+struct RealmVehicleRepository {
+    private let realm = RealmDatabaseManager.shared.realm
+
+    // Create
+    func add(
+        for user: User,
+        licensePlate: String,
+        model: String,
+        manufacture: String,
+        year: Int) throws -> Vehicle {
+        let vehicle = Vehicle()
+        vehicle.licensePlate = licensePlate
+        vehicle.model = model
+        vehicle.manufacture = manufacture
+        vehicle.year = year
+
+        do {
+            try realm.write {
+                realm.add(vehicle)
+                user.vehicles.append(vehicle)
+            }
+        } catch {
+            fatalError("Deu error na criação do veículo: \(error)")
+        }
+        return vehicle
+    }
+
+    // Read all
+    func all(by user: User) throws -> Results<Vehicle> {
+        let vehicles = realm.objects(Vehicle.self)
+        return vehicles.filter("ANY owner.id == %@", user.id)
+    }
+    
+    func get(by id: String) throws -> Vehicle? {
+        return realm.object(ofType: Vehicle.self, forPrimaryKey: id)
+    }
+
+    // Update
+    func update(
+        _ vehicle: Vehicle,
+        licensePlate: String? = nil,
+        model: String? = nil,
+        manufacture: String? = nil,
+        year: Int? = nil) throws -> Void {
+        do {
+            try realm.write {
+                if let lp = licensePlate { vehicle.licensePlate = lp }
+                if let m = model { vehicle.model = m }
+                if let mf = manufacture { vehicle.manufacture = mf }
+                if let y = year { vehicle.year = y }
+            }
+        } catch {
+            fatalError("Deu error na atualização do veículo: \(error)")
+        }
+    }
+
+    // Delete
+    func delete(_ vehicle: Vehicle) throws -> Void {
+        do {
+            try realm.write {
+                realm.delete(vehicle)
+            }
+        } catch {
+            fatalError("Deu error na deleção do veículo: \(error)")
+        }
+    }
+}
+
+@MainActor
+struct RealmGroupRepository {
+    private let realm = RealmDatabaseManager.shared.realm
+
+    // Create
+    func add(name: String, description: String?) throws -> Group {
+        let group = Group()
+        group.name = name
+        group.descriptions = description
+
+        do {
+            try realm.write {
+                realm.add(group)
+            }
+        } catch {
+            fatalError("Deu error na criação do grupo: \(error)")
+        }
+        return group
+    }
+
+    // Read all
+    func all() throws -> Results<Group> {
+        return realm.objects(Group.self)
+    }
+    
+    func get(by id: String) throws -> Group? {
+        return realm.object(ofType: Group.self, forPrimaryKey: id)
+    }
+
+    // Update
+    func update(_ group: Group, name: String? = nil, description: String? = nil) throws -> Void {
+        do {
+            try realm.write {
+                if let n = name { group.name = n }
+                if let d = description { group.descriptions = d }
+            }
+        } catch {
+            fatalError("Deu error na atualização do grupo: \(error)")
+        }
+    }
+
+    // Delete
+    func delete(_ group: Group) throws -> Void {
+        do {
+            try realm.write {
+                realm.delete(group)
+            }
+        } catch {
+            fatalError("Deu error na deleção do grupo: \(error)")
+        }
+    }
+    
+    func addUser(_ user: User, to group: Group) {
+        try! realm.write {
+            if !user.groups.contains(group) {
+                user.groups.append(group)
+            }
+        }
+    }
+
+    func removeUser(_ user: User, from group: Group) {
+        try! realm.write {
+            if let idx = user.groups.index(of: group) {
+                user.groups.remove(at: idx)
+            }
+        }
+    }
+}
+
+@MainActor
+func realmRunner() {
+    let settingsRepository = RealmSettingsRepository()
+    let userRepository     = RealmUserRepository()
+    let vehicleRepository  = RealmVehicleRepository()
+    let groupRepository    = RealmGroupRepository()
     
     do {
-        // 1. Criar alguns itens
-        let t1 = try repo.add(title: "Comprar leite")
-        let t2 = try repo.add(title: "Estudar GRDB")
-        print("✅ Criados:", t1, t2)
-        // Criados: Todo(id: Optional(1), title: "Comprar leite", done: false)
-        //          Todo(id: Optional(2), title: "Estudar GRDB", done: false)
-
-        // 2. Listar tudo
-        var itens = try repo.all()
-        print("📋 Todos:", itens)
-        // Todos: [
-        //      Todo(id: Optional(1), title: "Comprar leite", done: false),
-        //      Todo(id: Optional(2), title: "Estudar GRDB", done: false)
-        // ]
-
-        // 3. Marcar o primeiro como feito e atualizar
-        try repo.update(t1, title: "Comprar leitei quente!", done: true)
-        print("✏️ Atualizado:", t1)
-        // Atualizado: Todo(id: Optional(1), title: "Comprar leite", done: true)
+        // 1. Criar Settings
+        let settings = try settingsRepository.add(volume: 5, lang: "pt-BR")
+        print("🔧 Settings criadas:", settings)
         
-        // 4. Só os feitos
-        print("✅ Feitos:", try repo.fetch(title: "Comprar"))
-        // Feitos: [Todo(id: Optional(1), title: "Comprar leite", done: true)]
+        // 2. Criar Usuário com Settings
+        let user = try userRepository.add(name: "Alice", document: "123.456.789-00", settings: settings)
+        print("👤 Usuário criado:", user)
         
-        // 5. Deletar o segundo
-        let success = try repo.delete(t2)
-        if success {
-            print("🗑️ Item deletado com sucesso")
-        }
+        // 3. Criar Veículos para o Usuário
+        let vehicle1 = try vehicleRepository.add(
+            for: user,
+            licensePlate: "ABC-1234",
+            model: "Civic",
+            manufacture: "Honda",
+            year: 2020
+        )
+        let vehicle2 = try vehicleRepository.add(
+            for: user,
+            licensePlate: "XYZ-9876",
+            model: "Corolla",
+            manufacture: "Toyota",
+            year: 2021
+        )
+        print("🚗 Veículos criados para \(user.name):", vehicle1.model, vehicle2.model)
+        
+        // 4. Criar Grupos e adicionar Usuário
+        let group1 = try groupRepository.add(name: "Admins", description: "Grupo de administradores")
+        let group2 = try groupRepository.add(name: "Testers", description: nil)
+        groupRepository.addUser(user, to: group1)
+        groupRepository.addUser(user, to: group2)
+        print("👥 \(user.name) adicionado aos grupos:", group1.name, "&", group2.name)
+        
+        // 5. Listar
+        let allUsers    = try userRepository.all()
+        let allVehicles = try vehicleRepository.all(by: user)
+        let allGroups   = try groupRepository.all()
 
-        // 6. Listar de novo
-        itens = try repo.all()
-        print("📋 Final:", itens)
-        // Final: [Todo(id: Optional(1), title: "Comprar leite", done: true)]
+        print("📋 Usuários:", allUsers)
+        print("📋 Veículos de \(user.name):", allVehicles)
+        print("📋 Grupos:", allGroups)
+        
+        // 6. Atualizar alguns registros
+        try settingsRepository.update(settings, volume: 8, lang: "en-US")
+        try userRepository.update(user, name: "Alice Santos", document: nil)
+        try vehicleRepository.update(vehicle1, licensePlate: "ABC-0000", model: nil, manufacture: nil, year: 2022)
+        try groupRepository.update(group2, name: "Quality Testers", description: "Equipe de QA")
+        
+        print("✏️ Atualizações aplicadas:")
+        print("   • Settings:", settings)
+        print("   • Usuário:", user)
+        print("   • Veículo v1:", vehicle1)
+        print("   • Grupo g2:", group2)
+        
+        // 7. Buscar por filtro (ex.: usuário por nome)
+        let filteredUsers = try userRepository.fetch(name: "Alice")
+        print("🔍 Usuários filtrados (\"Alice\"):", filteredUsers)
+        
+        // 8. Remoções
+        //    a) remover vehicle2 do usuário e deletar vehicle2
+        userRepository.removeVehicle(vehicle2, from: user)
+        //    b) remover usuário do grupo group1
+        groupRepository.removeUser(user, from: group1)
+        //    c) deletar g1
+        try groupRepository.delete(group1)
+        
+        print("🗑️ Remoções feitas.")
+        
+        // 9. Listar de novo para ver estado final
+        let finalVehicles = try vehicleRepository.all(by: user)
+        let finalGroups   = try groupRepository.all()
+        
+        print("📋 Veículos finais de \(user.name):", finalVehicles)
+        print("📋 Grupos finais:", finalGroups)
     } catch {
-        print("❌ Erro durante CRUD:", error)
+        print("❌ Erro durante CRUD demo:", error)
     }
 }
 
