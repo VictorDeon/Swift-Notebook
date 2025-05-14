@@ -1,4 +1,16 @@
-// São atributos que são calculados em tempo de uso.
+/*
+ Em Swift, além de propriedades armazenadas (stored properties), podemos usar:
+    - Computed Properties (Propriedades Computadas): não armazenam um valor diretamente, mas calculam-no
+      dinamicamente a cada acesso.
+        1. Declaração obrigatoriamente em var.
+        2. Podem ter getter e (opcionalmente) setter.
+        3. Se só houver getter, são read-only.
+    - Property Observers (Observadores de Propriedade): permitem reagir a mudanças de valor em uma propriedade
+      armazenada, executando código em willSet e/ou didSet.
+        1. Só funcionam em propriedades armazenadas.
+        2. willSet roda antes de alterar o valor (acessa newValue).
+        3. didSet roda depois de alterar o valor (acessa oldValue e o novo valor pelo seu nome).
+*/
 
 import Foundation
 import AppKit
@@ -12,64 +24,70 @@ struct ComputedAttributesCommands: ParsableCommand {
 
     @OptionGroup var common: CommonOptions
     
-    @Option(
-        name: .long,  // pizza
-        help: "Quantidade total de pedaços da pizza"
-    )
-    var pizza: Int = 10
-    
-    @Option(
-        name: .long,  // persons
-        help: "Quantidade total de pessoas que vão comer pizza"
-    )
-    var persons: Int = 4
-    
-    @Option(
-        name: .long,  // slices
-        help: "Quantidade ideal de pedaços de pizza por pessoa."
-    )
-    var slices: Int = 3
+    @Option(name: .long, help: "Total de pedaços por pizza.")
+    var slicesPerPizza: Int = 8
+
+    @Option(name: .long, help: "Número de pessoas que vão comer pizza.")
+    var numberOfPeople: Int = 5
+
+    @Option(name: .long, help: "Quantidade de pedaços desejados por pessoa.")
+    var slicesPerPerson: Int = 3
 
     func run() throws {
-        computerAttributesRunner(pizza, persons, slices)
+        let calculator = PizzaCalculator(
+            slicesPerPizza: slicesPerPizza,
+            numberOfPeople: numberOfPeople,
+            slicesPerPerson: slicesPerPerson
+        )
+        calculator.printResults()
+        // ➡️ Precisamos de 2 pizza(s) para 5 pessoa(s).
+        // ⚠️ Atenção: haverá desperdício de pizza!
+        // 🍕 Sobrou 1 pedaço(s) de pizza.
     }
 }
 
-func computerAttributesRunner(_ pizza: Int, _ persons: Int, _ slices: Int) {
-    // Observa mudanças nessa variavel e dispara os triggers abaixo
-    var slicesLeftOver: Int = 0 {
+struct PizzaCalculator {
+    // 1) Stored property com Property Observers
+    // Uma propriedade armazenada leftoverSlices com observers para notificar desperdício.
+    private(set) var leftoverSlices: Int = 0 {
         willSet {
-            print("Vai ter desperdicio de pizza!")
-            // Vai ter desperdicio de pizza!
+            print("⚠️ Atenção: haverá desperdício de pizza!")
         }
         didSet {
-            print("Sobrou \(slicesLeftOver) pedaços de pizza.")
-            // Sobrou 1 pedaços de pizza.
+            print("🍕 Sobrou \(leftoverSlices) pedaço(s) de pizza.")
         }
     }
-    
-    // computed properties tem que ser um var e precisa especificar um data type
-    // o valor sempre vai mudar a medida que algums colunas mudarem
-    // O getter, se esse não tiver um setter ele vai ser read-only
-    // O setter é disparado quando atribuimos um valor a variavel com o =
-    var numberOfPizza: Int {
+
+    // Propriedades recebidas via inicialização
+    let slicesPerPizza: Int
+    let numberOfPeople: Int
+    let slicesPerPerson: Int
+
+    // 2) Computed property: calcula pizzas necessárias
+    // Uma propriedade computada pizzasNeeded que calcula quantas pizzas comprar.
+    var pizzasNeeded: Int {
         get {
-            let numberOfSlicesPerPerson: Double = Double(pizza) / Double(slices)
-            let numberOfPizza: Double = Double(persons) / numberOfSlicesPerPerson
-            return Int(numberOfPizza)
+            // Total de pedaços necessários
+            let totalNeeded = numberOfPeople * slicesPerPerson
+            // Quantas pizzas inteiras precisamos (arredonda pra cima)
+            let pizzas = Int(ceil(Double(totalNeeded) / Double(slicesPerPizza)))
+            return pizzas
         }
         set {
-            let totalNumberOfSlices: Int = newValue * pizza
-            // Executa o observer properties
-            slicesLeftOver = totalNumberOfSlices % slices
+            // Ao atribuir um novo valor, calculamos desperdício
+            let totalSlices = newValue * slicesPerPizza
+            leftoverSlices = totalSlices - (numberOfPeople * slicesPerPerson)
         }
     }
 
-    // Executa o getter
-    print("Precisamos comprar \(numberOfPizza) pizzas para \(persons) pessoas.")
-    // Precisamos comprar 27 pizzas para 30 pessoas.
-
-    // Executa o setter
-    numberOfPizza = numberOfPizza
+    // 3) Método para exibir resultados
+    func printResults() {
+        // Executa o getter
+        print("➡️ Precisamos de \(pizzasNeeded) pizza(s) para \(numberOfPeople) pessoa(s).")
+        // Agora executa o setter para disparar os observers
+        // (reaproveitamos o mesmo valor para cálculo de sobra)
+        var mutableSelf = self
+        mutableSelf.pizzasNeeded = pizzasNeeded
+    }
 }
 
