@@ -56,7 +56,7 @@ jobs:
           pkgbuild \
             --root ".build/release" \
             --install-location "/" \
-            --identifier "tech.vksoftware.notebookterminalapp" \
+            --identifier "${{ secrets.BUNDLE_ID }}" \
             --version "${{ github.ref_name }}" \
             --sign "${{ secrets.DEVELOPER_ID_INSTALLER_NAME }}" \
             "NotebookTerminalApp-${{ github.ref_name }}.pkg"
