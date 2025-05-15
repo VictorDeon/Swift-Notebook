@@ -10,6 +10,9 @@ on:
         description: "Versão da ferramenta. Ex: v1.2.3"
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build NotebookTerminalApp
