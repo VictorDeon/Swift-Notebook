@@ -72,7 +72,8 @@ jobs:
       - name: Build the project
         run: |
           swift build -c release
-          ls -la .build/release/
+          mkdir -p pkgroot/usr/local/bin
+          cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
 
       - name: Sign all required files
         run: |
@@ -93,8 +94,8 @@ jobs:
       - name: Create .pkg installer
         run: |
           pkgbuild \
-            --root ".build/release" \
-            --install-location /usr/local/bin \
+            --root pkgroot \
+            --install-location / \
             --identifier "${{ secrets.BUNDLE_ID }}" \
             --version "${{ steps.set_version.outputs.VERSION }}" \
             --sign "${{ secrets.DEVELOPER_ID_INSTALLER_NAME }}" \
