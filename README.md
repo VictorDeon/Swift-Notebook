@@ -140,14 +140,16 @@ Macos 10.15
 TODO:
 
 - [x] Sintaxe basica, intermediaria e avançada
-- [ ] Modulos
-- [ ] Empacotamento e geração do binario
+- [ ] Empacotamento de modulos e utilização do pacote
+- [ ] Geração do binario via github actions
 - [ ] Sistema de logging
-- [ ] Lista de metodos uteis para cada tipo do swift
+- [x] Lista de metodos uteis para cada tipo do swift
 - [ ] Operações no Sistema Operacional do MACOS
 - [ ] Manipulação de arquivos
 	- [ ] JSON
 	- [ ] CSV
+    - [ ] Excel
+    - [ ] PDF
 	- [ ] PLIST
     - [ ] XML
 - [x] Finalizar OO
@@ -158,9 +160,37 @@ TODO:
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
     - [ ] Firestore: Solução de banco de dados em nuvem NoSQL
+    - [ ] Storage: Armazenamento de arquivos
+    - [ ] Analytics
+    - [ ] Crashlytics
+    - [ ] A/B Testing
 - [ ] Design Patterns
     - [x] Delegate
-    - [ ] Singleton
+    - [x] Singleton
+    - [ ] Chain Of Responsability
+    - [ ] Command
+    - [ ] Interpreter
+    - [ ] Iterator
+    - [ ] Mediator
+    - [ ] Observer
+    - [ ] Memento
+    - [ ] State
+    - [ ] Strategy
+    - [ ] Template Method
+    - [ ] Visitor
+    - [ ] Abstract Factory
+    - [ ] Builder
+    - [ ] Factory Method
+    - [ ] Multiton
+    - [ ] Object Pool
+    - [ ] Prototype
+    - [ ] Adapter
+    - [ ] Bridge
+    - [ ] Composite
+    - [ ] Decorator
+    - [ ] Facade
+    - [ ] Flyweight
+    - [ ] Proxy
 - [ ] SwiftUI
 - [x] Banco de Dados
     - [x] UserDefaults: Armazena pequenos bites de dados em plists, normalmente usado em configurações
@@ -173,7 +203,44 @@ TODO:
 - [ ] Testes Automatizados
 - [ ] Threads e Processos
 - [ ] Libs da Apple
-- [ ] Estrutura de Dados e Algoritmos
+- [ ] Estrutura de Dados
+    - [ ] Pilha
+    - [ ] Fila
+    - [ ] Deque
+    - [ ] Lista Encadeada
+    - [ ] Lista Duplamente Encadeada
+    - [ ] Fila de Prioridades
+    - [ ] Binary Heap
+    - [ ] Tabela Hash
+    - [ ] Grafos
+    - [ ] Matriz de Adjacencia
+    - [ ] Lista de Adjacencia
+    - [ ] Matriz de Incidencia
+    - [ ] Lista de Incidencia
+- [ ] Algoritmos
+    - [ ] Analise Assintótica
+    - [ ] Arvore Binária de Busca
+    - [ ] Busca em Profundidade
+    - [ ] Busca em Largura
+    - [ ] Programação Dinamica
+    - [ ] Algoritmo Guloso
+    - [ ] Algoritmo de Dijkstra
+    - [ ] Detectando Ciclos em Grafos
+    - [ ] Backtracking
+    - [ ] Algoritmos de Ordenação
+        - [ ] Bubble Sort
+        - [ ] Selection Sort
+        - [ ] Insertion Sort
+        - [ ] Quick Sort
+        - [ ] Merge Sort
+    - [ ] Função Sort
+    - [ ] Caixante Viajeiro
+    - [ ] Busca Tabu
+    - [ ] Busca Binaria
+    - [ ] Distancia Hamming
+    - [ ] Distancia de Edicao
+    - [ ] Cifra de Cesar
+    - [ ] Simulated Annealing
 - [ ] Socket
 - [ ] Criptografia e Segurança
 - [ ] Machine Learning e Data Science
