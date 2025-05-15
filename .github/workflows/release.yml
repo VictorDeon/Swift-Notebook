@@ -44,12 +44,6 @@ jobs:
         run: |
           echo "Versão usada: ${{ steps.set_version.outputs.VERSION }}"
 
-      - name: Create New Tag
-        run: git tag -a ${{ steps.set_version.outputs.VERSION }} -m "Release ${{ steps.set_version.outputs.VERSION }}"
-
-      - name: Push New Tag
-        run: git push --tags
-
       - name: Change version.txt
         run: echo "${{ steps.set_version.outputs.VERSION }}" > version.txt
 
@@ -89,7 +83,6 @@ jobs:
             --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
             .build/release/NotebookTerminalApp
 
-          # para a biblioteca
           codesign \
             --force \
             --options runtime \
@@ -157,6 +150,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: NotebookTerminalApp
+
+      - name: Create New Tag
+        run: git tag -a ${{ needs.build.outputs.VERSION }} -m "Release ${{ needs.build.outputs.VERSION }}"
+
+      - name: Push New Tag
+        run: git push --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
