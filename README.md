@@ -203,7 +203,7 @@ TODO:
 - [ ] Testes Automatizados
 - [ ] Threads e Processos
 - [ ] Libs da Apple
-- [ ] Estrutura de Dados
+- [ ] Estrutura de Dados (pacotes)
     - [ ] Pilha
     - [ ] Fila
     - [ ] Deque
@@ -217,7 +217,7 @@ TODO:
     - [ ] Lista de Adjacencia
     - [ ] Matriz de Incidencia
     - [ ] Lista de Incidencia
-- [ ] Algoritmos
+- [ ] Algoritmos (pacotes)
     - [ ] Analise Assintótica
     - [ ] Arvore Binária de Busca
     - [ ] Busca em Profundidade

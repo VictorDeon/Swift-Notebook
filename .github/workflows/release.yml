@@ -1,0 +1,117 @@
+name: Build and Release NotebookTerminalApp
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    name: Build NotebookTerminalApp
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Import developer id installer certificate
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.DEVELOPER_ID_INSTALLER_KEY }}
+          p12-password: ${{ secrets.INSTALLER_P12_PASSWORD }}
+          keychain: build
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+
+      - name: Import developer id application certificate
+        uses: apple-actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.DEVELOPER_ID_APPLICATION_KEY }}
+          p12-password: ${{ secrets.APPLICATION_P12_PASSWORD }}
+          create-keychain: false
+          keychain: build
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+
+      - name: Verify certificates on Keychain
+        run: |     
+          # Verify certificates on Keychain
+          security find-identity -v -p basic
+
+      - name: Build the project
+        run: |
+          swift build -c release
+          ls -la .build/release/NotebookTerminalApp
+
+      - name: Create .pkg installer
+        run: |
+          pkgbuild \
+            --root ".build/release" \
+            --install-location "/" \
+            --identifier "tech.vksoftware.notebookterminalapp" \
+            --version "${{ github.ref_name }}" \
+            --sign "${{ secrets.DEVELOPER_ID_INSTALLER_NAME }}" \
+            "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+
+      - name: Verify Signature
+        run: |
+          pkgutil --check-signature "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+
+      - name: Notarize .pkg installer
+        run: |
+          xcrun notarytool store-credentials "notarytool-profile" \
+            --apple-id "${{ secrets.PROD_MACOS_NOTARIZATION_APPLE_ID }}" \
+            --password "${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}" \
+            --team-id "${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}"
+
+          output=$(xcrun notarytool submit "NotebookTerminalApp-${{ github.ref_name }}.pkg" --keychain-profile "notarytool-profile" --wait)
+          echo $output
+
+          extracted_id=$(echo "$output" | awk '/status: Invalid/ {getline; if ($1 == "id:") print $2}')
+
+          if [ -n "$extracted_id" ]; then
+            echo "ID: $extracted_id"
+            xcrun notarytool log $extracted_id --keychain-profile "notarytool-profile"
+            exit 1
+          else
+            # Staple the notarization
+            xcrun stapler staple "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+          fi
+
+      - name: Verify Notarization
+        run: |
+          spctl --assess -vv --type install "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: NotebookTerminalApp
+          path: |
+            .build/release/NotebookTerminalApp
+            NotebookTerminalApp-${{ github.ref_name }}.pkg
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: NotebookTerminalApp
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            NotebookTerminalApp
+            NotebookTerminalApp-${{ github.ref_name }}.pkg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
