@@ -19,7 +19,7 @@ let package = Package(
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "RealmSwift", package: "realm-swift"),
+                .product(name: "RealmSwift", package: "realm-swift")
             ]
         )
     ]

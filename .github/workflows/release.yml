@@ -72,8 +72,19 @@ jobs:
       - name: Build the project
         run: |
           swift build -c release
-          mkdir -p pkgroot/usr/local/bin
+          mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib
           cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
+          cp .build/release/libRealmSwift.dylib pkgroot/usr/local/lib/
+
+      - name: Configure .dylib dependency
+        run: |
+          install_name_tool \
+            -id /usr/local/lib/libRealmSwift.dylib \
+            pkgroot/usr/local/lib/libRealmSwift.dylib
+
+          install_name_tool \
+            -add_rpath /usr/local/lib \
+            pkgroot/usr/local/bin/NotebookTerminalApp
 
       - name: Sign all required files
         run: |
@@ -83,6 +94,13 @@ jobs:
             --timestamp \
             --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
             pkgroot/usr/local/bin/NotebookTerminalApp
+
+          codesign \
+            --force \
+            --options runtime \
+            --timestamp \
+            --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
+            pkgroot/usr/local/lib/libRealmSwift.dylib
 
       - name: Create .pkg installer
         run: |
