@@ -24,6 +24,21 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      - name: Define version
+        id: set_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+          else
+            # remove o prefixo 'refs/tags/' da ref para obter só 'v1.2.3'
+            TAG_NAME=${GITHUB_REF#refs/tags/}
+            echo "VERSION=$TAG_NAME" >> $GITHUB_ENV
+          fi
+
+      - name: Show version
+        run: |
+          echo "Versão usada: $VERSION"
+
       - name: Import developer id installer certificate
         uses: apple-actions/import-codesign-certs@v1
         with:
@@ -49,21 +64,25 @@ jobs:
       - name: Build the project
         run: |
           swift build -c release
-          ls -la .build/release/NotebookTerminalApp
+          ls -la .build/release
+
+      - name: Sign all files
+        run: |
+          sh codesign.sh "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" "${{ secrets.BUNDLE_ID }}"
 
       - name: Create .pkg installer
         run: |
           pkgbuild \
             --root ".build/release" \
-            --install-location "/" \
+            --install-location /usr/local/bin \
             --identifier "${{ secrets.BUNDLE_ID }}" \
-            --version "${{ github.ref_name }}" \
+            --version "$VERSION" \
             --sign "${{ secrets.DEVELOPER_ID_INSTALLER_NAME }}" \
-            "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+            "NotebookTerminalApp-$VERSION.pkg"
 
       - name: Verify Signature
         run: |
-          pkgutil --check-signature "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+          pkgutil --check-signature "NotebookTerminalApp-$VERSION.pkg"
 
       - name: Notarize .pkg installer
         run: |
@@ -72,7 +91,7 @@ jobs:
             --password "${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}" \
             --team-id "${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}"
 
-          output=$(xcrun notarytool submit "NotebookTerminalApp-${{ github.ref_name }}.pkg" --keychain-profile "notarytool-profile" --wait)
+          output=$(xcrun notarytool submit "NotebookTerminalApp-$VERSION.pkg" --keychain-profile "notarytool-profile" --wait)
           echo $output
 
           extracted_id=$(echo "$output" | awk '/status: Invalid/ {getline; if ($1 == "id:") print $2}')
@@ -83,12 +102,12 @@ jobs:
             exit 1
           else
             # Staple the notarization
-            xcrun stapler staple "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+            xcrun stapler staple "NotebookTerminalApp-$VERSION.pkg"
           fi
 
       - name: Verify Notarization
         run: |
-          spctl --assess -vv --type install "NotebookTerminalApp-${{ github.ref_name }}.pkg"
+          spctl --assess -vv --type install "NotebookTerminalApp-$VERSION.pkg"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -96,7 +115,7 @@ jobs:
           name: NotebookTerminalApp
           path: |
             .build/release/NotebookTerminalApp
-            NotebookTerminalApp-${{ github.ref_name }}.pkg
+            NotebookTerminalApp-$VERSION.pkg
 
   release:
     name: Create GitHub Release
@@ -117,6 +136,6 @@ jobs:
         with:
           files: |
             NotebookTerminalApp
-            NotebookTerminalApp-${{ github.ref_name }}.pkg
+            NotebookTerminalApp-*.pkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -141,7 +141,7 @@ TODO:
 
 - [x] Sintaxe basica, intermediaria e avançada
 - [ ] Empacotamento de modulos e utilização do pacote
-- [ ] Geração do binario via github actions
+- [x] Geração do binario via github actions
 - [ ] Sistema de logging
 - [x] Lista de metodos uteis para cada tipo do swift
 - [ ] Operações no Sistema Operacional do MACOS
