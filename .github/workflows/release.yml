@@ -123,6 +123,12 @@ jobs:
         run: |
           spctl --assess -vv --type install "NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg"
 
+      - name: Create New Tag
+        run: git tag -a ${{ steps.set_version.outputs.VERSION }} -m "Release ${{ steps.set_version.outputs.VERSION }}"
+
+      - name: Push New Tag
+        run: git push --tags
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -144,12 +150,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: NotebookTerminalApp
-
-      - name: Create New Tag
-        run: git tag -a ${{ needs.build.outputs.VERSION }} -m "Release ${{ needs.build.outputs.VERSION }}"
-
-      - name: Push New Tag
-        run: git push --tags
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
