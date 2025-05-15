@@ -14,6 +14,8 @@ jobs:
   build:
     name: Build NotebookTerminalApp
     runs-on: macos-latest
+    outputs:
+      VERSION: ${{ steps.set_version.outputs.VERSION }}
 
     steps:
       - name: Checkout code
@@ -28,16 +30,25 @@ jobs:
         id: set_version
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
           else
             # remove o prefixo 'refs/tags/' da ref para obter só 'v1.2.3'
             TAG_NAME=${GITHUB_REF#refs/tags/}
-            echo "VERSION=$TAG_NAME" >> $GITHUB_ENV
+            echo "VERSION=$TAG_NAME" >> $GITHUB_OUTPUT
           fi
 
       - name: Show version
         run: |
-          echo "Versão usada: $VERSION"
+          echo "Versão usada: ${{ steps.set_version.outputs.VERSION }}"
+
+      - name: Create New Tag
+        run: git tag -a ${{ steps.set_version.outputs.VERSION }} -m "Release ${{ steps.set_version.outputs.VERSION }}"
+
+      - name: Push New Tag
+        run: git push --tags
+
+      - name: Change version.txt
+        run: echo "${{ steps.set_version.outputs.VERSION }}" > version.txt
 
       - name: Import developer id installer certificate
         uses: apple-actions/import-codesign-certs@v1
@@ -66,9 +77,22 @@ jobs:
           swift build -c release
           ls -la .build/release/
 
-      - name: Sign all files
+      - name: Sign all required files
         run: |
-          sh codesign.sh "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" "${{ secrets.BUNDLE_ID }}"
+          codesign \
+            --force \
+            --options runtime \
+            --timestamp \
+            --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
+            .build/release/NotebookTerminalApp
+
+          # para a biblioteca
+          codesign \
+            --force \
+            --options runtime \
+            --timestamp \
+            --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
+            .build/release/libRealmSwift.dylib
 
       - name: Create .pkg installer
         run: |
@@ -76,13 +100,13 @@ jobs:
             --root ".build/release" \
             --install-location /usr/local/bin \
             --identifier "${{ secrets.BUNDLE_ID }}" \
-            --version "$VERSION" \
+            --version "${{ steps.set_version.outputs.VERSION }}" \
             --sign "${{ secrets.DEVELOPER_ID_INSTALLER_NAME }}" \
-            "NotebookTerminalApp-$VERSION.pkg"
+            "NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg"
 
       - name: Verify Signature
         run: |
-          pkgutil --check-signature "NotebookTerminalApp-$VERSION.pkg"
+          pkgutil --check-signature "NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg"
 
       - name: Notarize .pkg installer
         run: |
@@ -91,7 +115,7 @@ jobs:
             --password "${{ secrets.PROD_MACOS_NOTARIZATION_PWD }}" \
             --team-id "${{ secrets.PROD_MACOS_NOTARIZATION_TEAM_ID }}"
 
-          output=$(xcrun notarytool submit "NotebookTerminalApp-$VERSION.pkg" --keychain-profile "notarytool-profile" --wait)
+          output=$(xcrun notarytool submit "NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg" --keychain-profile "notarytool-profile" --wait)
           echo $output
 
           extracted_id=$(echo "$output" | awk '/status: Invalid/ {getline; if ($1 == "id:") print $2}')
@@ -102,12 +126,12 @@ jobs:
             exit 1
           else
             # Staple the notarization
-            xcrun stapler staple "NotebookTerminalApp-$VERSION.pkg"
+            xcrun stapler staple "NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg"
           fi
 
       - name: Verify Notarization
         run: |
-          spctl --assess -vv --type install "NotebookTerminalApp-$VERSION.pkg"
+          spctl --assess -vv --type install "NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -115,7 +139,7 @@ jobs:
           name: NotebookTerminalApp
           path: |
             .build/release/NotebookTerminalApp
-            NotebookTerminalApp-$VERSION.pkg
+            NotebookTerminalApp-${{ steps.set_version.outputs.VERSION }}.pkg
 
   release:
     name: Create GitHub Release
@@ -134,8 +158,11 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ needs.build.outputs.VERSION }}
+          draft: false
+          prerelease: false
           files: |
             NotebookTerminalApp
-            NotebookTerminalApp-*.pkg
+            NotebookTerminalApp-${{ needs.build.outputs.VERSION }}.pkg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
