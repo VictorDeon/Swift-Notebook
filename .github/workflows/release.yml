@@ -64,7 +64,7 @@ jobs:
       - name: Build the project
         run: |
           swift build -c release
-          ls -la .build/release
+          ls -la .build/release/
 
       - name: Sign all files
         run: |

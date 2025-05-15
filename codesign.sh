@@ -18,4 +18,4 @@ signFile() {
 }
 
 export -f signFile
-find .build/release -exec bash -c 'signFile "{}"' \;
+find .build/release/ -exec bash -c 'signFile "{}"' \;
