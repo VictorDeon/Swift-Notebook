@@ -82,14 +82,7 @@ jobs:
             --options runtime \
             --timestamp \
             --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
-            .build/release/NotebookTerminalApp
-
-          codesign \
-            --force \
-            --options runtime \
-            --timestamp \
-            --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
-            .build/release/libRealmSwift.dylib
+            pkgroot/usr/local/bin/NotebookTerminalApp
 
       - name: Create .pkg installer
         run: |
