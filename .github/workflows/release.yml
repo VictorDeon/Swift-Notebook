@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versão da ferramenta. Ex: v1.2.3"
+        required: true
 
 jobs:
   build:
