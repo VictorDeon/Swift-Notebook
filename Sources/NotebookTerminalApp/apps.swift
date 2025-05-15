@@ -30,16 +30,20 @@ class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
     }
 }
 
-enum LogLevel: String, CaseIterable, ExpressibleByArgument {
-    case debug, info, warning, error
-}
-
 struct CommonOptions: ParsableArguments {
     @Option(
         name: [.short, .customLong("log")],  // -l ou --log
-        help: "Nível de logging (debug, info, warning, error)"
+        help: "Nível de logging (debug, info, warning, error)",
+        transform: { log in
+            setenv("LOG_LEVEL", log, 1)
+            if let valor = ProcessInfo.processInfo.environment["LOG_LEVEL"] {
+                print("LOG_LEVEL = \(valor)")
+                return valor
+            }
+            return log
+          }
     )
-    var logLevel: LogLevel = .info
+    var logLevel: String = "info"
 
     @Option(
         name: [.short, .customLong("plist")],  // -p ou --plist
@@ -78,6 +82,7 @@ struct TerminalApp: AsyncParsableCommand {
             FunctionCommands.self,
             OptionalCommands.self,
             RandomCommands.self,
+            LoggingCommands.self,
             // Advanced
             CastingCommands.self,
             ClosuresCommands.self,

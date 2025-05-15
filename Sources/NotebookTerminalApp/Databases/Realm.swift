@@ -1,5 +1,4 @@
 // É uma soluçãp de banco de dados que pode substituir o SQLite ou o Core Data
-
 // Usado para armazenar dados que o user defaults não consegue como objetos, arrays de objetos e etc.
 // É criado um plist mais performatico que o user defaults.
 // Pode ser considerado um banco de dados mais simples NoSQL.

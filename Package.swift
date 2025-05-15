@@ -11,6 +11,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0"),
         .package(url: "https://github.com/groue/GRDB.swift.git", from: "7.5.0"),
         .package(url: "https://github.com/realm/realm-swift.git", .upToNextMajor(from: "20.0.2")),
+        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
     ],
     targets: [
         .executableTarget(
@@ -19,7 +20,8 @@ let package = Package(
                 .product(name: "Alamofire", package: "Alamofire"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "RealmSwift", package: "realm-swift")
+                .product(name: "RealmSwift", package: "realm-swift"),
+                .product(name: "Logging", package: "swift-log")
             ]
         )
     ]

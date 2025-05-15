@@ -22,6 +22,33 @@ $ .build/<debug|release>/<NomeDoSeuBinario>
 3. Modifique o scheme no editor para ao clicar em run executar o scheme que desejar.
 // Lib de parametros de terminal: https://github.com/apple/swift-argument-parser
 
+### Gerar documentação
+
+Para documentar o codigo utilize três barras `///` para documentação inline ou `/** */` para documentação
+de multiplas linhas. Normalmente são aplicadas em Protocols.
+
+Dentro das documentações temos algumas flags que ao preencher deixa a doc mais inteligente:
+
+```swift
+// MARK: Faz uma marcação no codigo que da para ver no breadcrumb do xcode.
+// TODO: Insira algo que ainda tem que ser feito.
+// FIXME: Insira algum bug que deve ser corrigido.
+
+/**
+  Vamos aplicar a documentação aqui de algum método.
+  - Parameters:
+    - title: Título do error.
+    - message: Mensagem do error.
+  - Returns: Void (não retorna nada)
+*/
+func presentErrorAlert(title: String, message: String) -> Void
+```
+
+Para gerar a documentação vai no xcode e clica em `Product/Build Documentation` e para acessa-lo
+vai em `Window/Developer Documentation`
+
+Para fazer comentarios normais é duas barras `//` ou `/* */` para comentario de multiplas linhas.
+
 ### Uso do CocoaPod
 
 Adicionando libs externas usando o Cocoapods
@@ -142,7 +169,7 @@ TODO:
 - [x] Sintaxe basica, intermediaria e avançada
 - [ ] Empacotamento de modulos e utilização do pacote
 - [x] Geração do binario via github actions
-- [ ] Sistema de logging
+- [x] Sistema de logging
 - [x] Lista de metodos uteis para cada tipo do swift
 - [ ] Operações no Sistema Operacional do MACOS
 - [ ] Manipulação de arquivos
