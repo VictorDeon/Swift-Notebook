@@ -167,22 +167,26 @@ Macos 10.15
 TODO:
 
 - [x] Sintaxe basica, intermediaria e avançada
-- [ ] Empacotamento de modulos e utilização do pacote
 - [x] Geração do binario via github actions
 - [x] Sistema de logging
 - [x] Lista de metodos uteis para cada tipo do swift
-- [ ] Operações no Sistema Operacional do MACOS
+- [ ] Operações no Sistema Operacional do MACOS*
 - [ ] Manipulação de arquivos
-	- [ ] JSON
-	- [ ] CSV
+	- [ ] JSON*
+	- [ ] CSV*
     - [ ] Excel
     - [ ] PDF
-	- [ ] PLIST
-    - [ ] XML
+	- [ ] PLIST*
+    - [ ] XML*
 - [x] Finalizar OO
-- [ ] Requisições HTTP
-- [ ] Datetime
-- [ ] Inputs e Outputs
+- [ ] Requisições HTTP*
+- [ ] Datetime*
+- [ ] Criptografia e Segurança*
+- [ ] Threads e Processos*
+- [ ] Assincronicidade igual ao python (Corotines)*
+- [ ] Regex*
+- [ ] SwiftUI*
+- [ ] Empacotamento de modulos e utilização do pacote*
 - [x] Execução por Terminal com Path Parameters
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
@@ -218,17 +222,13 @@ TODO:
     - [ ] Facade
     - [ ] Flyweight
     - [ ] Proxy
-- [ ] SwiftUI
 - [x] Banco de Dados
     - [x] UserDefaults: Armazena pequenos bites de dados em plists, normalmente usado em configurações
     - [x] Codable (NSCoder): Armazena pequenos objetos em plists
     - [x] Keychain: Armazena pequenos bites de dados de forma segura
     - [x] SQLite: Persiste grandes quantidades de dados em banco relacional SQL (FMDB)
     - [x] Realm: Solução de banco de dados (framework) mais rapida e facil de usar.
-- [ ] Assincronicidade igual ao python (Corotines)
-- [ ] Regex
 - [ ] Testes Automatizados
-- [ ] Threads e Processos
 - [ ] Libs da Apple
 - [ ] Estrutura de Dados (pacotes)
     - [ ] Pilha
@@ -269,6 +269,6 @@ TODO:
     - [ ] Cifra de Cesar
     - [ ] Simulated Annealing
 - [ ] Socket
-- [ ] Criptografia e Segurança
+- [ ] Inputs e Outputs
 - [ ] Machine Learning e Data Science
 - [ ] Matematica

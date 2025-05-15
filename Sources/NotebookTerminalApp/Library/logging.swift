@@ -75,7 +75,80 @@ struct LoggingCommands: AsyncParsableCommand {
     }
 }
 
-struct SimpleLogHandler: LogHandler {
+/// Um LogHandler que escreve cada mensagem no final de um arquivo
+struct FileLogHandler: LogHandler {
+    let label: String
+    var metadata: Logger.Metadata = [:]
+    var logLevel: Logger.Level = .debug
+    var appName: String = "myapp"
+    var version: String = readVersion()
+
+    private let lock = NSLock()
+    private let fileHandle: FileHandle
+    
+    private let dateFormatter: DateFormatter = {
+      let f = DateFormatter()
+      f.dateFormat = "YYY-MM-dd HH:mm:ss"
+      return f
+    }()
+
+    init(label: String) {
+        self.label = label
+
+        // caminho do arquivo de log
+        let path = "/tmp/\(appName).log"
+        let url = URL(fileURLWithPath: path)
+        let fm = FileManager.default
+
+        // cria o arquivo se não existir
+        if !fm.fileExists(atPath: path) {
+            fm.createFile(atPath: path, contents: nil, attributes: [
+                // ajuste permissões se necessário
+                FileAttributeKey.posixPermissions: 0o644
+            ])
+        }
+
+        // abre para escrever e posiciona no fim
+        do {
+            fileHandle = try FileHandle(forWritingTo: url)
+            fileHandle.seekToEndOfFile()
+        } catch {
+            fatalError("Não foi possível abrir o arquivo de log em \(path): \(error)")
+        }
+    }
+
+    subscript(metadataKey key: String) -> Logger.Metadata.Value? {
+        get { metadata[key] }
+        set { metadata[key] = newValue }
+    }
+
+    func log(
+        level: Logger.Level,
+        message: Logger.Message,
+        metadata: Logger.Metadata?,
+        source: String,
+        file: String,
+        function: String,
+        line: UInt
+    ) {
+        let timestamp = dateFormatter.string(from: Date())
+        var msg = "\(timestamp) [\(level)] \(version)"
+
+        if let trace = metadata!["trace"] {
+            msg += " trace=\(trace)"
+        }
+        
+        msg += ": \(message)\n"
+
+        guard let data = msg.data(using: .utf8) else { return }
+
+        lock.lock()
+        defer { lock.unlock() }
+        fileHandle.write(data)
+    }
+}
+
+struct ConsoleLogHandler: LogHandler {
     let label: String
     var metadata: Logger.Metadata = [:]
     var logLevel: Logger.Level = .debug
@@ -169,7 +242,9 @@ public final class LoggerSingleton {
         }()
 
         LoggingSystem.bootstrap { label in
-            return SimpleLogHandler(label: label, level: level)
+            let file = FileLogHandler(label: label)
+            let console = ConsoleLogHandler(label: label, level: level)
+            return MultiplexLogHandler([console, file])
         }
 
         self.logger = Logger(label: "tech.vksoftware.nts")

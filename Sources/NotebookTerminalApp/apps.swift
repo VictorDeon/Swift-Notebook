@@ -94,7 +94,6 @@ struct TerminalApp: AsyncParsableCommand {
             FunctionCommands.self,
             OptionalCommands.self,
             RandomCommands.self,
-            LoggingCommands.self,
             // Advanced
             CastingCommands.self,
             ClosuresCommands.self,
@@ -103,12 +102,14 @@ struct TerminalApp: AsyncParsableCommand {
             ComputedAttributesCommands.self,
             CicloDeReferenciaCommands.self,
             AssociationCommands.self,
+            SOCommands.self,
             // Design Patterns
             DelegateCommands.self,
             SingletonCommands.self,
             // Libraries
             RequestCommands.self,
             TimeCommands.self,
+            LoggingCommands.self,
             // Databases
             UserDefaultCommands.self,
             NSCoderCommands.self,
