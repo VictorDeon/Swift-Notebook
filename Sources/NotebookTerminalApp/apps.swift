@@ -1,6 +1,18 @@
 import ArgumentParser
 import SwiftUI
 
+func readVersion() -> String {
+  // Bundle.module só existe em SPM para targets com resources
+  guard let url = Bundle.module.url(forResource: "version", withExtension: "txt") else {
+    fatalError("version.txt não encontrado no bundle")
+  }
+  do {
+    return try String(contentsOf: url, encoding: .utf8)
+  } catch {
+    fatalError("Falha ao ler version.txt: \(error)")
+  }
+}
+
 class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
     // Cria a janela SwiftUI
     init(rootView: V, title: String, x: Int, y: Int, width: Int, height: Int) {
@@ -51,7 +63,7 @@ struct CommonOptions: ParsableArguments {
         completion: .file(extensions: [".plist"])
     )
     var plistPath: String?
-    
+
     @Flag(
         name: .shortAndLong,  // -s ou --simulate
         help: "Só mostra o que seria feito, sem executar"
@@ -66,7 +78,7 @@ struct TerminalApp: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "NotebookTerminalApp",
         abstract: "Ferramenta Toolbox: escolhe um executável e passa os parâmetros certos",
-        version: "0.1.0",
+        version: readVersion(),
         subcommands: [
             // Basic
             ArrayCommands.self,

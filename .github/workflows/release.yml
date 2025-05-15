@@ -45,7 +45,7 @@ jobs:
           echo "Versão usada: ${{ steps.set_version.outputs.VERSION }}"
 
       - name: Change version.txt
-        run: echo "${{ steps.set_version.outputs.VERSION }}" > version.txt
+        run: echo "${{ steps.set_version.outputs.VERSION }}" > Sources/NotebookTerminalApp/version.txt
 
       - name: Import developer id installer certificate
         uses: apple-actions/import-codesign-certs@v1

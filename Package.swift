@@ -22,6 +22,9 @@ let package = Package(
                 .product(name: "GRDB", package: "GRDB.swift"),
                 .product(name: "RealmSwift", package: "realm-swift"),
                 .product(name: "Logging", package: "swift-log")
+            ],
+            resources: [
+                .copy("version.txt")
             ]
         )
     ]

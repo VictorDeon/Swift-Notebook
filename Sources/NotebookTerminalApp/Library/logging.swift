@@ -79,6 +79,7 @@ struct SimpleLogHandler: LogHandler {
     let label: String
     var metadata: Logger.Metadata = [:]
     var logLevel: Logger.Level = .debug
+    var version: String = readVersion()
 
     private let dateFormatter: DateFormatter = {
       let f = DateFormatter()
@@ -106,10 +107,7 @@ struct SimpleLogHandler: LogHandler {
       line: UInt
     ) {
         let timestamp = dateFormatter.string(from: Date())
-        var msg = "\(timestamp) [\(level)]"
-        if let version = metadata!["version"] {
-            msg += " \(version)"
-        }
+        var msg = "\(timestamp) [\(level)] \(version)"
 
         if let trace = metadata!["trace"] {
             msg += " trace=\(trace)"
@@ -158,7 +156,6 @@ public final class LoggerSingleton {
     public static let shared = LoggerSingleton()
     private let logger: Logger
     private let jsonFormatter = JSONFormatter()
-    private let version = "vX.Y.Z"
 
     private init() {
         let lvlStr = ProcessInfo.processInfo.environment["LOG_LEVEL"] ?? "info"
@@ -175,12 +172,12 @@ public final class LoggerSingleton {
             return SimpleLogHandler(label: label, level: level)
         }
 
-        self.logger = Logger(label: "tech.rocketman.nts")
+        self.logger = Logger(label: "tech.vksoftware.nts")
     }
 
     // MARK: Métodos de logging
     public func debug(_ msg: String, trace: String?, json: [String: AnyEncodable]?) {
-        var metadata: [String: Logger.MetadataValue] = ["version": .string(version)]
+        var metadata: [String: Logger.MetadataValue] = [:]
         if let traceSafe = trace {
             metadata["trace"] = .string(traceSafe)
         }
@@ -202,7 +199,7 @@ public final class LoggerSingleton {
     }
 
     public func info(_ msg: String, trace: String?, json: [String: AnyEncodable]?) {
-        var metadata: [String: Logger.MetadataValue] = ["version": .string(version)]
+        var metadata: [String: Logger.MetadataValue] = [:]
         if let traceSafe = trace {
             metadata["trace"] = .string(traceSafe)
         }
@@ -224,7 +221,7 @@ public final class LoggerSingleton {
     }
 
     public func warning(_ msg: String, trace: String?, json: [String: AnyEncodable]?) {
-        var metadata: [String: Logger.MetadataValue] = ["version": .string(version)]
+        var metadata: [String: Logger.MetadataValue] = [:]
         if let traceSafe = trace {
             metadata["trace"] = .string(traceSafe)
         }
@@ -246,7 +243,7 @@ public final class LoggerSingleton {
     }
 
     public func error(_ error: Error, trace: String?) {
-        var metadata: [String: Logger.MetadataValue] = ["version": .string(version)]
+        var metadata: [String: Logger.MetadataValue] = [:]
         if let traceSafe = trace {
             metadata["trace"] = .string(traceSafe)
         }
