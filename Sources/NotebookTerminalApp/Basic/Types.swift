@@ -87,22 +87,22 @@ struct IntType {
 /// Tipo Float e Double
 struct FloatType {
     static func run() {
-        let f:  Float  = 3.7
-        let d:  Double = 9.81
+        let value1:  Float  = 3.7
+        let value2:  Double = 9.81
 
         // rounded() / rounded(.down)
-        print(f.rounded())             // → 4.0
-        print(d.rounded(.down))        // → 9.0
+        print(value1.rounded())             // → 4.0
+        print(value2.rounded(.down))        // → 9.0
 
         // isFinite / isInfinite / isNormal
-        print(f.isFinite)              // → true
-        print(d.isInfinite)            // → false
-        print(d.isNormal)              // → true
+        print(value1.isFinite)              // → true
+        print(value2.isInfinite)            // → false
+        print(value2.isNormal)              // → true
 
         // Float.random(in:) / Double.random(in:)
-        let rf = Float.random(in: 0..<1)
-        let rd = Double.random(in: 0..<1)
-        print(rf, rd)
+        let random1 = Float.random(in: 0..<1)
+        let random2 = Double.random(in: 0..<1)
+        print(random1, random2)
         // → dois valores entre 0.0 e 1.0
     }
 }
@@ -116,9 +116,9 @@ struct BoolType {
         print(!flag)   // → false
 
         // && (and) / || (or)
-        let a = true, b = false
-        print(a && b)  // → false
-        print(a || b)  // → true
+        let bool1 = true, bool2 = false
+        print(bool1 && bool2)  // → false
+        print(bool1 || bool2)  // → true
 
         // toggle()
         flag.toggle()
@@ -244,17 +244,17 @@ struct AnyType {
         qualquer = 99
 
         // downcast com as? / as!
-        if let s = qualquer as? String {
-            print("String:", s)
-        } else if let n = qualquer as? Int {
-            print("Int:", n)            // 99
+        if let anyString = qualquer as? String {
+            print("String:", anyString)
+        } else if let anyInt = qualquer as? Int {
+            print("Int:", anyInt)            // 99
         }
 
         // AnyObject (classes)
-        class Foo { let x = 5 }
+        class Foo { let myValue = 5 }
         let arr: [AnyObject] = [Foo()]
-        if let f = arr.first as? Foo {
-            print(f.x)  // → 5
+        if let obj = arr.first as? Foo {
+            print(obj.myValue)  // → 5
         }
     }
 }

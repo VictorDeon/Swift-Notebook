@@ -3,7 +3,8 @@
  Doc: https://github.com/Alamofire/Alamofire/blob/master/Documentation/Usage.md#making-requests
  Doc: https://github.com/Alamofire/Alamofire/blob/master/Documentation/AdvancedUsage.md#security
  
- Para deixar suas requisições o mais seguras possível com Alamofire, o segredo é usar pinning de certificado ou de chave pública, em vez de confiar só no TLS padrão. Veja como fazer isso de forma bem simples:
+ Para deixar suas requisições o mais seguras possível com Alamofire, o segredo é usar pinning de certificado
+ ou de chave pública, em vez de confiar só no TLS padrão. Veja como fazer isso de forma bem simples:
  
  1. Prepare seu bundle de certificados
  * Exporte o(s) certificado(s) .pem ou .cer do seu servidor (normalmente o certificado raiz ou intermediário).
@@ -11,7 +12,8 @@
  
  2. Escolha o tipo de “pinning”
  * Certificate pinning (PinnedCertificatesTrustEvaluator): compara o certificado completo.
- * Public key pinning (PublicKeysTrustEvaluator): compara só a chave pública (mais flexível se o servidor renovar o certificado).
+ * Public key pinning (PublicKeysTrustEvaluator): compara só a chave pública (mais flexível se o
+ servidor renovar o certificado).
  
  3. Configure o ServerTrustManager
  ```swift
@@ -35,14 +37,17 @@
  Como funciona:
  Ao chamar session.request(...), o Alamofire vai:
  1. Validar a cadeia TLS normal (URLSession)
- 2. Verificar se o certificado recebido bate com um dos que você agrupou no bundle (ou se a chave pública bate, no caso do PublicKeysTrustEvaluator)
+ 2. Verificar se o certificado recebido bate com um dos que você agrupou no bundle (ou se a chave
+ pública bate, no caso do PublicKeysTrustEvaluator)
  3. Garantir que o “host” do desafio bate com o certificado
  
  Se algum desses passos falhar, a requisição é abortada — protegendo você de MITM.
  
  Trate casos especiais:
- 1. Revogação de certificado: adicione RevocationTrustEvaluator() num CompositeTrustEvaluator se precisar checar CRL/OCSP.
- 2. Wildcard ou lógica customizada: crie uma subclasse de ServerTrustManager e sobrescreva serverTrustEvaluator(forHost:).
+ 1. Revogação de certificado: adicione RevocationTrustEvaluator() num CompositeTrustEvaluator
+ se precisar checar CRL/OCSP.
+ 2. Wildcard ou lógica customizada: crie uma subclasse de ServerTrustManager e sobrescreva
+ serverTrustEvaluator(forHost:).
  3. Debug/local com self-signed: no seu Info.plist, permita local networking:
     ```plist
      <key>NSAppTransportSecurity</key>
@@ -51,7 +56,8 @@
        <true/>
      </dict>
     ```
- 5. Nunca use no production: O DisabledTrustEvaluator só serve para DEBUG: ele ignora toda validação e deixa seu app vulnerável.
+ 5. Nunca use no production: O DisabledTrustEvaluator só serve para DEBUG: ele ignora toda validação e deixa
+ seu app vulnerável.
  
  Resumo rápido:
  1. Inclua seus .cer/.pem no bundle
@@ -59,7 +65,8 @@
  3. Monte um ServerTrustManager e injete numa Session
  4. Faça suas requisições por session.request(...)
 
- Pronto! Agora o Alamofire só aceitará certificados (ou chaves) que você mesmo aprovou, protegendo suas chamadas de eventuais ataques MITM.
+ Pronto! Agora o Alamofire só aceitará certificados (ou chaves) que você mesmo aprovou, protegendo suas chamadas de
+ eventuais ataques MITM.
 */
 
 import Alamofire
@@ -90,7 +97,7 @@ struct RequestCommands: ParsableCommand {
             _ = await MakeRequest.upload()
             semaphore.signal()
         }
-        
+
         // Bloqueia até signal()
         semaphore.wait()
         print("Finalizando requisição")
@@ -117,10 +124,11 @@ struct AuthModel: Decodable {
 
 struct MakeRequest {
     /// .validate valida se o status code esta entre 200 e 300 e se o accept type ta correto.
-    /// .responseDecodable(of: ModelDecodable.self) retorna os dados formatados de acordo com a modelo que implementa o protocolo Decodable
+    /// .responseDecodable(of: ModelDecodable.self) retorna os dados formatados de acordo com a modelo
+    /// que implementa o protocolo Decodable
     static func get() async -> Int? {
         let result = await AF.request("https://httpbin.org/get")
-            .cURLDescription { d in print(d) }
+            .cURLDescription { description in print(description) }
             .validate()
             .serializingDecodable(DecodableModel.self)
             .response
@@ -128,16 +136,16 @@ struct MakeRequest {
         print(result.metrics?.taskInterval ?? 0)
         let url = result.value?.url ?? ""
         debugPrint(url)
-        
+
         return result.response?.statusCode
     }
-    
-    static func batch() async -> Void {
+
+    static func batch() async {
         let session = Session.default
         async let first = session.request("https://httpbin.org/get").serializingDecodable(DecodableModel.self).response
         async let second = session.request("https://httpbin.org/get").serializingString().response
         async let third = session.request("https://httpbin.org/get").serializingData().response
-        
+
         print("Fazendo as requisições em paralelo...")
         let responses = await (first, second, third)
         print("As 3 requisições finalizaram...")
@@ -145,13 +153,13 @@ struct MakeRequest {
         print(responses.1.metrics?.taskInterval ?? 0)
         print(responses.2.metrics?.taskInterval ?? 0)
     }
-    
+
     static func post(login: Login) async -> Int? {
         let headers: HTTPHeaders = [
             "Authorization": "Basic VXNlcm5hbWU6UGFzc3dvcmQ=",
             "Accept": "application/json"
         ]
-        
+
         let result = await AF.request(
             "https://httpbin.org/post",
             method: .post,
@@ -166,16 +174,16 @@ struct MakeRequest {
         let data = result.value?.json ?? [:]
         debugPrint(data)
         print(data["email"]!)
-        
+
         return result.response?.statusCode
     }
-    
+
     static func put(login: Login) async -> Int? {
         let headers: HTTPHeaders = [
             "Authorization": "Basic VXNlcm5hbWU6UGFzc3dvcmQ=",
             "Accept": "application/json"
         ]
-        
+
         let result = await AF.request(
             "https://httpbin.org/put",
             method: .put,
@@ -183,20 +191,20 @@ struct MakeRequest {
             encoder: JSONParameterEncoder.default,
             headers: headers
         ).validate().serializingDecodable(DecodableModel.self).response
-        
+
         let data = result.value?.json ?? [:]
         debugPrint(data)
         print(data["email"]!)
-        
+
         return result.response?.statusCode
     }
-    
+
     static func delete(userId: Int) async -> Int? {
         let headers: HTTPHeaders = [
             .authorization(username: "Username", password: "Password"),
             .accept("application/json")
         ]
-        
+
         let result = await AF.request(
             "https://httpbin.org/delete",
             method: .delete,
@@ -205,29 +213,29 @@ struct MakeRequest {
 
         let data = result.value?.json ?? [:]
         debugPrint(data)
-        
+
         return result.response?.statusCode
     }
-    
+
     static func auth() async -> Int? {
         let user = "user"
         let password = "password"
-        
+
         let credential = URLCredential(user: user, password: password, persistence: .forSession)
 
         let result = await AF.request("https://httpbin.org/basic-auth/\(user)/\(password)")
             .authenticate(with: credential)
-            //.authenticate(username: user, password: password)
+            // .authenticate(username: user, password: password)
             .validate().serializingDecodable(AuthModel.self).response
-        
+
         let authenticated = result.value?.authenticated ?? false
         let loggedUser = result.value?.user ?? ""
         debugPrint(authenticated)
         print(loggedUser)
-        
+
         return result.response?.statusCode
     }
-    
+
     static func download() async -> Int? {
         let destination: DownloadRequest.Destination = { _, _ in
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -247,7 +255,7 @@ struct MakeRequest {
         print(response.fileURL!)
         return response.response?.statusCode
     }
-    
+
     static func upload() async -> Int? {
         guard let fileURL = Bundle.module.url(forResource: "version", withExtension: "txt") else { return 404 }
 
@@ -262,5 +270,3 @@ struct MakeRequest {
         return result.response?.statusCode
     }
 }
-
-

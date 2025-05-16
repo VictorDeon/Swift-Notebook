@@ -85,11 +85,11 @@ struct FileLogHandler: LogHandler {
 
     private let lock = NSLock()
     private let fileHandle: FileHandle
-    
+
     private let dateFormatter: DateFormatter = {
-      let f = DateFormatter()
-      f.dateFormat = "YYY-MM-dd HH:mm:ss"
-      return f
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYY-MM-dd HH:mm:ss"
+        return formatter
     }()
 
     init(label: String) {
@@ -98,11 +98,11 @@ struct FileLogHandler: LogHandler {
         // caminho do arquivo de log
         let path = "/tmp/\(appName).log"
         let url = URL(fileURLWithPath: path)
-        let fm = FileManager.default
+        let fileManager = FileManager.default
 
         // cria o arquivo se não existir
-        if !fm.fileExists(atPath: path) {
-            fm.createFile(atPath: path, contents: nil, attributes: [
+        if !fileManager.fileExists(atPath: path) {
+            fileManager.createFile(atPath: path, contents: nil, attributes: [
                 // ajuste permissões se necessário
                 FileAttributeKey.posixPermissions: 0o644
             ])
@@ -122,6 +122,7 @@ struct FileLogHandler: LogHandler {
         set { metadata[key] = newValue }
     }
 
+    // swiftlint:disable:next function_parameter_count
     func log(
         level: Logger.Level,
         message: Logger.Message,
@@ -137,7 +138,7 @@ struct FileLogHandler: LogHandler {
         if let trace = metadata!["trace"] {
             msg += " trace=\(trace)"
         }
-        
+
         msg += ": \(message)\n"
 
         guard let data = msg.data(using: .utf8) else { return }
@@ -155,9 +156,9 @@ struct ConsoleLogHandler: LogHandler {
     var version: String = readVersion()
 
     private let dateFormatter: DateFormatter = {
-      let f = DateFormatter()
-      f.dateFormat = "YYY-MM-dd HH:mm:ss"
-      return f
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YYY-MM-dd HH:mm:ss"
+        return formatter
     }()
 
     init(label: String, level: Logger.Level) {
@@ -170,6 +171,7 @@ struct ConsoleLogHandler: LogHandler {
         set { metadata[key] = newValue }
     }
 
+    // swiftlint:disable:next function_parameter_count
     func log(
       level: Logger.Level,
       message: Logger.Message,
@@ -185,7 +187,7 @@ struct ConsoleLogHandler: LogHandler {
         if let trace = metadata!["trace"] {
             msg += " trace=\(trace)"
         }
-        
+
         print(msg + ": \(message)")
     }
 }
@@ -234,10 +236,10 @@ public final class LoggerSingleton {
         let lvlStr = ProcessInfo.processInfo.environment["LOG_LEVEL"] ?? "info"
         let level: Logger.Level = {
             switch lvlStr.uppercased() {
-                case "INFO":     return .info
-                case "WARNING":  return .warning
-                case "ERROR":    return .error
-                default:         return .debug
+            case "INFO":     return .info
+            case "WARNING":  return .warning
+            case "ERROR":    return .error
+            default:         return .debug
             }
         }()
 
@@ -264,11 +266,11 @@ public final class LoggerSingleton {
         }
         logger.debug("\(msg)", metadata: metadata)
     }
-    
+
     public func debug(_ msg: String, trace: String) {
         self.debug(msg, trace: trace, json: nil)
     }
-    
+
     public func debug(_ msg: String) {
         self.debug(msg, trace: nil, json: nil)
     }
@@ -286,7 +288,7 @@ public final class LoggerSingleton {
         }
         logger.info("\(msg)", metadata: metadata)
     }
-    
+
     public func info(_ msg: String, trace: String) {
         self.info(msg, trace: trace, json: nil)
     }

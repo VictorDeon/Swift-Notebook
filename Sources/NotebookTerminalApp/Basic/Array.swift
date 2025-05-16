@@ -17,10 +17,10 @@ struct ArrayCommands: ParsableCommand {
         parsing: .upToNextOption,
         help: "Insira um array de inteiros",
         transform: { str in
-          guard let i = Int(str) else {
+          guard let intValue = Int(str) else {
             throw ValidationError("‘\(str)’ não é um inteiro válido")
           }
-          return i
+          return intValue
         }
     )
     var array: [Int] = [1, 2, 3, 4, 5]
@@ -42,7 +42,7 @@ struct SintaxeDeArray {
 struct PropriedadesBasicas {
     static func run() {
         let nomes: [String] = ["Alice", "Bob", "Carol"]
-        
+
         // Número de elementos
         print(nomes.count)          // 3
         // true se vazio, caso contrário false
@@ -78,7 +78,7 @@ struct Mutacoes {
         // Adicionar
         letras.append("d")
         print(letras)                   // ["a","b","c","d"]
-        letras += ["e","f"]
+        letras += ["e", "f"]
         print(letras)                   // ["a","b","c","d","e","f"]
 
         // Inserir em posição
@@ -98,7 +98,7 @@ struct Mutacoes {
         // Substituir
         letras[1] = "x"             // troca no índice 1
         print(letras)               // ["a","x","e"]
-        letras[0...1] = ["u","v"]   // substitui intervalo
+        letras[0...1] = ["u", "v"]   // substitui intervalo
         print(letras)               // ["u","v","e"]
     }
 }
@@ -125,10 +125,10 @@ struct TransformacoesFuncionais {
         print(inteiros)                         // [10, 30]
 
         // Achata coleções de coleções (Achatar matriz)
-        let matriz = [[1,2], [3,4], [5]]
+        let matriz = [[1, 2], [3, 4], [5]]
         let plano = matriz.flatMap { $0 }
         print(plano)                            // [1,2,3,4,5]
-        
+
         // Itera sem retornar array
         nums.forEach { valor in
             print(valor)
@@ -138,10 +138,10 @@ struct TransformacoesFuncionais {
         // 3
         // 4
         // 5
-        
-        var unsortedValues = [3,1,2]
+
+        var unsortedValues = [3, 1, 2]
         // Ordena uma copia da variavel e retorna ela
-        let orderedValues = [3,1,2].sorted()
+        let orderedValues = [3, 1, 2].sorted()
         print(unsortedValues)                   // [3, 1, 2]
         print(orderedValues)                    // [1, 2, 3]
         // Ordena valores na propria variavel
@@ -193,7 +193,7 @@ struct OrdenacaoEmbaralhamento {
 
 struct FatiamentoFragmentos {
     static func run() {
-        let letras = ["a","b","c","d","e"]
+        let letras = ["a", "b", "c", "d", "e"]
 
         // Prefixos e Sufixos
         print(letras.prefix(3))     // ["a","b","c"]
@@ -213,12 +213,12 @@ struct FatiamentoFragmentos {
 
 struct CombinacaoEnumeracao {
     static func run() {
-        let a = [1,2,3]
-        let b = ["x","y","z","k"]
+        let array1 = [1, 2, 3]
+        let array2 = ["x", "y", "z", "k"]
 
         // Enumerar com índice
-        for (i, v) in b.enumerated() {
-            print(i, v)
+        for (value1, value2) in array2.enumerated() {
+            print(value1, value2)
         }
         // 0 x
         // 1 y
@@ -226,8 +226,8 @@ struct CombinacaoEnumeracao {
         // 3 k
 
         // Zip de duas coleções
-        for (x, y) in zip(a, b) {
-            print("\(x): \(y)")
+        for (value1, value2) in zip(array1, array2) {
+            print("\(value1): \(value2)")
         }
         // 1: x
         // 2: y
@@ -242,7 +242,7 @@ struct CombinacaoEnumeracao {
 
 struct ArraysMultidimensionais {
     static func run() {
-        let matriz2D: [[Int]] = [[1,2,3], [4,5,6]]
+        let matriz2D: [[Int]] = [[1, 2, 3], [4, 5, 6]]
         print(matriz2D[1][2])   // 6
 
         // Achatar 2D para 1D
@@ -254,24 +254,24 @@ struct ArraysMultidimensionais {
 struct OutrasUtilidades {
     static func run() {
         // Trocar dois elementos
-        var mix = [10,20,30]
+        var mix = [10, 20, 30]
         mix.swapAt(0, 2)
         print(mix)          // [30,20,10]
 
         // Remover duplicados (usando Set)
-        let repetidos = [1,2,2,3,3,3]
+        let repetidos = [1, 2, 2, 3, 3, 3]
         let unicos = Array(Set(repetidos))  // ordem não garantida
         print(unicos)   // [1,2,3]
 
         // Partition: agrupa conforme predicado (iOS 14+)
-        var part = [1,2,3,4]
+        var part = [1, 2, 3, 4]
         let pivot = part.partition(by: { $0.isMultiple(of: 2) })
         print("Pivo: \(pivot)")     // 2
         print(part[0..<pivot])      // impares [1, 3]
         print(part[pivot...])       // pares [2, 4]
 
         // Pop last (retira e retorna opcional)
-        var pilha = [1,2,3]
+        var pilha = [1, 2, 3]
         let top = pilha.popLast()
         print(top!)     // 3
         print(pilha)    // [1,2]
@@ -280,7 +280,7 @@ struct OutrasUtilidades {
 
 struct ArrayRunner {
     var array: [Int] = []
-    
+
     func execute() {
         print("→ Sintaxe Basica de Arrays:")
         SintaxeDeArray.run(array: array)
@@ -306,5 +306,3 @@ struct ArrayRunner {
         OutrasUtilidades.run()
     }
 }
-
-

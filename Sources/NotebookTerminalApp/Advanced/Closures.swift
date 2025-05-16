@@ -11,6 +11,7 @@
     3. Evite lógica pesada dentro de closures — extraia em funções nomeadas se ficar extenso.
     4. Atenção à captura de valores: para closures que vão viver além do escopo atual (por exemplo, stored properties), considere [weak self] ou [unowned self] para evitar ciclos de referência.
 */
+// swiftlint:disable all
 
 import AppKit
 import ArgumentParser

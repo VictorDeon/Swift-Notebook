@@ -31,7 +31,8 @@ struct RegexCommands: ParsableCommand {
 }
 
 /// Literal: sequência de caracteres que devem ser encontrados “ao pé da letra”.
-/// Metacaracteres: caracteres com significado especial, ex.: . (qualquer caractere), * (0 ou mais), + (1 ou mais), ? (0 ou 1), [] (conjunto), () (grupo), | (ou).
+/// Metacaracteres: caracteres com significado especial, ex.: . (qualquer caractere), * (0 ou mais),
+/// + (1 ou mais), ? (0 ou 1), [] (conjunto), () (grupo), | (ou).
 /// Escapando: para usar um metacaractere como literal, preceda com \. Em strings Swift, precisa dobrar a barra: "\\".
 /// Desde versões mais antigas de Swift (e do Foundation), você usa NSRegularExpression:
 /// Métodos úteis:
@@ -43,15 +44,15 @@ struct ConceitosBasicosRegex {
     static func run() {
         let pattern = "\\b\\w+@\\w+\\.\\w{2,}\\b"
         // \\b: boundary, \\w+: palavra, @, domínio, .tld de 2+ caracteres
-        let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
 
         let text = "Contato: joao@exemplo.com ou maria@dominio.org"
         let range = NSRange(text.startIndex..<text.endIndex, in: text)
 
         // Encontrar todas as ocorrências
-        let matches = regex.matches(in: text, options: [], range: range)
-        for m in matches {
-            if let range = Range(m.range, in: text) {
+        let matches = regex!.matches(in: text, options: [], range: range)
+        for match in matches {
+            if let range = Range(match.range, in: text) {
                 print("Email encontrado: \(text[range])")
                 // Email encontrado: joao@exemplo.com
                 // Email encontrado: maria@dominio.org
@@ -67,18 +68,18 @@ struct CapturarGrupos {
     static func run() {
         let pattern = "(\\d{2})/(\\d{2})/(\\d{4})"
         // Captura dia, mês e ano
-        let regex = try! NSRegularExpression(pattern: pattern)
+        let regex = try? NSRegularExpression(pattern: pattern)
         let text = "Data: 16/05/2025"
         let nsrange = NSRange(text.startIndex..., in: text)
 
-        if let match = regex.firstMatch(in: text, options: [], range: nsrange) {
+        if let match = regex!.firstMatch(in: text, options: [], range: nsrange) {
             let dayRange  = match.range(at: 1)
             let monthRange = match.range(at: 2)
             let yearRange = match.range(at: 3)
-            if let d = Range(dayRange, in: text),
-               let m = Range(monthRange, in: text),
-               let y = Range(yearRange, in: text) {
-                print("Dia: \(text[d]), Mês: \(text[m]), Ano: \(text[y])")
+            if let day = Range(dayRange, in: text),
+               let month = Range(monthRange, in: text),
+               let year = Range(yearRange, in: text) {
+                print("Dia: \(text[day]), Mês: \(text[month]), Ano: \(text[year])")
                 // Dia: 16, Mês: 05, Ano: 2025
             }
         }
@@ -99,29 +100,29 @@ struct RegexNativo {
             print("Encontrado: \(String(match.output))")
             // Encontrado: user@swift.org
         }
-        
+
         let dateRegex = /(?<day>\d{2})\/(?<month>\d{2})\/(?<year>\d{4})/
         let input = "Hoje é 16/05/2025."
 
-        if let m = input.firstMatch(of: dateRegex) {
-            print("Dia:", m.output.day)     // Dia: 16
-            print("Mês:", m.output.month)   // Mês: 05
-            print("Ano:", m.output.year)    // Ano: 2025
+        if let match = input.firstMatch(of: dateRegex) {
+            print("Dia:", match.output.day)     // Dia: 16
+            print("Mês:", match.output.month)   // Mês: 05
+            print("Ano:", match.output.year)    // Ano: 2025
         }
-        
+
         let censored = input.replacing(dateRegex, with: "_DATA_")
         print(censored) // Hoje é _DATA_.
-        
+
         // Validação simples de telefone (formato “(XX) XXXXX-XXXX”)
         let phoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/
         let valid = try? phoneRegex.wholeMatch(in: "(11) 98765-4321") != nil
         print(valid!) // true
-        
+
         // Dividir texto por delimitadores múltiplos
         let delimiters = /[,\s;]+/  // vírgula, espaço ou ponto-e-vírgula
         let parts = "maçã, banana;laranja  pera".split(separator: delimiters)
         print(parts) // ["maçã", "banana", "laranja", "pera"]
-        
+
         // Extração de todas as hashtags de um comentário
         let hashRegex = /#\w+/
         let comment = "Aprendendo #Swift e #Regex em #2025!"

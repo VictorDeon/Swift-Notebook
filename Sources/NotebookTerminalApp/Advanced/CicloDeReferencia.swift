@@ -80,11 +80,11 @@ class PessoaSafe {
         // Captura fraca: a closure não "segura" o self com força
         tarefa = { [weak self] in
             // 'self' vira opcional: pode ser nil se o objeto já tiver sido liberado
-            guard let s = self else { return }
-            print("\(s.nome) está executando a tarefa")
+            guard let pessoa = self else { return }
+            print("\(pessoa.nome) está executando a tarefa")
         }
     }
-    
+
     deinit {
         print("PessoaSafe \(nome) foi desalocada.")
     }

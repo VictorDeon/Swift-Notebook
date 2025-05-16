@@ -12,7 +12,7 @@ struct SQLiteCommands: AsyncParsableCommand {
 
     @OptionGroup var common: CommonOptions
 
-    mutating func run() async throws -> Void {
+    mutating func run() async throws {
         await MainActor.run {
             sqliteRunner()
         }
@@ -66,147 +66,153 @@ class DatabaseManager {
     private init() {
         print("Executado somente uma unica vez.")
         // Caminho do SQLite na pasta Documents
-        let fm = FileManager.default
-        let folderURL = try! fm.url(
+        let fileManager = FileManager.default
+        let folderURL = try? fileManager.url(
             for: .applicationSupportDirectory,
             in: .userDomainMask,
             appropriateFor: nil,
             create: true
         )
-        let dbURL = folderURL.appendingPathComponent("NotebookTerminalApp/app.sqlite")
+        let dbURL = folderURL!.appendingPathComponent("NotebookTerminalApp/app.sqlite")
         print("DB URL: \(dbURL)")
-        try! fm.createDirectory(at: folderURL, withIntermediateDirectories: true)
-        
+        try? fileManager.createDirectory(at: folderURL!, withIntermediateDirectories: true)
+
         // Open or create the database
+        // swiftlint:disable:next force_try
         dbQueue = try! DatabaseQueue(path: dbURL.path)
-        
+
         // Database migrations
         var migrator = DatabaseMigrator()
-        migrator.registerMigration("createTables") { db in
+        migrator.registerMigration("createTables") { database in
             // Settings table
-            try db.create(table: "settings") { t in
-                t.column("id", .text).primaryKey()
-                t.column("volume", .integer).notNull().defaults(to: 0)
-                t.column("lang", .text)
+            try database.create(table: "settings") { table in
+                table.column("id", .text).primaryKey()
+                table.column("volume", .integer).notNull().defaults(to: 0)
+                table.column("lang", .text)
             }
             // Users table
-            try db.create(table: "users") { t in
-                t.column("id", .text).primaryKey()
-                t.column("name", .text).notNull()
-                t.column("document", .text).notNull()
-                t.column("settingsId", .text).references("settings", onDelete: .setNull)
+            try database.create(table: "users") { table in
+                table.column("id", .text).primaryKey()
+                table.column("name", .text).notNull()
+                table.column("document", .text).notNull()
+                table.column("settingsId", .text).references("settings", onDelete: .setNull)
             }
             // Vehicles table
-            try db.create(table: "vehicles") { t in
-                t.column("id", .text).primaryKey()
-                t.column("licensePlate", .text).notNull()
-                t.column("model", .text).notNull()
-                t.column("manufacture", .text).notNull()
-                t.column("year", .integer).notNull()
-                t.column("ownerId", .text).notNull().indexed().references("users", onDelete: .cascade)
+            try database.create(table: "vehicles") { table in
+                table.column("id", .text).primaryKey()
+                table.column("licensePlate", .text).notNull()
+                table.column("model", .text).notNull()
+                table.column("manufacture", .text).notNull()
+                table.column("year", .integer).notNull()
+                table.column("ownerId", .text).notNull().indexed().references("users", onDelete: .cascade)
             }
             // Groups table
-            try db.create(table: "groups") { t in
-                t.column("id", .text).primaryKey()
-                t.column("name", .text).notNull()
-                t.column("descriptions", .text)
+            try database.create(table: "groups") { table in
+                table.column("id", .text).primaryKey()
+                table.column("name", .text).notNull()
+                table.column("descriptions", .text)
             }
             // Junction table for many-to-many User-Group
-            try db.create(table: "user_group") { t in
-                t.column("userId", .text).notNull().references("users", onDelete: .cascade)
-                t.column("groupId", .text).notNull().references("groups", onDelete: .cascade)
-                t.primaryKey(["userId", "groupId"])
+            try database.create(table: "user_group") { table in
+                table.column("userId", .text).notNull().references("users", onDelete: .cascade)
+                table.column("groupId", .text).notNull().references("groups", onDelete: .cascade)
+                table.primaryKey(["userId", "groupId"])
             }
         }
-        try! migrator.migrate(dbQueue)
+        try? migrator.migrate(dbQueue)
     }
 }
 
-typealias DB = DatabaseManager
+typealias DATABASE = DatabaseManager
 
 @MainActor
 class SettingsRepository {
-    let db = DB.shared.dbQueue
+    let dbQueue = DATABASE.shared.dbQueue
 
     @discardableResult
     func add(volume: Int?, lang: String?) throws -> QLSettings {
         var settings = QLSettings()
         settings.volume = volume ?? 0
         settings.lang = lang
-        try db.write { db in
-            try settings.insert(db)
+        try dbQueue.write { database in
+            try settings.insert(database)
         }
         return settings
     }
 
     func update(_ settings: inout QLSettings, volume: Int?, lang: String?) throws {
-        try db.write { db in
+        try dbQueue.write { database in
             settings.volume = volume ?? settings.volume
             settings.lang = lang ?? settings.lang
-            try settings.update(db)
+            try settings.update(database)
         }
     }
 
     func delete(_ settings: QLSettings) throws -> Bool {
-        return try db.write { db in
-            try settings.delete(db)
+        return try dbQueue.write { database in
+            try settings.delete(database)
         }
     }
 }
 
 @MainActor
 class UserRepository {
-    let db = DB.shared.dbQueue
+    let dbQueue = DATABASE.shared.dbQueue
 
     func add(name: String, document: String, settingsId: String? = nil) throws -> QLUser {
         let user = QLUser(name: name, document: document, settingsId: settingsId)
-        try db.write { db in
-            try user.insert(db)
+        try dbQueue.write { database in
+            try user.insert(database)
         }
         return user
     }
 
     func all() throws -> [QLUser] {
-        try db.read { db in
-            try QLUser.fetchAll(db)
+        try dbQueue.read { database in
+            try QLUser.fetchAll(database)
         }
     }
 
     func get(by id: String) throws -> QLUser? {
-        try db.read { db in
-            try QLUser.fetchOne(db, key: id)
+        try dbQueue.read { database in
+            try QLUser.fetchOne(database, key: id)
         }
     }
 
     func fetch(name: String) throws -> [QLUser] {
-        try db.read { db in
+        try dbQueue.read { database in
             try QLUser
                 .filter(sql: "name LIKE '%' || ? || '%'", arguments: [name])
                 .order(Column("name"))
-                .fetchAll(db)
+                .fetchAll(database)
         }
     }
 
     func update(_ user: inout QLUser, name: String? = nil, document: String? = nil) throws {
-        try db.write { db in
-            if let n = name { user.name = n }
-            if let d = document { user.document = d }
-            try user.update(db)
+        try dbQueue.write { database in
+            if let newName = name { user.name = newName }
+            if let newDoc = document { user.document = newDoc }
+            try user.update(database)
         }
     }
 
     func delete(_ user: QLUser) throws -> Bool {
-        return try db.write { db in
-            try user.delete(db)
+        return try dbQueue.write { database in
+            try user.delete(database)
         }
     }
 }
 
 @MainActor
 class VehicleRepository {
-    let db = DB.shared.dbQueue
+    let dbQueue = DATABASE.shared.dbQueue
 
-    func add(for user: QLUser, licensePlate: String, model: String, manufacture: String, year: Int) throws -> QLVehicle {
+    func add(
+        for user: QLUser,
+        licensePlate: String,
+        model: String,
+        manufacture: String,
+        year: Int) throws -> QLVehicle {
         let vehicle = QLVehicle(
             licensePlate: licensePlate,
             model: model,
@@ -214,89 +220,94 @@ class VehicleRepository {
             year: year,
             ownerId: user.id
         )
-        try db.write { db in
-            try vehicle.insert(db)
+        try dbQueue.write { database in
+            try vehicle.insert(database)
         }
         return vehicle
     }
 
     func all(by user: QLUser) throws -> [QLVehicle] {
-        try db.read { db in
-            try QLVehicle.filter(Column("ownerId") == user.id).fetchAll(db)
+        try dbQueue.read { database in
+            try QLVehicle.filter(Column("ownerId") == user.id).fetchAll(database)
         }
     }
 
     func get(by id: String) throws -> QLVehicle? {
-        try db.read { db in
-            try QLVehicle.fetchOne(db, key: id)
+        try dbQueue.read { database in
+            try QLVehicle.fetchOne(database, key: id)
         }
     }
 
-    func update(_ vehicle: inout QLVehicle, licensePlate: String? = nil, model: String? = nil, manufacture: String? = nil, year: Int? = nil) throws {
-        try db.write { db in
-            if let lp = licensePlate { vehicle.licensePlate = lp }
-            if let m = model { vehicle.model = m }
-            if let mf = manufacture { vehicle.manufacture = mf }
-            if let y = year { vehicle.year = y }
-            try vehicle.update(db)
+    func update(
+        _ vehicle: inout QLVehicle,
+        licensePlate: String? = nil,
+        model: String? = nil,
+        manufacture: String? = nil,
+        year: Int? = nil) throws {
+        try dbQueue.write { database in
+            if let newLP = licensePlate { vehicle.licensePlate = newLP }
+            if let newModel = model { vehicle.model = newModel }
+            if let newMF = manufacture { vehicle.manufacture = newMF }
+            if let newYear = year { vehicle.year = newYear }
+            try vehicle.update(database)
         }
     }
 
     func delete(_ vehicle: QLVehicle) throws -> Bool {
-        return try db.write { db in
-            try vehicle.delete(db)
+        return try dbQueue.write { database in
+            try vehicle.delete(database)
         }
     }
 }
 
 @MainActor
 class GroupRepository {
-    let db = DB.shared.dbQueue
+    let dbQueue = DATABASE.shared.dbQueue
 
     func add(name: String, description: String?) throws -> QLGroup {
         let group = QLGroup(name: name, descriptions: description)
-        try db.write { db in
-            try group.insert(db)
+        try dbQueue.write { database in
+            try group.insert(database)
         }
         return group
     }
 
     func all() throws -> [QLGroup] {
-        try db.read { db in
-            try QLGroup.fetchAll(db)
+        try dbQueue.read { database in
+            try QLGroup.fetchAll(database)
         }
     }
 
     func get(by id: String) throws -> QLGroup? {
-        try db.read { db in
-            try QLGroup.fetchOne(db, key: id)
+        try dbQueue.read { database in
+            try QLGroup.fetchOne(database, key: id)
         }
     }
 
     func update(_ group: inout QLGroup, name: String? = nil, description: String? = nil) throws {
-        try db.write { db in
-            if let n = name { group.name = n }
-            if let d = description { group.descriptions = d }
-            try group.update(db)
+        try dbQueue.write { database in
+            if let newName = name { group.name = newName }
+            if let newDescription = description { group.descriptions = newDescription }
+            try group.update(database)
         }
     }
 
     func delete(_ group: QLGroup) throws -> Bool {
-        return try db.write { db in
-            try group.delete(db)
+        return try dbQueue.write { database in
+            try group.delete(database)
         }
     }
 
     func addUser(_ user: QLUser, to group: QLGroup) throws {
-        let ug = UserGroup(userId: user.id, groupId: group.id)
-        try db.write { db in
-            try ug.insert(db)
+        let userGroup = UserGroup(userId: user.id, groupId: group.id)
+        try dbQueue.write { database in
+            try userGroup.insert(database)
         }
     }
-    
+
     func removeUser(_ user: QLUser, from group: QLGroup) throws {
-        try db.write { db in
-            try db.execute(
+        try dbQueue.write { database in
+            try database.execute(
                 sql: """
                     DELETE FROM user_group
                     WHERE userId = ? AND groupId = ?
@@ -307,7 +318,7 @@ class GroupRepository {
     }
 }
 
-
+// swiftlint:disable:next function_body_length
 @MainActor func sqliteRunner() {
     let settingsRepo = SettingsRepository()
     let userRepo     = UserRepository()
@@ -324,28 +335,28 @@ class GroupRepository {
         print("👤 User created: \(user.name)")
 
         // 3. Create Vehicles for User
-        var v1 = try vehicleRepo.add(
+        var vehicle1 = try vehicleRepo.add(
             for: user,
             licensePlate: "ABC-1234",
             model: "Civic",
             manufacture: "Honda",
             year: 2020
         )
-        let v2 = try vehicleRepo.add(
+        let vehicle2 = try vehicleRepo.add(
             for: user,
             licensePlate: "XYZ-9876",
             model: "Corolla",
             manufacture: "Toyota",
             year: 2021
         )
-        print("🚗 Vehicles created for \(user.name): \(v1.model) & \(v2.model)")
+        print("🚗 Vehicles created for \(user.name): \(vehicle1.model) & \(vehicle2.model)")
 
         // 4. Create Groups and add User
-        let g1 = try groupRepo.add(name: "Admins", description: "Administrators group")
-        var g2 = try groupRepo.add(name: "Testers", description: nil)
-        try groupRepo.addUser(user, to: g1)
-        try groupRepo.addUser(user, to: g2)
-        print("👥 \(user.name) added to groups: \(g1.name) & \(g2.name)")
+        let group1 = try groupRepo.add(name: "Admins", description: "Administrators group")
+        var group2 = try groupRepo.add(name: "Testers", description: nil)
+        try groupRepo.addUser(user, to: group1)
+        try groupRepo.addUser(user, to: group2)
+        print("👥 \(user.name) added to groups: \(group1.name) & \(group2.name)")
 
         // 5. List all
         let allUsers    = try userRepo.all().map { $0.name }
@@ -358,8 +369,8 @@ class GroupRepository {
         // 6. Updates
         try settingsRepo.update(&settings, volume: 8, lang: "en-US")
         try userRepo.update(&user, name: "Alice Santos")
-        try vehicleRepo.update(&v1, licensePlate: "ABC-0000", year: 2022)
-        try groupRepo.update(&g2, name: "Quality Testers", description: "QA Team")
+        try vehicleRepo.update(&vehicle1, licensePlate: "ABC-0000", year: 2022)
+        try groupRepo.update(&group2, name: "Quality Testers", description: "QA Team")
         print("✏️ Updates applied")
 
         // 7. Filter Users by name
@@ -367,9 +378,9 @@ class GroupRepository {
         print("🔍 Filtered users (\"Alice\"): \(filtered.map { $0.name }.joined(separator: ", "))")
 
         // 8. Removals
-        _ = try vehicleRepo.delete(v2)
-        try groupRepo.removeUser(user, from: g1)
-        _ = try groupRepo.delete(g1)
+        _ = try vehicleRepo.delete(vehicle2)
+        try groupRepo.removeUser(user, from: group1)
+        _ = try groupRepo.delete(group1)
         print("🗑️ Removals done")
 
         // 9. Final state
@@ -379,13 +390,11 @@ class GroupRepository {
         print("📋 Final groups: \(finalGroups.joined(separator: ", "))")
 
         // Cleanup
-        _ = try groupRepo.delete(g2)
-        _ = try vehicleRepo.delete(v1)
+        _ = try groupRepo.delete(group2)
+        _ = try vehicleRepo.delete(vehicle1)
         _ = try settingsRepo.delete(settings)
         _ = try userRepo.delete(user)
     } catch {
         print("❌ Erro durante CRUD:", error)
     }
 }
-
-

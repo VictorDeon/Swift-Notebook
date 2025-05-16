@@ -8,15 +8,15 @@ enum MathError: LocalizedError {
     case divisionByZero
     case negativeNumerator
     case other(message: String)
-    
+
     var errorDescription: String? {
         switch self {
-            case .divisionByZero:
-                return "Erro: tentativa de divisão por zero."
-            case .negativeNumerator:
-                return "Erro: o numerador não pode ser negativo."
-            case .other(let message):
-                return message
+        case .divisionByZero:
+            return "Erro: tentativa de divisão por zero."
+        case .negativeNumerator:
+            return "Erro: o numerador não pode ser negativo."
+        case .other(let message):
+            return message
         }
     }
 }
@@ -28,13 +28,13 @@ struct ExceptionCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .shortAndLong,  // -n --numerador
         help: "numerador da divisão"
     )
     var numerador: Int
-    
+
     @Option(
         name: .shortAndLong,  // -d --denominador
         help: "denominador da divisão"
@@ -46,7 +46,7 @@ struct ExceptionCommands: ParsableCommand {
         if let resultadoOpcional = try? divide(numerador, by: denominador) {
             print("→ Resultado (try?): \(resultadoOpcional)")
         }
-        
+
         // Uso completo de do-catch
         do {
             let resultado = try divide(numerador, by: denominador)
@@ -58,10 +58,10 @@ struct ExceptionCommands: ParsableCommand {
             // fallback para qualquer outro Error
             print("Erro inesperado: \(error.localizedDescription)")
         }
-        
+
         do {
-            let r = try applyOperation(numerador, denominador, operation: divide)
-            print("→ Resultado (rethrowing): \(r)")
+            let result = try applyOperation(numerador, denominador, operation: divide)
+            print("→ Resultado (rethrowing): \(result)")
         } catch {
             print(error.localizedDescription)
         }
@@ -82,6 +82,6 @@ func divide(_ numerador: Int, by denominador: Int) throws -> Int {
 }
 
 // 4) Exemplo de função rethrowing, para mostrar como propagar erros
-func applyOperation<T>(_ a: Int, _ b: Int, operation: (Int, Int) throws -> T) rethrows -> T {
-    return try operation(a, b)
+func applyOperation<T>(_ value1: Int, _ value2: Int, operation: (Int, Int) throws -> T) rethrows -> T {
+    return try operation(value1, value2)
 }

@@ -19,20 +19,20 @@ struct ConditionalCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .long,  // age
         help: "Idade para dirigir",
         transform: { str in
             // tenta converter, se falhar, lança ValidationError
-            guard let n = Int(str), n > 0 else {
+            guard let intValue = Int(str), intValue > 0 else {
                 throw ValidationError("Idade ‘\(str)’ não é um inteiro positivo")
             }
-            return n
+            return intValue
         }
     )
     var age: Int = 20
-    
+
     @Option(
         name: .long,  // hardness
         help: "Tipo da clara do ovo. Ex: Soft, Medium, Hard"
@@ -72,27 +72,26 @@ struct CondicionalTernario {
 struct CondicionalSwitch {
     static func run(age: Int) {
         switch age {
-            case 70...120:  // Closed Range
-                print("Muito velho para dirigir")
-            case 18..<70: // Half Open Range
-                print("Pode dirigir")
-            case ...17:   // One Sided Range
-                print("Muito novo para dirigir")
-            default:
-                print("Error, opção inválida.")
+        case 70...120:  // Closed Range
+            print("Muito velho para dirigir")
+        case 18..<70: // Half Open Range
+            print("Pode dirigir")
+        case ...17:   // One Sided Range
+            print("Muito novo para dirigir")
+        default:
+            print("Error, opção inválida.")
         }
     }
     static func run(hardness: String) {
         switch hardness {
-            case "Soft":
-                print("Ovo ta cru")
-            case "Medium":
-                print("Ovo perfeito")
-            case "Hard":
-                print("Ovo ta queimado")
-            default:
-                print("Error, opção inválida.")
+        case "Soft":
+            print("Ovo ta cru")
+        case "Medium":
+            print("Ovo perfeito")
+        case "Hard":
+            print("Ovo ta queimado")
+        default:
+            print("Error, opção inválida.")
         }
     }
 }
-

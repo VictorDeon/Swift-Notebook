@@ -36,18 +36,18 @@ struct LoopRange {
     static func run() {
         let start: Int = 1
         let end: Int = 5
-        
-        for i in start...10 {
-            if i == 3 { continue } // Pula a iteração 3
-            if i > 5 { break }  // Ao passar da iteração 5 pare o loop
 
-            print("Iteração \(i)")
+        for index in start...10 {
+            if index == 3 { continue } // Pula a iteração 3
+            if index > 5 { break }  // Ao passar da iteração 5 pare o loop
+
+            print("Iteração \(index)")
             // Iteração 1
             // Iteração 2
             // Iteração 4
             // Iteração 5
         }
-        
+
         for _ in start..<end {
             print("Ola mundo!")
             // Ola mundo!
@@ -93,10 +93,10 @@ struct LoopArray {
 
 struct LoopWhile {
     static func run() {
-        var i = 0
-        while i < 3 {
-            print("While i=\(i)")
-            i += 1
+        var index = 0
+        while index < 3 {
+            print("While i=\(index)")
+            index += 1
             // While i=0
             // While i=1
             // While i=2
@@ -121,9 +121,9 @@ struct LoopMatrix {
     static func run() {
         var matrix: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
         print(matrix)  // [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-        for i in 0..<3 {
-            for j in 0..<3 {
-                matrix[i][j] = i * 3 + j
+        for line in 0..<3 {
+            for column in 0..<3 {
+                matrix[line][column] = line * 3 + column
             }
         }
         print(matrix)  // [[0, 1, 2], [3, 4, 5], [6, 7, 8]]

@@ -8,13 +8,13 @@ struct EnumCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .long,  // today
         help: "Dia da semana. Ex: monday, tuesday, wednesday, thusdaym friday, saturday, sunday"
     )
     var today: WeekDay = .monday
-    
+
     @Option(
         name: .long,  // temperature
         help: "Dia da semana. Ex: hot, cold"
@@ -30,22 +30,23 @@ struct EnumCommands: ParsableCommand {
               throw ValidationError("Use success:… ou fail:…")
             }
             switch parts[0].lowercased() {
-                case "success": return .success(parts[1])
-                case "fail":    return .fail(parts[1])
-                default:        throw ValidationError("Prefixo inválido: use success ou fail")
+            case "success": return .success(parts[1])
+            case "fail":    return .fail(parts[1])
+            default:        throw ValidationError("Prefixo inválido: use success ou fail")
             }
           }
     )
     var testResult: TestResult = .success("Teste passou com sucesso!")
-    
+
     @Option(
         name: .long,  // temperature
         help: "Status: 1 ou 0",
             transform: { arg in
-                guard let i = Int(arg), let st = Status(rawValue: i) else {
+                guard let intValue = Int(arg),
+                      let status = Status(rawValue: intValue) else {
                     throw ValidationError("Use 1 (ativo) ou 0 (inativo)")
                 }
-                return st
+                return status
             }
     )
     var status: Status = .actived
@@ -73,10 +74,10 @@ enum Temperature: String, CaseIterable, ExpressibleByArgument {
 
     func description() -> String {
         switch self {
-            case .hot:
-                return "Está quente."
-            case .cold:
-                return "Está frio."
+        case .hot:
+            return "Está quente."
+        case .cold:
+            return "Está frio."
         }
     }
 }
@@ -89,22 +90,22 @@ enum Status: Int {
 struct EnumRunner {
     static func run(today: WeekDay) {
         switch today {
-            case .monday:
-                print("Hoje é segunda-feira")  // Entra aqui
-            case .tuesday:
-                print("Hoje é terça-feira")
-            default:
-                print("Outro dia da semana: \(today)")
+        case .monday:
+            print("Hoje é segunda-feira")  // Entra aqui
+        case .tuesday:
+            print("Hoje é terça-feira")
+        default:
+            print("Outro dia da semana: \(today)")
         }
     }
     static func run(result: TestResult) {
         let result: TestResult = result
 
         switch result {
-            case .success(let mensagem):
-                print(mensagem) // Teste passou com sucesso!
-            case .fail(let erro):
-                print(erro)
+        case .success(let mensagem):
+            print(mensagem) // Teste passou com sucesso!
+        case .fail(let erro):
+            print(erro)
         }
     }
     static func run(temperature: Temperature) {

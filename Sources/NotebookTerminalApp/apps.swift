@@ -15,9 +15,9 @@ func readVersion() -> String {
 
 class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
     // Cria a janela SwiftUI
-    init(rootView: V, title: String, x: Int, y: Int, width: Int, height: Int) {
+    init(rootView: V, title: String) {
         let win = NSWindow(
-            contentRect: NSRect(x: x, y: y, width: width, height: height),
+            contentRect: NSRect(x: 0, y: 0, width: 300, height: 100),
             styleMask: [.titled, .closable, .resizable],
             backing: .buffered,
             defer: false
@@ -74,7 +74,7 @@ struct CommonOptions: ParsableArguments {
 @main
 struct TerminalApp: AsyncParsableCommand {
     @MainActor static var windowControllers: [Any] = []
-    
+
     static let configuration = CommandConfiguration(
         commandName: "NotebookTerminalApp",
         abstract: "Ferramenta Toolbox: escolhe um executável e passa os parâmetros certos",
@@ -122,13 +122,13 @@ struct TerminalApp: AsyncParsableCommand {
             // Algoritmos
             PaintingBucketsCommands.self,
             // SwiftUI
-            SwiftUIHelloWorldCommands.self,
+            SwiftUIHelloWorldCommands.self
         ]
     )
 
     // Mostra a janela do SwiftUI
-    @MainActor static func showWindow<V: View>(_ view: V, title: String, x: Int = 0, y: Int = 0, width: Int = 300, height: Int = 100) {
-        let controller = HostingWindowController(rootView: view, title: title, x: x, y: y, width: width, height: height)
+    @MainActor static func showWindow<V: View>(_ view: V, title: String) {
+        let controller = HostingWindowController(rootView: view, title: title)
         windowControllers.append(controller)
         controller.showWindow(nil)
     }

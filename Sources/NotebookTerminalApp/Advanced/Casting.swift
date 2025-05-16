@@ -92,6 +92,7 @@ struct DowncastingInseguro {
         let creatures: [Animal] = [jack, Fish(name: "Nemo")]
         let nemo = creatures[1]
         // Sabemos que creatures[1] é Fish, então:
+        // swiftlint:disable:next force_cast
         let fish = nemo as! Fish
         fish.breatheUnderWater()  // Nemo está respirando embaixo d’água.
     }

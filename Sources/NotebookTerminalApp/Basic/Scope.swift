@@ -53,12 +53,12 @@ struct FuncoesAninhadasEscopoDeBloco {
     static func run() {
         func outerFunction() {
             var count = 0
-            
+
             func innerFunction() {
                 count += 1        // inner “vê” e modifica 'count'
                 print("Count = \(count)")
             }
-            
+
             innerFunction()      // Count = 1
             innerFunction()      // Count = 2
         }
@@ -66,12 +66,12 @@ struct FuncoesAninhadasEscopoDeBloco {
         outerFunction()
 
         // Cada bloco (if, while, { … }) também cria um novo escopo:
-        let x = 10
-        if x > 5 {
-            let x = 100           // sombreia (shadowing) o 'x' externo
-            print(x)              // 100 (dentro do bloco)
+        let value = 10
+        if value > 5 {
+            let value = 100           // sombreia (shadowing) o 'x' externo
+            print(value)              // 100 (dentro do bloco)
         }
-        print(x)                  // 10  (fora do bloco)
+        print(value)                  // 10  (fora do bloco)
     }
 }
 
@@ -79,10 +79,10 @@ struct FuncoesAninhadasEscopoDeBloco {
 /// var: cria variáveis mutáveis — podem ser alteradas.
 struct LetVsVarNoEscopo {
     static func run() {
-        let pi = 3.14
-        print(pi)               // 3.14
+        let pii = 3.14
+        print(pii)               // 3.14
         // pi = 3.1415          // ❌ Erro: não pode reatribuir
-        
+
         var counter = 0
         counter += 1            // ok
         print(counter)          // 1
