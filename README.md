@@ -55,8 +55,6 @@ Adicionando libs externas usando o Cocoapods
 
 Vamos instalar e usas essa lib: https://github.com/Alamofire/Alamofire
 
-Doc: https://github.com/Alamofire/Alamofire/blob/master/Documentation/Usage.md#making-requests
-
 Instale o cocopod pelo terminal:
 ```sh
 $ sudo gem install cocoapods
@@ -170,23 +168,26 @@ TODO:
 - [x] Geração do binario via github actions
 - [x] Sistema de logging
 - [x] Lista de metodos uteis para cada tipo do swift
-- [ ] Operações no Sistema Operacional do MACOS*
+- [x] Operações no Sistema Operacional do MACOS
 - [ ] Manipulação de arquivos
-	- [ ] JSON*
-	- [ ] CSV*
+	- [x] JSON
+	- [x] CSV
+    - [x] TXT
     - [ ] Excel
     - [ ] PDF
-	- [ ] PLIST*
-    - [ ] XML*
+	- [x] PLIST
+    - [ ] XML
 - [x] Finalizar OO
-- [ ] Requisições HTTP*
-- [ ] Datetime*
-- [ ] Criptografia e Segurança*
-- [ ] Threads e Processos*
-- [ ] Assincronicidade igual ao python (Corotines)*
-- [ ] Regex*
-- [ ] SwiftUI*
-- [ ] Empacotamento de modulos e utilização do pacote*
+- [x] Requisições HTTP* (Sexta)
+- [ ] Datetime* (Sexta)
+- [ ] Regex* (Sexta)
+- [ ] Criptografia e Segurança* (Domingo)
+- [ ] Threads e Processos* (Domingo)
+- [ ] Assincronicidade igual ao python (Corotines)* (Domingo)
+- [ ] Launch Daemon e Launch User (Segunda)
+- [ ] Empacotamento de modulos e utilização do pacote* (Terça)
+- [ ] SwiftUI* (Terça a Sexta)
+- [ ] ObjectiveC
 - [x] Execução por Terminal com Path Parameters
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
