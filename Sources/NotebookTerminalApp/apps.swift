@@ -103,6 +103,7 @@ struct TerminalApp: AsyncParsableCommand {
             CicloDeReferenciaCommands.self,
             AssociationCommands.self,
             SOCommands.self,
+            IOCommands.self,
             // Design Patterns
             DelegateCommands.self,
             SingletonCommands.self,
