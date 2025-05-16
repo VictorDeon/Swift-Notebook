@@ -75,7 +75,7 @@ jobs:
           mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib pkgroot/usr/local/shared
           cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
           cp .build/release/libRealmSwift.dylib pkgroot/usr/local/lib/
-          cp .build/release/NotebookTerminalApp_NotebookTerminalApp.bundle pkgroot/usr/local/shared/
+          cp -r .build/release/NotebookTerminalApp_NotebookTerminalApp.bundle pkgroot/usr/local/shared/
 
       - name: Configure .dylib dependency
         run: |
