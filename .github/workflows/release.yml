@@ -75,6 +75,7 @@ jobs:
           mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib
           cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
           cp .build/release/libRealmSwift.dylib pkgroot/usr/local/lib/
+          cp .build/release/NotebookTerminalApp_NotebookTerminalApp.bundle pkgroot/usr/local/shared/
 
       - name: Configure .dylib dependency
         run: |
@@ -85,6 +86,19 @@ jobs:
           install_name_tool \
             -add_rpath /usr/local/lib \
             pkgroot/usr/local/bin/NotebookTerminalApp
+
+      - name: Configure .bundle dependency
+        run: |
+          install_name_tool \
+            -id /usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle \
+            pkgroot/usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle
+
+          install_name_tool \
+            -add_rpath /usr/local/shared \
+            pkgroot/usr/local/bin/NotebookTerminalApp
+
+      - name: Testar executavel
+        run: pkgroot/usr/local/bin/NotebookTerminalApp --version
 
       - name: Sign all required files
         run: |

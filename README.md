@@ -181,13 +181,13 @@ TODO:
 - [x] Requisições HTTP
 - [x] Datetime
 - [x] Regex
-- [ ] Criptografia e Segurança* (Domingo)
-- [ ] Threads e Processos* (Domingo)
-- [ ] Assincronicidade igual ao python (Corotines)* (Domingo)
-- [ ] Launch Daemon e Launch User (Segunda)
-- [ ] Empacotamento de modulos e utilização do pacote* (Terça)
-- [ ] SwiftUI* (Terça a Sexta)
-- [ ] ObjectiveC
+- [ ] Criptografia e Segurança* (simetrica, assimetrica e JWT) (ChatGPT)
+- [ ] Threads e Processos* (Domingo) (Video)
+- [ ] Assincronicidade igual ao python (Corotines)* (Domingo) (Video)
+- [ ] Launch Daemon e Launch User (Segunda) (ChatGPT)
+- [ ] Empacotamento de modulos e utilização do pacote* (Terça) (Video)
+- [ ] SwiftUI* (Terça a Quinta) (Video)
+- [ ] ObjectiveC (Segunda + Terça) (Video)
 - [x] Execução por Terminal com Path Parameters
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
