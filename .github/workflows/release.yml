@@ -72,7 +72,7 @@ jobs:
       - name: Build the project
         run: |
           swift build -c release
-          mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib
+          mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib pkgroot/usr/local/shared
           cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
           cp .build/release/libRealmSwift.dylib pkgroot/usr/local/lib/
           cp .build/release/NotebookTerminalApp_NotebookTerminalApp.bundle pkgroot/usr/local/shared/
@@ -115,6 +115,13 @@ jobs:
             --timestamp \
             --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
             pkgroot/usr/local/lib/libRealmSwift.dylib
+
+          codesign \
+            --force \
+            --options runtime \
+            --timestamp \
+            --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
+            pkgroot/usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle
 
       - name: Create .pkg installer
         run: |
