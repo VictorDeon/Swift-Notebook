@@ -112,6 +112,7 @@ struct TerminalApp: AsyncParsableCommand {
             TimeCommands.self,
             LoggingCommands.self,
             DateTimeCommands.self,
+            RegexCommands.self,
             // Databases
             UserDefaultCommands.self,
             NSCoderCommands.self,

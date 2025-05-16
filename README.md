@@ -178,9 +178,9 @@ TODO:
 	- [x] PLIST
     - [ ] XML
 - [x] Finalizar OO
-- [x] Requisições HTTP* (Sexta)
-- [ ] Datetime* (Sexta)
-- [ ] Regex* (Sexta)
+- [x] Requisições HTTP
+- [x] Datetime
+- [x] Regex
 - [ ] Criptografia e Segurança* (Domingo)
 - [ ] Threads e Processos* (Domingo)
 - [ ] Assincronicidade igual ao python (Corotines)* (Domingo)
