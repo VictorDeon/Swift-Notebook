@@ -25,9 +25,8 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log")
             ],
             resources: [
-                .copy("version.txt")
-            ],
-            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
+                .process("version.txt")
+            ]
         )
     ]
 )

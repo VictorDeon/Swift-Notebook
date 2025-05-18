@@ -72,10 +72,10 @@ jobs:
       - name: Build the project
         run: |
           swift build -c release
-          mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib pkgroot/usr/local/shared
+          mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib
           cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
           cp .build/release/libRealmSwift.dylib pkgroot/usr/local/lib/
-          cp -r .build/release/NotebookTerminalApp_NotebookTerminalApp.bundle pkgroot/usr/local/shared/
+          cp -r .build/release/NotebookTerminalApp_NotebookTerminalApp.bundle pkgroot/usr/local/bin/
 
       - name: Configure .dylib dependency
         run: |
@@ -85,16 +85,6 @@ jobs:
 
           install_name_tool \
             -add_rpath /usr/local/lib \
-            pkgroot/usr/local/bin/NotebookTerminalApp
-
-      - name: Configure .bundle dependency
-        run: |
-          install_name_tool \
-            -id /usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle/version.txt \
-            pkgroot/usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle/version.txt
-
-          install_name_tool \
-            -add_rpath /usr/local/shared \
             pkgroot/usr/local/bin/NotebookTerminalApp
 
       - name: Testar executavel
@@ -115,13 +105,6 @@ jobs:
             --timestamp \
             --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
             pkgroot/usr/local/lib/libRealmSwift.dylib
-
-          codesign \
-            --force \
-            --options runtime \
-            --timestamp \
-            --sign "${{ secrets.DEVELOPER_ID_APPLICATION_NAME }}" \
-            pkgroot/usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle
 
       - name: Create .pkg installer
         run: |

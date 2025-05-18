@@ -1,5 +1,7 @@
-// Este guia mostra como realizar operações básicas de I/O de arquivos e diretórios em Swift, usando as APIs do Foundation
 /**
+ Este guia mostra como realizar operações básicas de I/O de arquivos e diretórios em Swift,
+ usando as APIs do Foundation
+ 
  Abaixo está uma tabela com todas as combinações de bits de permissão (leitura, escrita e execução) e o
  seu valor POSIX em octal, para um único “triplete” (usuário, grupo ou outros):
  
@@ -22,7 +24,6 @@
  
  Basta concatenar os três dígitos octais para definir as permissões completas de um arquivo ou diretório.
 */
-
 
 import Foundation
 import AppKit
@@ -70,7 +71,7 @@ struct ManipulandoArquivos {
             // Pasta criada com sucesso!
             print(getFullPath(by: folder))
             // /Users/<user>/Documents/static/folder
-            
+
             let txtFile = "\(folder)/teste.txt"
             try createFile(at: txtFile)
             // Arquivo criado com sucesso!
@@ -82,7 +83,7 @@ struct ManipulandoArquivos {
             // Permissões modificadas com sucesso!
             try deleteFile(at: txtFile)
             // Arquivo removido com sucesso!
-            
+
             let jsonfile = "\(folder)/teste.json"
             try createFile(at: jsonfile)
             // Arquivo criado com sucesso!
@@ -90,7 +91,7 @@ struct ManipulandoArquivos {
             // PessoaAleatoria(nome: "Ana", idade: 30)
             try deleteFile(at: jsonfile)
             // Arquivo removido com sucesso!
-            
+
             let plistFile = "\(folder)/teste.plist"
             try createFile(at: plistFile)
             // Arquivo criado com sucesso!
@@ -98,7 +99,7 @@ struct ManipulandoArquivos {
             // PessoaAleatoria(nome: "Ana", idade: 30)
             try deleteFile(at: plistFile)
             // Arquivo removido com sucesso!
-            
+
             let csvFile = "\(folder)/teste.csv"
             try createFile(at: csvFile)
             // Arquivo criado com sucesso!
@@ -108,7 +109,7 @@ struct ManipulandoArquivos {
             }
             try deleteFile(at: csvFile)
             // Arquivo removido com sucesso!
-            
+
             try changePermission(at: folder, permissoes: 0o755)
             // Permissões modificadas com sucesso!
             readPermissions(by: folder)
@@ -121,18 +122,18 @@ struct ManipulandoArquivos {
             fatalError("Error: \(error)")
         }
     }
-    
+
     static func fileExist(at path: String) -> (exist: Bool, isFolder: Bool) {
         var isFolder: ObjCBool = false
         let exist = FileManager.default.fileExists(atPath: path, isDirectory: &isFolder)
         return (exist, isFolder.boolValue)
     }
-    
+
     static func getFullPath(by path: String) -> String {
         let url = URL(fileURLWithPath: path)
         return url.absoluteURL.path
     }
-    
+
     static func isExecutable(at path: String) -> Bool {
         let fileManager = FileManager.default
         if fileManager.isExecutableFile(atPath: path) {
@@ -140,7 +141,7 @@ struct ManipulandoArquivos {
         }
         return false
     }
-    
+
     static func readPermissions(by path: String) {
         let fileManager = FileManager.default
 
@@ -157,30 +158,36 @@ struct ManipulandoArquivos {
             print("Erro ao obter atributos do arquivo: \(error)")
         }
     }
-    
+
     static func readTXT(at path: String) throws -> String {
         let url = URL(fileURLWithPath: path)
         let data = try Data(contentsOf: url)
         guard let content = String(data: data, encoding: .utf8) else {
-            throw NSError(domain: "LeituraErro", code: -1, userInfo: [NSLocalizedDescriptionKey: "Codificação inválida"])
+            throw NSError(
+                domain: "LeituraErro",
+                code: -1,
+                userInfo: [
+                    NSLocalizedDescriptionKey: "Codificação inválida"
+                ]
+            )
         }
         return content
     }
-    
+
     static func readJSON<T: Decodable>(at path: String, type: T.Type) throws -> T {
         let url = URL(fileURLWithPath: path)
         let data = try Data(contentsOf: url)
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     }
-    
+
     static func readPLIST<T: Decodable>(at path: String, type: T.Type) throws -> T {
         let url = URL(fileURLWithPath: path)
         let data = try Data(contentsOf: url)
         let decoder = PropertyListDecoder()
         return try decoder.decode(T.self, from: data)
     }
-    
+
     @available(macOS 13.0, *)
     static func readCSV(at path: String, delimiter: String = ",") throws -> [[String]] {
         let text = try ManipulandoArquivos.readTXT(at: path)
@@ -188,7 +195,7 @@ struct ManipulandoArquivos {
             .split(separator: "\n")
             .map { $0.split(separator: delimiter).map(String.init) }
     }
-    
+
     static func readWithFileHandler(at path: String) throws {
         let url = URL(fileURLWithPath: path)
         let fileHandle = try FileHandle(forReadingFrom: url)
@@ -202,20 +209,20 @@ struct ManipulandoArquivos {
             print(text)
         }
     }
-    
+
     static func createFile(at path: String) throws {
-        let fm = FileManager.default
+        let fileManager = FileManager.default
         let content = "Olá, Mundo!".data(using: .utf8)!
-        
+
         let result = fileExist(at: path)
         if result.exist {
             print("Arquivo \(path) já existe.")
             return
         }
-        
+
         if path.hasSuffix(".txt") {
             let url = URL(fileURLWithPath: path)
-            fm.createFile(atPath: url.path, contents: content, attributes: nil)
+            fileManager.createFile(atPath: url.path, contents: content, attributes: nil)
         } else if path.hasSuffix(".json") {
             let _: JSONEncoder = JSONEncoder()
             let person = PessoaAleatoria(nome: "Ana", idade: 30)
@@ -235,22 +242,22 @@ struct ManipulandoArquivos {
         } else {
             fatalError("Extensão não registrada para o arquivo \(path).")
         }
-        
+
         print("Arquivo criado com sucesso!")
     }
-    
+
     static func deleteFile(at path: String) throws {
-        let fm = FileManager.default
+        let fileManager = FileManager.default
         let url = URL(fileURLWithPath: path)
-        try fm.removeItem(at: url)
+        try fileManager.removeItem(at: url)
         print("Arquivo removido com sucesso!")
     }
-    
+
     static func createFolder(at path: String) throws {
-        let fm = FileManager.default
+        let fileManager = FileManager.default
         let result = fileExist(at: path)
         if !result.exist {
-            try fm.createDirectory(
+            try fileManager.createDirectory(
                 atPath: path,
                 withIntermediateDirectories: true,
                 attributes: nil
@@ -260,19 +267,19 @@ struct ManipulandoArquivos {
             print("Pasta \(path) já existe.")
         }
     }
-    
+
     static func deleteFolder(at path: String) throws {
-        let fm = FileManager.default
+        let fileManager = FileManager.default
         let url = URL(fileURLWithPath: path)
-        try fm.removeItem(at: url)
+        try fileManager.removeItem(at: url)
         print("Pasta removida com sucesso!")
     }
-    
+
     static func changePermission(at path: String, permissoes: Int) throws {
         // permissoes no estilo UNIX, e.g. 0o755
         let attrs: [FileAttributeKey: Any] = [.posixPermissions: permissoes]
-        let fm = FileManager.default
-        try fm.setAttributes(attrs, ofItemAtPath: path)
+        let fileManager = FileManager.default
+        try fileManager.setAttributes(attrs, ofItemAtPath: path)
         print("Permissões modificadas com sucesso!")
     }
 }
