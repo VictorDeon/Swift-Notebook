@@ -90,8 +90,8 @@ jobs:
       - name: Configure .bundle dependency
         run: |
           install_name_tool \
-            -id /usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle \
-            pkgroot/usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle
+            -id /usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle/version.txt \
+            pkgroot/usr/local/shared/NotebookTerminalApp_NotebookTerminalApp.bundle/version.txt
 
           install_name_tool \
             -add_rpath /usr/local/shared \
