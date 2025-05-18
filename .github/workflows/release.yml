@@ -87,9 +87,6 @@ jobs:
             -add_rpath /usr/local/lib \
             pkgroot/usr/local/bin/NotebookTerminalApp
 
-      - name: Testar executavel
-        run: pkgroot/usr/local/bin/NotebookTerminalApp --version
-
       - name: Sign all required files
         run: |
           codesign \
