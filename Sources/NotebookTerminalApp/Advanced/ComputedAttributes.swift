@@ -23,7 +23,7 @@ struct ComputedAttributesCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(name: .long, help: "Total de pedaços por pizza.")
     var slicesPerPizza: Int = 8
 
@@ -90,4 +90,3 @@ struct PizzaCalculator {
         mutableSelf.pizzasNeeded = pizzasNeeded
     }
 }
-

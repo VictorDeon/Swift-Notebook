@@ -44,7 +44,8 @@ struct CriptografiaSimetrica {
         let key = SymmetricKey(size: .bits256)
 
         // 2. Texto claro
-        let plaintext = "Mensagem secreta".data(using: .utf8)!
+        let msg: String? = "Mensagem secreta"
+        let plaintext = msg!.data(using: .utf8)!
 
         // 3. Encriptar usando AES-GCM
         do {
@@ -74,7 +75,8 @@ struct CriptografiaAssimetrica {
         let publicKey = privateKey.publicKey
 
         // 2. Mensagem a assinar
-        let message = "Dados importantes".data(using: .utf8)!
+        let msg: String? = "Dados importantes"
+        let message = msg!.data(using: .utf8)!
 
         // 3. Assinar
         let signature = try? privateKey.signature(for: message)
@@ -105,10 +107,11 @@ struct CriptografiaAssimetrica {
         ) throws -> SymmetricKey {
             let peerPublicKey = try Curve25519.KeyAgreement.PublicKey(rawRepresentation: peerPublicKeyData)
             let sharedSecret = try myPrivateKey.sharedSecretFromKeyAgreement(with: peerPublicKey)
+            let msg: String? = "RocketmanTechSalt"
             // Deriva uma chave AES-256 a partir do segredo compartilhado
             return sharedSecret.hkdfDerivedSymmetricKey(
                 using: SHA256.self,
-                salt: "RocketmanTechSalt".data(using: .utf8)!,
+                salt: msg!.data(using: .utf8)!,
                 sharedInfo: Data(),  // você pode incluir metadados aqui
                 outputByteCount: 32
             )

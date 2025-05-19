@@ -82,28 +82,28 @@ class GameCharacter: Attackable, Movable, Game {
     // público para leitura, privado para escrita
     private(set) var name: String             // name é read-only fora da classe
     var health: Int
-    
+
     init(name: String, health: Int) {
         self.name = name
         self.health = health
     }
-    
+
     // Computed Property para ver % de vida
     var healthPercentage: Double {
         return Double(health) / 100.0 * 100.0
     }
-    
+
     // Attackable
     func attack() -> Int {
         // implementação genérica, subclasses podem sobrescrever
         return 5
     }
-    
+
     func takeDamage(_ amount: Int) {
         health = max(health - amount, 0)
         print("\(name) tomou \(amount) de dano. Vida agora: \(health).")
     }
-    
+
     // Movable
     func move() {
         print("\(name) se move.")
@@ -114,17 +114,17 @@ class GameCharacter: Attackable, Movable, Game {
 // 2.1 Inimigo Genérico: Enemy
 class Enemy: GameCharacter {
     private var attackStrength: Int
-    
+
     init(name: String, health: Int = 100, attackStrength: Int = 10) {
         self.attackStrength = attackStrength
         super.init(name: name, health: health)
     }
-    
+
     override func attack() -> Int {
         print("\(name) ataca causando \(attackStrength) de dano.")
         return attackStrength
     }
-    
+
     override func move() {
         print("\(name) se arrasta pelo chão.")
     }
@@ -133,24 +133,24 @@ class Enemy: GameCharacter {
 // 2.2 Inimigo Especial: Dragon
 final class Dragon: Enemy {
     let wingSpan: Int
-    
+
     init(name: String, health: Int = 300, attackStrength: Int = 50, wingSpan: Int = 5) {
         self.wingSpan = wingSpan
         super.init(name: name, health: health, attackStrength: attackStrength)
     }
-    
+
     // Sobrecarga de método
     func attack(withFire intensity: Int) -> Int {
         let damage = intensity * 2
         print("\(name) cospe fogo e causa \(damage) de dano.")
         return damage
     }
-    
+
     // Sobrescrita de comportamento de movimento
     override func move() {
         print("\(name) voa majestoso com envergadura de \(wingSpan)m.")
     }
-    
+
     // Método de classe
     static func roar() {
         print("🗣️ Dragões rugem para anunciar seu poder!")
@@ -163,17 +163,17 @@ struct Goblin: Attackable, Movable {
     var name: String
     var health: Int
     var attackStrength: Int
-    
+
     func attack() -> Int {
         print("\(name) ataca com clava e causa \(attackStrength) de dano.")
         return attackStrength
     }
-    
+
     mutating func takeDamage(_ amount: Int) {
         health = max(health - amount, 0)
         print("\(name) recebeu \(amount) de dano. Vida: \(health).")
     }
-    
+
     func move() {
         print("\(name) corre entre as rochas.")
     }
@@ -187,7 +187,7 @@ struct OORunner {
         let skeleton = Enemy(name: "Esqueleto")
         let goblin = Goblin(name: "Goblin", health: 60, attackStrength: 8)
         let dragon = Dragon(name: "Drako", wingSpan: 7)
-        
+
         // Polimorfismo: trate todos como Attackable
         let combatants: [Attackable] = [skeleton, goblin, dragon]
         print("\n--- Início do Combate ---")
@@ -203,7 +203,7 @@ struct OORunner {
         // Goblin recebeu 4 de dano. Vida: 56.
         // Drako ataca causando 50 de dano.
         // Drako tomou 25 de dano. Vida agora: 275.
-        
+
         // Movimentação genérica
         print("\n--- Movimentação ---")
         let movers: [Movable] = [skeleton, goblin, dragon]
@@ -212,7 +212,7 @@ struct OORunner {
         // Esqueleto se arrasta pelo chão.
         // Goblin corre entre as rochas.
         // Drako voa majestoso com envergadura de 7m.
-        
+
         // Comerciando métodos específicos
         print("\n--- Habilidades Específicas ---")
         _ = dragon.attack(withFire: 20)
@@ -220,7 +220,7 @@ struct OORunner {
         // --- Habilidades Específicas ---
         // Drako cospe fogo e causa 40 de dano.
         // 🗣️ Dragões rugem para anunciar seu poder!
-        
+
         // Mostrar referência vs valor
         print("\n--- Referência vs Valor ---")
         let enemyCopy = skeleton
@@ -228,7 +228,7 @@ struct OORunner {
         print("Esqueleto original agora tem \(skeleton.health) de vida (referência)")
         // Esqueleto tomou 20 de dano. Vida agora: 75.
         // Esqueleto original agora tem 75 de vida (referência)
-        
+
         var goblinCopy = goblin
         goblinCopy.takeDamage(10)
         print("Goblin original tem \(goblin.health) (valor imutado)")

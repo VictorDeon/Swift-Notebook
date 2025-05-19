@@ -155,7 +155,6 @@ struct MakeRequest {
         print(responses.2.metrics?.taskInterval ?? 0)
     }
 
-
     static func post(login: Login) async -> Int? {
         let headers: HTTPHeaders = [
             "Authorization": "Basic VXNlcm5hbWU6UGFzc3dvcmQ=",

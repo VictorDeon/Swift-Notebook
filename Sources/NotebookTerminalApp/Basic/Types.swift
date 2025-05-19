@@ -87,8 +87,8 @@ struct IntType {
 /// Tipo Float e Double
 struct FloatType {
     static func run() {
-        let value1:  Float  = 3.7
-        let value2:  Double = 9.81
+        let value1: Float  = 3.7
+        let value2: Double = 9.81
 
         // rounded() / rounded(.down)
         print(value1.rounded())             // → 4.0
@@ -168,7 +168,7 @@ struct ArrayType {
 /// Tipo Dicionario
 struct DictType {
     static func run() {
-        var info: [String:Int] = ["idade": 25, "peso": 70]
+        var info: [String: Int] = ["idade": 25, "peso": 70]
 
         // updateValue(_:forKey:)
         info.updateValue(75, forKey: "peso")
@@ -197,7 +197,7 @@ struct DictType {
 /// Tipo Set
 struct SetType {
     static func run() {
-        var letras: Set = ["a","b","c"]
+        var letras: Set = ["a", "b", "c"]
 
         // insert(_:)
         letras.insert("d")
@@ -211,7 +211,7 @@ struct SetType {
         print(letras.contains("a"))  // → true
 
         // union(_:)
-        let outro: Set = ["c","e"]
+        let outro: Set = ["c", "e"]
         print(letras.union(outro))   // → ["a","c","d","e"]
 
         // intersection(_:)

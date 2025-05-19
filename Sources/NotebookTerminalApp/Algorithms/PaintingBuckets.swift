@@ -11,19 +11,19 @@ struct PaintingBucketsCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .shortAndLong,  // -w --width
         help: "Largura da parede"
     )
     var width: Float
-    
+
     @Option(
         name: .shortAndLong,  // -h --height
         help: "Altura da parede"
     )
     var height: Float
-    
+
     @Option(
         name: [.customShort("a"), .customLong("bucketAreaCovered")],  // -a --bucketAreaCovered
         help: "Area coberta por uma lata de tinta"
@@ -37,17 +37,13 @@ struct PaintingBucketsCommands: ParsableCommand {
 
 func paintingBucketRunner(_ width: Float, _ height: Float, _ bucketAreaCovered: Float) {
     var bucketsOfPaint: Int {
-        get {
-            let area = width * height
-            let numberOfBuckets = area / bucketAreaCovered
-            let roundedBuckets = ceilf(numberOfBuckets)
-            return Int(roundedBuckets)
-        }
+        let area = width * height
+        let numberOfBuckets = area / bucketAreaCovered
+        let roundedBuckets = ceilf(numberOfBuckets)
+        return Int(roundedBuckets)
     }
-    
+
     print("Precisaremos de \(bucketsOfPaint) latas de tinta para cobrir a parede.")
     let areaCanCover = Float(bucketsOfPaint) * bucketAreaCovered
     print("Essa quantidade de tinta pode cobrir uma area de \(areaCanCover)m2")
 }
-
-

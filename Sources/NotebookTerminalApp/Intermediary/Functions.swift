@@ -10,49 +10,49 @@ struct FunctionCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
-        name: .long,  // numerador
+        name: .customLong("n1"),  // numerador
         help: "valor 1"
     )
-    var n1: Int = 1
-    
+    var value1: Int = 1
+
     @Option(
-        name: .long,  // denominador
+        name: .customLong("n2"),  // denominador
         help: "valor 2"
     )
-    var n2: Int = 2
+    var value2: Int = 2
 
     func run() throws {
-        print(sum1(n1: n1, n2: n2))   // 3
-        print(sum2(n1, n2))           // 3
-        print(sum3(n1: n1, n2: n2))   // 3
-        print(sum4(n1, n2: n2))       // 3
+        print(sum1(value1: value1, value2: value2))   // 3
+        print(sum2(value1, value2))           // 3
+        print(sum3(value1: value1, value2: value2))   // 3
+        print(sum4(value1, value2: value2))       // 3
         printHello()
     }
 }
 
 // Parametros nomeados iguais Externamente e Internamente
-func sum1(n1: Int, n2: Int) -> Int {
-    return n1 + n2
+func sum1(value1: Int, value2: Int) -> Int {
+    return value1 + value2
 }
 
 // Parametros nao nomeados
-func sum2(_ n1: Int, _ n2: Int) -> Int {
-    return n1 + n2
+func sum2(_ value1: Int, _ value2: Int) -> Int {
+    return value1 + value2
 }
 
 // Parametros nomeados diferentes Externamente e Internamente
-func sum3(n1 number1: Int, n2 number2: Int) -> Int {
+func sum3(value1 number1: Int, value2 number2: Int) -> Int {
     return number1 + number2
 }
 
 // Parametros nomeados e Nao nomeados na mesma função
-func sum4(_ n1: Int, n2: Int) -> Int {
-    return n1 + n2
+func sum4(_ value1: Int, value2: Int) -> Int {
+    return value1 + value2
 }
 
 // Função sem retorno e sem parâmetros
-func printHello() -> Void {
+func printHello() {
     print("Hello World!")
 }

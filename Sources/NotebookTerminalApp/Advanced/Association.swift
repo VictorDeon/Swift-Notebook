@@ -64,13 +64,13 @@ struct Item1 {
 struct Order1 {
     var items: [Item1] = []
     var total: Float = 0
-    
+
     init(items: [Item1]) {
         for item in items {
             self.items.append(item)
         }
     }
-    
+
     mutating func getBill() -> Float {
         for item in self.items {
             self.total += item.price
@@ -93,12 +93,12 @@ class Keyboard {
 class Notebook {
     var model: String
     var keyboard: Keyboard?
-    
+
     init(model: String, keyboard: Keyboard?) {
         self.model = model
         self.keyboard = keyboard
     }
-    
+
     init(model: String) {
         self.model = model
     }
@@ -124,7 +124,7 @@ struct Association1xN {
 
         var fulana = Person1(name: "Ana", phone: "61992839456", phones: [phone1, phone2])
         fulana.phones.append(phone3)
-        
+
         print(fulana.name)  // Ana
         for phone in fulana.phones {
             print("(" + String(phone.ddd) + ")" + " " + String(phone.number))
@@ -143,25 +143,25 @@ struct AssociationNxM {
         var joao = Person1(name: "João")
         var marcos = Person1(name: "Marcos")
         var camila = Person1(name: "Camila")
-        
+
         // Vamos criar alguns grupos
-        let g1 = Group1(name: "Grupo A", people: [pedro, paula, joao])
-        let g2 = Group1(name: "Grupo B", people: [marcos, camila])
-        
-        pedro.groups.append(g1)
-        paula.groups.append(g1)
-        joao.groups.append(g1)
-        marcos.groups.append(g2)
-        camila.groups.append(g2)
-        
-        print(g1.name + ":")
-        for person in g1.people {
+        let group1 = Group1(name: "Grupo A", people: [pedro, paula, joao])
+        let group2 = Group1(name: "Grupo B", people: [marcos, camila])
+
+        pedro.groups.append(group1)
+        paula.groups.append(group1)
+        joao.groups.append(group1)
+        marcos.groups.append(group2)
+        camila.groups.append(group2)
+
+        print(group1.name + ":")
+        for person in group1.people {
             print(person.name)
         }
         // Pedro
         // Paula
         // João
-        
+
         print(camila.name + " grupos:")
         for group in camila.groups {
             print(group.name)
@@ -180,7 +180,7 @@ struct Aggregation {
         let item1 = Item1(title: "XTudo", price: 11.90)
         let item2 = Item1(title: "Coca-Cola", price: 5.75)
         let item3 = Item1(title: "Batata Frita", price: 5.00)
-        
+
         var order = Order1(items: [item1, item2, item3])
         print("O pedido ficou: R$ " + String(order.getBill()))
         // O pedido ficou: R$ 22.65
@@ -199,4 +199,3 @@ struct Composition {
         print("Notebook: " + keyboard.notebook.model)
     }
 }
-

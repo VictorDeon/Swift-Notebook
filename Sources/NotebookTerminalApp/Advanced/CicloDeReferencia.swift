@@ -16,7 +16,6 @@
  Assim você evita “vazamentos” de memória e mantém seu app saudável!
 */
 
-
 import AppKit
 import ArgumentParser
 import Foundation
@@ -61,7 +60,7 @@ class PessoaLeaky {
             print("\(self.nome) está executando a tarefa")
         }
     }
-    
+
     deinit {
         print("PessoaLeaky \(nome) foi desalocada.")
     }
@@ -109,4 +108,3 @@ func runSafeExample() {
     print("Referência externa a PessoaSafe zerada.\n")
     // Agora sim o deinit será chamado, porque não há retain cycle
 }
-

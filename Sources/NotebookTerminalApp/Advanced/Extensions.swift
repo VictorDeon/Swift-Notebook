@@ -49,4 +49,3 @@ extension Double {
         return (self * factor).rounded() / factor
     }
 }
-

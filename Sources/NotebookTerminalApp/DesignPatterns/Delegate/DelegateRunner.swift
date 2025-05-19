@@ -22,9 +22,9 @@ struct DelegateCommands: ParsableCommand {
 func delegateRunner() {
     let emilio = EmergencyCallHandler()
     // Pegou o bleep e ficou por um tempo depois passou para a o Surgeon
-    let _ = Paramedic(handler: emilio)
+    _ = Paramedic(handler: emilio)
     // O Surgeon esta com o bleep agora e vai responder a qualquer emergencia medica
-    let _ = Surgeon(handler: emilio)
+    _ = Surgeon(handler: emilio)
 
     emilio.assessSituation()
     // Pode me dizer o que aconteceu?

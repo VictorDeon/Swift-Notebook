@@ -29,15 +29,16 @@ func nscodeRunner() {
         for: .documentDirectory,
         in: .userDomainMask
     ).first?.appendingPathComponent("items.plist")
-    
+
     print(dataFilePath!)
-    // /Users/<user>/Library/Developer/CoreSimulator/Devices/<deviceId>/data/Containers/Data/Application/<appId>/Documents/items.plist
+    // /Users/<user>/Library/Developer/CoreSimulator/Devices/
+    // <deviceId>/data/Containers/Data/Application/<appId>/Documents/items.plist
     // /Users/<username>/Documents/items.plist
-    
+
     let item1 = TodoItem(title: "Item 01", done: true)
     let item2 = TodoItem(title: "Item 02", done: true)
     let item3 = TodoItem(title: "Item 03", done: false)
-    
+
     let items: [TodoItem] = [item1, item2, item3]
 
     // Salvando os dados
@@ -49,7 +50,7 @@ func nscodeRunner() {
     } catch {
         print("Error ao encode o array de items: \(error)")
     }
-    
+
     // Carregando os dados
     var currentItems: [TodoItem] = []
     if let data = try? Data(contentsOf: dataFilePath!) {
@@ -62,13 +63,11 @@ func nscodeRunner() {
                 // NotebookTerminalApp.Item(title: "Item 01", done: true),
                 // NotebookTerminalApp.Item(title: "Item 02", done: true),
                 // NotebookTerminalApp.Item(title: "Item 03", done: false)
-            //]
+            // ]
         } catch {
             print("Ocorreu um error ao carregar os items: \(error)")
         }
     }
-    
+
     try? FileManager.default.removeItem(at: dataFilePath!)
 }
-
-

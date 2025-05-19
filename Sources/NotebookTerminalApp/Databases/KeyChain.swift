@@ -18,26 +18,26 @@ struct KeyChainCommands: AsyncParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .long,  // --service
         help: "O identificador unico do serviço (e.g., bundle ID)"
     )
     var service: String = "tech.vksoftware.example"
-    
+
     @Option(
         name: [.customLong("key")],  // --key
         help: "A chave na qual o dados será armazenado"
     )
     var account: String
-    
+
     @Option(
         name: .long,  // --data
         help: "Os dados sensiveis que serão armazenados."
     )
     var data: String
 
-    mutating func run() async throws -> Void {
+    mutating func run() async throws {
         await MainActor.run {
             keychainRunner(service, account, data)
         }
@@ -48,7 +48,7 @@ struct KeyChainCommands: AsyncParsableCommand {
 final class KeychainHelper {
     static let shared = KeychainHelper()
     private init() {}
-    
+
     /// Salva dados no Keychain
     /// - Parameters:
     ///   - service: Identifica o “serviço” (normalmente, seu bundle ID).
@@ -129,7 +129,6 @@ final class KeychainHelper {
     }
 }
 
-
 @MainActor
 func keychainRunner(_ serviceBundle: String, _ account: String, _ data: String) {
     let service = Bundle.main.bundleIdentifier ?? serviceBundle
@@ -151,7 +150,7 @@ func keychainRunner(_ serviceBundle: String, _ account: String, _ data: String) 
             _ = KeychainHelper.shared.update(service: service, account: account, data: newData)
             print("Novo dado atualizado com sucesso no keychain")
         }
-        
+
         // Read
         if let retrieved = KeychainHelper.shared.read(service: service, account: account),
            let retrievedString = String(data: retrieved, encoding: .utf8) {
@@ -164,5 +163,3 @@ func keychainRunner(_ serviceBundle: String, _ account: String, _ data: String) 
     }
 
 }
-
-

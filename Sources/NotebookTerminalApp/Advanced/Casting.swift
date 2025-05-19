@@ -77,10 +77,8 @@ struct VerificandoTipo {
         let jack = Human(name: "Jack Bauer")
         let creatures: [Animal] = [jack, Fish(name: "Nemo")]
 
-        for creature in creatures {
-            if creature is Fish {
-                print("\(creature.name) é um peixe!")
-            }
+        for creature in creatures where creature is Fish {
+            print("\(creature.name) é um peixe!")
         }
     }
 }

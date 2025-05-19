@@ -36,7 +36,8 @@ struct SOCommands: ParsableCommand {
     }
 }
 
-/// Em Swift (em macOS/iOS ou Linux), a classe principal para executar comandos externos é a Process. Para capturar a saída (stdout e stderr), usamos a classe Pipe.
+/// Em Swift (em macOS/iOS ou Linux), a classe principal para executar comandos externos é a Process.
+/// Para capturar a saída (stdout e stderr), usamos a classe Pipe.
 struct ConceitosBasicos {
     static func run() {
         let process = Process()
@@ -48,7 +49,7 @@ struct ConceitosBasicos {
         let pipe = Pipe()
         process.standardOutput = pipe
         process.standardError = pipe
-        
+
         // Executando Sincronamente e Capturando Resultado
         do {
             // Inicia o processo
@@ -77,7 +78,7 @@ struct TratandoErrorDeFormaRobusta {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
         process.arguments = ["ls", "-la", "/"]
-        
+
         // Passando Variáveis de Ambiente para o processo
         process.environment = [
             "PATH": "/usr/local/bin:/usr/bin:/bin",
@@ -113,22 +114,22 @@ struct AsyncExecution {
                 let process = Process()
                 process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
                 process.arguments = ["ls", "-la", "/"]
-                
+
                 let stdoutPipe = Pipe()
                 let stderrPipe = Pipe()
                 process.standardOutput = stdoutPipe
                 process.standardError = stderrPipe
 
                 try process.run()
-                
+
                 // terminationHandler é chamado quando o processo termina.
                 process.terminationHandler = { proc in
                     let outData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
                     let errData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
-                    
+
                     let out = String(data: outData, encoding: .utf8) ?? ""
                     let err = String(data: errData, encoding: .utf8) ?? ""
-                    
+
                     print("[ASYNC] Processo finalizado com código \(proc.terminationStatus)")
                     print("[ASYNC] Saída:\n\(out)")
                     print("[ASYNC] Erros:\n\(err)")
@@ -142,7 +143,6 @@ struct AsyncExecution {
         print("Chamou o comando de forma assíncrona.")
     }
 }
-
 
 /// Rode qualquer comando shell
 func runShellCommand(_ launchPath: String, _ arguments: [String]) throws -> (output: String, exitCode: Int32) {

@@ -3,11 +3,11 @@
 
 class EmergencyCallHandler {
     var delegate: AdvancedLifeSupportProtocol?
-    
+
     func assessSituation() {
         print("Pode me dizer o que aconteceu?")
     }
-    
+
     func medicalEmergency() {
         delegate?.performCPR()
     }

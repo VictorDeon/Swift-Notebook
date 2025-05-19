@@ -32,7 +32,7 @@ struct TimeCommands: ParsableCommand {
 class Logo {
     var title: String = ""
     private var delay: Double = 0.0
-    
+
     func addChar(_ char: Character) {
         self.delay += 1.0
         Timer.scheduledTimer(withTimeInterval: 0.1 * delay, repeats: false) { _ in
@@ -49,7 +49,7 @@ class Logo {
             // FlashChat
         }
     }
-    
+
     func closeTimer() {
         Timer.scheduledTimer(withTimeInterval: 0.2 * delay, repeats: false) { _ in
             // Encerra o RunLoop se estiver em CLI um pouco depois de o time acima executar
@@ -76,7 +76,7 @@ func timerRunnerAsync() {
     let title = "FlashChat"
     var current = ""
     let semaphore = DispatchSemaphore(value: 0)
-    
+
     for (index, char) in title.enumerated() {
         // espera 0.1s * (index+1)
         let delay = UInt64(0.1 * Double(index + 1) * 1_000_000_000)
@@ -84,12 +84,12 @@ func timerRunnerAsync() {
             try? await Task.sleep(nanoseconds: delay)
             semaphore.signal()
         }
-        
+
         semaphore.wait()
 
         current.append(char)
         print(current)
     }
-    
+
     print("Título completo: \(current)")
 }

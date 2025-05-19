@@ -12,20 +12,20 @@ struct LoggingCommands: AsyncParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .shortAndLong,  // -n --numerador
         help: "numerador da divisão"
     )
     var numerador: Int = 10
-    
+
     @Option(
         name: .shortAndLong,  // -d --denominador
         help: "denominador da divisão"
     )
     var denominador: Int = 2
 
-    mutating func run() async throws -> Void {
+    mutating func run() async throws {
         await MainActor.run {
             print("Oi eu sou o print!")
 
@@ -40,7 +40,8 @@ struct LoggingCommands: AsyncParsableCommand {
                 "userId": AnyEncodable("fulano@gmail.com"),
                 "retry": AnyEncodable(false)
             ])
-            // 2025-05-15 18:51:14 [debug] vX.Y.Z trace=19CC049E-FECD-4E62-AC6C-354CB0786687: Msg + trace + json {"retry":false,"userId":"fulano@gmail.com"}
+            // 2025-05-15 18:51:14 [debug] vX.Y.Z trace=19CC049E-FECD-4E62-AC6C-354CB0786687:
+            // Msg + trace + json {"retry":false,"userId":"fulano@gmail.com"}
 
             logger.info("Msg")
             logger.info("Msg + trace", trace: traceID)
@@ -67,10 +68,10 @@ struct LoggingCommands: AsyncParsableCommand {
             } catch {
                 // 2025-05-15 18:51:14 [error] vX.Y.Z: Erro: tentativa de divisão por zero.
                 logger.error(error)
-                // 2025-05-15 18:51:14 [error] vX.Y.Z trace=19CC049E-FECD-4E62-AC6C-354CB0786687: Erro: tentativa de divisão por zero.
+                // 2025-05-15 18:51:14 [error] vX.Y.Z trace=19CC049E-FECD-4E62-AC6C-354CB0786687:
+                // Erro: tentativa de divisão por zero.
                 logger.error(error, trace: traceID)
             }
-            
         }
     }
 }
@@ -292,7 +293,7 @@ public final class LoggerSingleton {
     public func info(_ msg: String, trace: String) {
         self.info(msg, trace: trace, json: nil)
     }
-    
+
     public func info(_ msg: String) {
         self.info(msg, trace: nil, json: nil)
     }
@@ -310,11 +311,11 @@ public final class LoggerSingleton {
         }
         logger.warning("\(msg)", metadata: metadata)
     }
-    
+
     public func warning(_ msg: String, trace: String) {
         self.warning(msg, trace: trace, json: nil)
     }
-    
+
     public func warning(_ msg: String) {
         self.warning(msg, trace: nil, json: nil)
     }

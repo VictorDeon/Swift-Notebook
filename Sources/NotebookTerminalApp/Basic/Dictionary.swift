@@ -57,7 +57,7 @@ struct CriacaoDeDicionarios {
         // Dicionário aninhado
         let hardwareSpecs: [String: [String: Int]] = [
             "desktop": ["cpu": 8, "ram": 16],
-            "laptop":  ["cpu": 4, "ram": 8]
+            "laptop": ["cpu": 4, "ram": 8]
         ]
         print(hardwareSpecs)            // ["desktop": ["ram": 16, "cpu": 8], "laptop": ["ram": 8, "cpu": 4]]
     }
@@ -80,7 +80,7 @@ struct AcessandoValores {
         // Acesso de dicionário aninhado
         let hardwareSpecs: [String: [String: Int]] = [
             "desktop": ["cpu": 8, "ram": 16],
-            "laptop":  ["cpu": 4, "ram": 8]
+            "laptop": ["cpu": 4, "ram": 8]
         ]
 
         if let desktop = hardwareSpecs["desktop"],
@@ -89,7 +89,6 @@ struct AcessandoValores {
         }
     }
 }
-
 
 /// Adicionando e atualizando entradas
 struct AdicionandoAtualizandoEntradas {

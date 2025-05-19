@@ -7,11 +7,13 @@
  mas oferecem sintaxe e recursos poderosos, como captura de valores.
  Dicas e boas práticas:
     1. Prefira trailing closures quando tiver código mais longo dentro da closure.
-    2. Use parâmetros abreviados ($0, $1) em closures curtas; declare nomes explícitos em closures complexas para clareza.
+    2. Use parâmetros abreviados ($0, $1) em closures curtas; declare nomes explícitos
+       em closures complexas para clareza.
     3. Evite lógica pesada dentro de closures — extraia em funções nomeadas se ficar extenso.
-    4. Atenção à captura de valores: para closures que vão viver além do escopo atual (por exemplo, stored properties), considere [weak self] ou [unowned self] para evitar ciclos de referência.
+    4. Atenção à captura de valores: para closures que vão viver além do escopo atual
+        (por exemplo, stored properties), considere [weak self] ou [unowned self] para evitar
+        ciclos de referência.
 */
-// swiftlint:disable all
 
 import AppKit
 import ArgumentParser
@@ -43,33 +45,33 @@ struct ClosuresCommands: ParsableCommand {
 struct SintaxeBasica {
     static func run() {
         // { (parâmetros) -> TipoRetorno in corpo-da-closure }
-        let closureExemplo: (Int, Int) -> Int = { (a: Int, b: Int) -> Int in
-            return a + b
+        let closureExemplo: (Int, Int) -> Int = { (value1: Int, value2: Int) -> Int in
+            return value1 + value2
         }
         print(closureExemplo(2, 3))   // 5
     }
 }
 
 // Podemos criar funções que recebem closures para executar diferentes operações:
-func calculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
-    operation(n1, n2)
+func calculator(_ value1: Int, _ value2: Int, operation: (Int, Int) -> Int) -> Int {
+    operation(value1, value2)
 }
 
 /// Closures como parâmetros de funções
 struct ClosuresComoParametrosDeFuncoes {
     static func run() {
         // Funções auxiliares
-        func add(_ a: Int, _ b: Int) -> Int { a + b }
-        func sub(_ a: Int, _ b: Int) -> Int { b - a }
-        func mul(_ a: Int, _ b: Int) -> Int { a * b }
+        func add(_ value1: Int, _ value2: Int) -> Int { value1 + value2 }
+        func sub(_ value1: Int, _ value2: Int) -> Int { value2 - value1 }
+        func mul(_ value1: Int, _ value2: Int) -> Int { value1 * value2 }
 
         // Uso com funções nomeadas
         print(calculator(2, 3, operation: add))      // 5
         print(calculator(2, 3, operation: mul))      // 6
 
         // Uso com closure inline
-        print(calculator(2, 3, operation: { (a: Int, b: Int) -> Int in
-            return b - a
+        print(calculator(2, 3, operation: { (value1: Int, value2: Int) -> Int in
+            return value2 - value1
         }))  // 1
     }
 }
@@ -77,7 +79,8 @@ struct ClosuresComoParametrosDeFuncoes {
 /// Trailing closures & shorthand argument names
 struct TrailingClosuresEShorthandArguments {
     static func run() {
-        // Quando a closure é o último parâmetro, podemos usar sintaxe de trailing closure e nomes abreviados ($0, $1, …):
+        // Quando a closure é o último parâmetro, podemos usar sintaxe de trailing
+        // closure e nomes abreviados ($0, $1, …):
         // Trailing closure:
         print(calculator(2, 3) { $1 - $0 })   // 1
 

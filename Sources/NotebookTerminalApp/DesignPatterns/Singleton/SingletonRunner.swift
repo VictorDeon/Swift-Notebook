@@ -16,7 +16,7 @@ struct SingletonCommands: AsyncParsableCommand {
 
     @OptionGroup var common: CommonOptions
 
-    mutating func run() async throws -> Void {
+    mutating func run() async throws {
         // Como estamos rodando um singleton dentro da thread do parsable command
         // precisamos rodar ela na thread principal com o MainActor.run
         await MainActor.run {
@@ -26,14 +26,14 @@ struct SingletonCommands: AsyncParsableCommand {
             let yourCar = CarSingleton()
             print("My Car Colour: \(myCar.colour)")     // Blue
             print("Your Car Colour: \(yourCar.colour)") // Red (outra instancia, pega o valor default)
-            
+
             let myCarSingleton = CarSingleton.shared
             myCarSingleton.colour = "Blue"
 
             let yourCarSingleton = CarSingleton.shared
             print("My Car Singleton Colour: \(myCarSingleton.colour)")      // Blue
             print("Your Car Singleton Colour: \(yourCarSingleton.colour)")  // Blue (é a mesma instancia singleton)
-            
+
             let settings = SingletonSettings.shared
             print(settings.lang!)
         }
@@ -43,7 +43,7 @@ struct SingletonCommands: AsyncParsableCommand {
 /// Singleton que permite modificação de seus atributos e instanciaçoes da classe
 class CarSingleton {
     var colour = "Red"
-    
+
     // Precisamos enviar para a thread principal para evitar concorrencia ao modificar os dados desse singleton.
     @MainActor static let shared = CarSingleton()
 }
@@ -51,10 +51,10 @@ class CarSingleton {
 /// Singleton que não permitie modificação ou instanciações
 class SingletonSettings {
     let lang: String = "pt-BR"
-    
+
     // Definie a forma de acesso as configurações
     @MainActor static let shared = Settings()
-    
+
     // Impede de inicializar uma nova instancia das configurações.
     private init() {}
 }

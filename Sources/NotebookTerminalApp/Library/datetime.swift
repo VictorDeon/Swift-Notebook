@@ -118,7 +118,7 @@ struct IntervalosEComparacao {
         let today = Date()
         let oneDay: TimeInterval = 24 * 60 * 60
         let tomorrow = today.addingTimeInterval(oneDay)
-        
+
         // Comparações
         if today < tomorrow {
             print("Hoje vem antes de Amanha")
@@ -148,24 +148,24 @@ struct TimeZonesELocale {
         // ["Africa/Abidjan", "Africa/Accra", "Africa/Addis_Ababa", "Africa/Algiers", "Africa/Asmara"]
 
         // Converter data entre fusos
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd HH:mm zzz"
-        df.locale = Locale(identifier: "pt_BR")
-        
-        df.timeZone = TimeZone(identifier: "America/Sao_Paulo")
-        print("Brasil SP: \(df.string(from: today))")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm zzz"
+        dateFormatter.locale = Locale(identifier: "pt_BR")
+
+        dateFormatter.timeZone = TimeZone(identifier: "America/Sao_Paulo")
+        print("Brasil SP: \(dateFormatter.string(from: today))")
         // Brasil SP: 2025-05-16 15:51 BRT
 
-        df.timeZone = TimeZone(identifier: "America/New_York")
-        print("NY: \(df.string(from: today))")
+        dateFormatter.timeZone = TimeZone(identifier: "America/New_York")
+        print("NY: \(dateFormatter.string(from: today))")
         // NY: 2025-05-16 14:49 GMT-4
 
-        df.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        print("Tokyo: \(df.string(from: today))")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        print("Tokyo: \(dateFormatter.string(from: today))")
         // Tokyo: 2025-05-17 03:49 GMT+9
-        
-        df.timeZone = TimeZone(identifier: "UTC")
-        print("UTC: \(df.string(from: today))")
+
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        print("UTC: \(dateFormatter.string(from: today))")
         // UTC: 2025-05-16 18:49 GMT
     }
 }

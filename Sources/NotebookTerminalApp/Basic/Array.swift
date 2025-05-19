@@ -11,7 +11,7 @@ struct ArrayCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .long,  // array
         parsing: .upToNextOption,

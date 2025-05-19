@@ -9,28 +9,28 @@ struct SwiftUIHelloWorldCommands: AsyncParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Option(
         name: .long,  // --title1
         help: "Título da primeira Janela"
     )
     var title1: String = "Janela 1"
-    
+
     @Option(
         name: .long,  // title2
         help: "Título da segunda Janela"
     )
     var title2: String = "Janela 2"
 
-    mutating func run() async throws -> Void {
+    mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
             TerminalApp.showWindow(ContentView1(), title: title1)
             app.run()
-            
+
             TerminalApp.showWindow(ContentView2(), title: title2)
             app.run()
-            
+
             print("Finalizado!")
         }
     }
@@ -51,4 +51,3 @@ struct ContentView2: View {
             .frame(width: 300, height: 100)
     }
 }
-

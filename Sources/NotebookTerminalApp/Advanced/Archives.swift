@@ -212,7 +212,8 @@ struct ManipulandoArquivos {
 
     static func createFile(at path: String) throws {
         let fileManager = FileManager.default
-        let content = "Olá, Mundo!".data(using: .utf8)!
+        let msg: String? = "Olá, Mundo!"
+        let content = msg!.data(using: .utf8)
 
         let result = fileExist(at: path)
         if result.exist {
