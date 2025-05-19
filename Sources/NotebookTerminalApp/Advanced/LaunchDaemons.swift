@@ -63,6 +63,12 @@
 
  # Listar todos os daemons carregados
  launchctl list | grep tech.vksoftware
+
+ # Verifica o que tem dentro do launch loaded
+ launchctl print system/tech.vksoftware.notebookdaemon
+
+ # Ler os logs
+ tail -f /var/log/swiftdaemon.{out,err}.log
  ```
  
  6. Casos:
@@ -120,8 +126,8 @@ struct LaunchDaemonEmSwift {
             "EnvironmentVariables": [
                 "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
             ],
-            "StandardOutPath": "/tmp/swiftdaemon.out.log",
-            "StandardErrorPath": "/tmp/swiftdaemon.err.log"
+            "StandardOutPath": "/var/log/swiftdaemon.out.log",
+            "StandardErrorPath": "/var/log/swiftdaemon.err.log"
         ]
 
         let path = "/Library/LaunchDaemons/tech.vksoftware.notebookdaemon.plist"
