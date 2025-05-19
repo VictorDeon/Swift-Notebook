@@ -24,11 +24,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_GITHUB_ACCESS_TOKEN }}
 
       - name: Configure Git to use token for private deps
         run: |
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://${{ secrets.PERSONAL_GITHUB_ACCESS_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
       - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
