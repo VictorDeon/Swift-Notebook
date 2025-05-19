@@ -23,7 +23,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-	with:
+        with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Xcode
