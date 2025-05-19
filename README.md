@@ -181,11 +181,11 @@ TODO:
 - [x] Requisições HTTP
 - [x] Datetime
 - [x] Regex
-- [x] Criptografia e Segurança* (simetrica, assimetrica e JWT) (ChatGPT)
+- [x] Criptografia e Segurança (simetrica, assimetrica e JWT) (ChatGPT)
 - [x] Threads e Processos
 - [x] Assincronicidade igual ao python (Corotines)
-- [ ] Launch Daemon e Launch User (Segunda) (ChatGPT)
-- [ ] Empacotamento de modulos e utilização do pacote* (Terça) (Video)
+- [x] Launch Daemon e Launch User
+- [x] Empacotamento de modulos e utilização do pacote
 - [ ] SwiftUI* (Terça a Quinta) (Video)
 - [ ] ObjectiveC (Segunda + Terça) (Video)
 - [x] Execução por Terminal com Path Parameters
