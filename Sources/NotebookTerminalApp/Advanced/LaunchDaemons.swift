@@ -69,6 +69,9 @@
 
  # Ler os logs
  tail -f /var/log/swiftdaemon.{out,err}.log
+
+ # Validar o plist
+ plutil -lint /Library/LaunchDaemons/tech.vksoftware.notebookdaemon.plist
  ```
  
  6. Casos:
