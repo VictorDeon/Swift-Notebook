@@ -102,7 +102,8 @@ let package = Package(
                 .product(name: "VKLogging", package: "VKLogging")
             ],
             resources: [
-                .process("version.txt")
+                .process("version.txt"),
+                .process("Assets")
             ]
         )
     ]
