@@ -182,8 +182,8 @@ TODO:
 - [x] Datetime
 - [x] Regex
 - [ ] Criptografia e Segurança* (simetrica, assimetrica e JWT) (ChatGPT)
-- [ ] Threads e Processos* (Domingo) (Video)
-- [ ] Assincronicidade igual ao python (Corotines)* (Domingo) (Video)
+- [x] Threads e Processos
+- [x] Assincronicidade igual ao python (Corotines)
 - [ ] Launch Daemon e Launch User (Segunda) (ChatGPT)
 - [ ] Empacotamento de modulos e utilização do pacote* (Terça) (Video)
 - [ ] SwiftUI* (Terça a Quinta) (Video)

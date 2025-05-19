@@ -140,6 +140,7 @@ struct MakeRequest {
         return result.response?.statusCode
     }
 
+    /// sabemos o número fica de requisições
     static func batch() async {
         let session = Session.default
         async let first = session.request("https://httpbin.org/get").serializingDecodable(DecodableModel.self).response
@@ -153,6 +154,7 @@ struct MakeRequest {
         print(responses.1.metrics?.taskInterval ?? 0)
         print(responses.2.metrics?.taskInterval ?? 0)
     }
+
 
     static func post(login: Login) async -> Int? {
         let headers: HTTPHeaders = [

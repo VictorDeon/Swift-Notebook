@@ -11,7 +11,7 @@ struct TimeCommands: ParsableCommand {
     )
 
     @OptionGroup var common: CommonOptions
-    
+
     @Flag(
         name: .customLong("async"),  // --async
         help: "Executa usando código assincrono."
