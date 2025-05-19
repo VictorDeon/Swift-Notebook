@@ -1,4 +1,4 @@
-// swift-tools-version: 6.1.0
+// swift-tools-version: 6.0
 // O swift-tools-version declara a versão mínima do Swift necessária para compilar este pacote.
 /**
  1. name: String = Nome do pacote (Obrigatorio)
