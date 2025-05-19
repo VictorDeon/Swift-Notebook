@@ -126,7 +126,8 @@ struct TerminalApp: AsyncParsableCommand {
             PaintingBucketsCommands.self,
             // SwiftUI
             SwiftUIHelloWorldCommands.self,
-            LayoutCommands.self
+            LayoutCommands.self,
+            TextCommands.self
         ]
     )
 
