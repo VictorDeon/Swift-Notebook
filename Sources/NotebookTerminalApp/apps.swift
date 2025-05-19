@@ -127,7 +127,8 @@ struct TerminalApp: AsyncParsableCommand {
             // SwiftUI
             SwiftUIHelloWorldCommands.self,
             LayoutCommands.self,
-            TextCommands.self
+            TextCommands.self,
+            SFSymbolCommands.self
         ]
     )
 
