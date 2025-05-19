@@ -181,7 +181,7 @@ TODO:
 - [x] Requisições HTTP
 - [x] Datetime
 - [x] Regex
-- [ ] Criptografia e Segurança* (simetrica, assimetrica e JWT) (ChatGPT)
+- [x] Criptografia e Segurança* (simetrica, assimetrica e JWT) (ChatGPT)
 - [x] Threads e Processos
 - [x] Assincronicidade igual ao python (Corotines)
 - [ ] Launch Daemon e Launch User (Segunda) (ChatGPT)
