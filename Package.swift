@@ -81,14 +81,14 @@ import PackageDescription
 
 let package = Package(
     name: "NotebookTerminalApp",
-    platforms: [.macOS(.v12)],
+    platforms: [.macOS(.v15)],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.6.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0"),
         .package(url: "https://github.com/groue/GRDB.swift.git", from: "7.5.0"),
         .package(url: "https://github.com/realm/realm-swift.git", .upToNextMajor(from: "20.0.2")),
-        .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
-        .package(url: "https://github.com/Kitura/Swift-JWT.git", from: "4.0.0")
+        .package(url: "https://github.com/Kitura/Swift-JWT.git", from: "4.0.0"),
+        .package(url: "https://github.com/VictorDeon/VKLogging.git", from: "1.0.0")
     ],
     targets: [
         .executableTarget(
@@ -98,8 +98,8 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "GRDB", package: "GRDB.swift"),
                 .product(name: "RealmSwift", package: "realm-swift"),
-                .product(name: "Logging", package: "swift-log"),
-                .product(name: "SwiftJWT", package: "Swift-JWT")
+                .product(name: "SwiftJWT", package: "Swift-JWT"),
+                .product(name: "VKLogging", package: "VKLogging")
             ],
             resources: [
                 .process("version.txt")

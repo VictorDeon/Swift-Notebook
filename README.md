@@ -186,7 +186,7 @@ TODO:
 - [x] Assincronicidade igual ao python (Corotines)
 - [x] Launch Daemon e Launch User
 - [x] Empacotamento de modulos e utilização do pacote
-- [ ] SwiftUI* (Terça a Quinta) (Video)
+- [ ] SwiftUI* (Segunda a Quinta) (Video)
 - [ ] ObjectiveC (Segunda + Terça) (Video)
 - [x] Execução por Terminal com Path Parameters
 - [ ] Firebase
