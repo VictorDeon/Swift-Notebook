@@ -142,7 +142,8 @@ struct TerminalApp: AsyncParsableCommand {
             ButtonCommands.self,
             StateCommands.self,
             TextFieldCommands.self,
-            IdentifiableCommands.self
+            IdentifiableCommands.self,
+            SheetsAndNavigationCommands.self
         ]
     )
 
