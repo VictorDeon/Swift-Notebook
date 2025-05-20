@@ -28,25 +28,25 @@ struct LayoutCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(VStackContent(), title: "VStack")
+            TerminalApp.showWindow(VStackContent(), by: app)
             app.run()
 
-            TerminalApp.showWindow(HStackContent(), title: "HStack")
+            TerminalApp.showWindow(HStackContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(ZStackContent(), title: "ZStack")
+            TerminalApp.showWindow(ZStackContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(LayoutContent(), title: "Layout")
+            TerminalApp.showWindow(LayoutContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(AlignmentContent(), title: "Alinhamento")
+            TerminalApp.showWindow(AlignmentContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(PositionContent(), title: "Posicionamento")
+            TerminalApp.showWindow(PositionContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(GeometryContent(), title: "Geometria")
+            TerminalApp.showWindow(GeometryContent(), by: app)
             app.run()
 
             print("Finalizado!")

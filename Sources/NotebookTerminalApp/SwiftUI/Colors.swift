@@ -12,7 +12,7 @@ struct ColorCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(ColorContentView(), title: "Cores")
+            TerminalApp.showWindow(ColorContentView(), by: app)
             app.run()
 
             print("Finalizado!")

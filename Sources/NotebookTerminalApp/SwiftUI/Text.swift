@@ -13,7 +13,7 @@ struct TextCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(TextContent(), title: "Text")
+            TerminalApp.showWindow(TextContent(), by: app)
             app.run()
 
             print("Finalizado!")

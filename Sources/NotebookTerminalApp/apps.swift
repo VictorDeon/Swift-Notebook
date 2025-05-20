@@ -15,7 +15,10 @@ func readVersion() -> String {
 
 class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
     // Cria a janela SwiftUI
-    init(rootView: V, title: String) {
+    init(app: NSApplication, rootView: V, title: String) {
+        // transformamos o CLI num app com Dock e foco
+        app.setActivationPolicy(.regular)
+
         let win = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 300, height: 100),
             styleMask: [.titled, .closable, .resizable],
@@ -29,6 +32,11 @@ class HostingWindowController<V: View>: NSWindowController, NSWindowDelegate {
 
         // configuro o contentView e o delegate
         win.contentView = NSHostingView(rootView: rootView)
+        // garantimos que a janela receba eventos de teclado
+        win.makeKeyAndOrderFront(nil)
+        // trazemos o app para frente
+        app.activate(ignoringOtherApps: true)
+
         super.init(window: win)
         win.delegate = self
     }
@@ -132,13 +140,14 @@ struct TerminalApp: AsyncParsableCommand {
             ShapeCommands.self,
             ColorCommands.self,
             ButtonCommands.self,
-            StateCommands.self
+            StateCommands.self,
+            TextFieldCommands.self
         ]
     )
 
     // Mostra a janela do SwiftUI
-    @MainActor static func showWindow<V: View>(_ view: V, title: String) {
-        let controller = HostingWindowController(rootView: view, title: title)
+    @MainActor static func showWindow<V: View>(_ view: V, by app: NSApplication, title: String = "Janela") {
+        let controller = HostingWindowController(app: app, rootView: view, title: title)
         windowControllers.append(controller)
         controller.showWindow(nil)
     }

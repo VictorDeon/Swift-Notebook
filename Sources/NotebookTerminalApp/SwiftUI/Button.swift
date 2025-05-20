@@ -12,7 +12,7 @@ struct ButtonCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(ContentView(), title: "Botões")
+            TerminalApp.showWindow(ContentView(), by: app)
             app.run()
 
             print("Finalizado!")

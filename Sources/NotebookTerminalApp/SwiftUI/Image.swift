@@ -13,10 +13,10 @@ struct ImageCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(ImageContent(), title: "Image")
+            TerminalApp.showWindow(ImageContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(BigImageContent(), title: "Big Image")
+            TerminalApp.showWindow(BigImageContent(), by: app)
             app.run()
 
             print("Finalizado!")

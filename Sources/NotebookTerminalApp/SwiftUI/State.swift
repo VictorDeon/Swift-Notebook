@@ -12,7 +12,7 @@ struct StateCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(StateContentView(), title: "State e Binding")
+            TerminalApp.showWindow(StateContentView(), by: app)
             app.run()
 
             print("Finalizado!")

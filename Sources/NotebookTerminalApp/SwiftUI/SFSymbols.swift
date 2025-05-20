@@ -14,7 +14,7 @@ struct SFSymbolCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(SFSymbolContent(), title: "SF Symbol")
+            TerminalApp.showWindow(SFSymbolContent(), by: app)
             app.run()
 
             print("Finalizado!")
