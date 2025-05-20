@@ -118,6 +118,7 @@ struct TerminalApp: AsyncParsableCommand {
             // Design Patterns
             DelegateCommands.self,
             SingletonCommands.self,
+            MVVMCommands.self,
             // Libraries
             RequestCommands.self,
             TimeCommands.self,
@@ -143,7 +144,8 @@ struct TerminalApp: AsyncParsableCommand {
             StateCommands.self,
             TextFieldCommands.self,
             IdentifiableCommands.self,
-            SheetsAndNavigationCommands.self
+            SheetsAndNavigationCommands.self,
+            ListCommands.self
         ]
     )
 

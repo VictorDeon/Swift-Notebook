@@ -187,22 +187,19 @@ TODO:
 - [x] Launch Daemon e Launch User
 - [x] Empacotamento de modulos e utilização do pacote
 - [ ] SwiftUI* (Terça)
-    - [ ] Seção 17 - Git and Github (Watch-Only) (1:20h)
-    - [ ] Seção 18 - MVVM (52min)
-    - [ ] Seção 19 - List and ScrollViews (20m)
-    - [ ] Seção 22 - Adaptive Layout (Watch-Only) (17m)
-    - [ ] Seção 23 - iPad Development (Watch-Only) (15m)
-    - [ ] Seção 24 - Multiplatform Application development (Watch-Only) (23m)
-    - [ ] Seção 25 - MacOS Development (Watch-Only) (19m)
     - [ ] Seção 36 - Grids (43m)
-    - [ ] Seção 37 - UIViewRepresentable (Watch-Only) (30m)
     - [ ] Seção 39 - ViewBuilders and Custom Modifiers (28m)
     - [ ] Seção 74 - Grand Central Dispatch and Memory (52m)
     - [ ] Seção 75 - Error Handling (22m)
     - [ ] Seção 76 - Generics (30m)
-    - [ ] Senti Falta: Select, Toogle, CheckBox, RadioButton, Datetime
+    - [ ] Seção 37 - UIViewRepresentable (Watch-Only) (30m)
 - [ ] ObjectiveC (Quarta) (Video) (6,5h)
-- [ ] MacOS Using SwiftUI (Quinta) (12h)
+- [ ] MacOS Using SwiftUI Projeto 01 (Quinta) (12h)
+    - [ ] Seção 21 - To Do List
+    - [ ] Seção 22 - Adaptive Layout (Watch-Only) (17m)
+    - [ ] Seção 23 - iPad Development (Watch-Only) (15m)
+    - [ ] Seção 24 - Multiplatform Application development (Watch-Only) (23m)
+    - [ ] Seção 25 - MacOS Development (Watch-Only) (19m)
 - [x] Execução por Terminal com Path Parameters
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
