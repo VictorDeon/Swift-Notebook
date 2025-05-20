@@ -187,7 +187,6 @@ TODO:
 - [x] Launch Daemon e Launch User
 - [x] Empacotamento de modulos e utilização do pacote
 - [ ] SwiftUI* (Terça)
-    - [ ] Seção 36 - Grids (43m)
     - [ ] Seção 39 - ViewBuilders and Custom Modifiers (28m)
     - [ ] Seção 74 - Grand Central Dispatch and Memory (52m)
     - [ ] Seção 75 - Error Handling (22m)
