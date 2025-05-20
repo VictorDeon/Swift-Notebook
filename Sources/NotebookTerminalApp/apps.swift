@@ -146,7 +146,8 @@ struct TerminalApp: AsyncParsableCommand {
             IdentifiableCommands.self,
             SheetsAndNavigationCommands.self,
             ListCommands.self,
-            GridsCommands.self
+            GridsCommands.self,
+            ViewBuilderCommands.self
         ]
     )
 
