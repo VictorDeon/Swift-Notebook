@@ -131,7 +131,8 @@ struct TerminalApp: AsyncParsableCommand {
             ImageCommands.self,
             ShapeCommands.self,
             ColorCommands.self,
-            ButtonCommands.self
+            ButtonCommands.self,
+            StateCommands.self
         ]
     )
 
