@@ -187,14 +187,13 @@ TODO:
 - [x] Launch Daemon e Launch User
 - [x] Empacotamento de modulos e utilização do pacote
 - [ ] SwiftUI* (Terça)
-    - [ ] Seção 16 - Sheets and Navigation (1h)
     - [ ] Seção 17 - Git and Github (Watch-Only) (1:20h)
     - [ ] Seção 18 - MVVM (52min)
     - [ ] Seção 19 - List and ScrollViews (20m)
     - [ ] Seção 22 - Adaptive Layout (Watch-Only) (17m)
     - [ ] Seção 23 - iPad Development (Watch-Only) (15m)
     - [ ] Seção 24 - Multiplatform Application development (Watch-Only) (23m)
-    - [ ] Seção 25 - MacOS Development (19m)
+    - [ ] Seção 25 - MacOS Development (Watch-Only) (19m)
     - [ ] Seção 36 - Grids (43m)
     - [ ] Seção 37 - UIViewRepresentable (Watch-Only) (30m)
     - [ ] Seção 39 - ViewBuilders and Custom Modifiers (28m)
