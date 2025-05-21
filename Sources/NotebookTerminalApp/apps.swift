@@ -117,6 +117,7 @@ struct TerminalApp: AsyncParsableCommand {
             CriptografyCommands.self,
             LaunchDaemonCommands.self,
             GenericsCommands.self,
+            POPCommands.self,
             // Design Patterns
             DelegateCommands.self,
             SingletonCommands.self,

@@ -187,14 +187,8 @@ TODO:
 - [x] Launch Daemon e Launch User
 - [x] Empacotamento de modulos e utilização do pacote
 - [x] SwiftUI
-- [ ] ObjectiveC (Quarta) (Video) (6,5h)
-- [ ] MacOS Using SwiftUI Projeto 01 (Quinta) (4h)
-    - [ ] Seção 21 - To Do List
-    - [ ] Seção 22 - Adaptive Layout (Watch-Only) (17m)
-    - [ ] Seção 23 - iPad Development (Watch-Only) (15m)
-    - [ ] Seção 24 - Multiplatform Application development (Watch-Only) (23m)
-    - [ ] Seção 25 - MacOS Development (Watch-Only) (19m)
 - [x] Execução por Terminal com Path Parameters
+- [ ] Inputs e Outputs
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
     - [ ] Firestore: Solução de banco de dados em nuvem NoSQL
@@ -276,6 +270,6 @@ TODO:
     - [ ] Cifra de Cesar
     - [ ] Simulated Annealing
 - [ ] Socket
-- [ ] Inputs e Outputs
+- [ ] SOLID
 - [ ] Machine Learning e Data Science
 - [ ] Matematica
