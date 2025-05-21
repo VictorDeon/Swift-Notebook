@@ -13,13 +13,13 @@ struct EnumCommands: ParsableCommand {
         name: .long,  // today
         help: "Dia da semana. Ex: monday, tuesday, wednesday, thusdaym friday, saturday, sunday"
     )
-    var today: WeekDay = .monday
+    fileprivate var today: WeekDay = .monday
 
     @Option(
         name: .long,  // temperature
         help: "Dia da semana. Ex: hot, cold"
     )
-    var temperature: Temperature = .cold
+    fileprivate var temperature: Temperature = .cold
 
     @Option(
         name: .customLong("test-result"),  // test-result
@@ -36,7 +36,7 @@ struct EnumCommands: ParsableCommand {
             }
           }
     )
-    var testResult: TestResult = .success("Teste passou com sucesso!")
+    fileprivate var testResult: TestResult = .success("Teste passou com sucesso!")
 
     @Option(
         name: .long,  // temperature
@@ -49,7 +49,7 @@ struct EnumCommands: ParsableCommand {
                 return status
             }
     )
-    var status: Status = .actived
+    fileprivate var status: Status = .actived
 
     func run() throws {
         print("→ Enums")

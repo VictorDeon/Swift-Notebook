@@ -81,3 +81,7 @@ struct LoggingCommands: AsyncParsableCommand {
         }
     }
 }
+
+fileprivate func divide(_ numerador: Int, by denominador: Int) throws -> Int {
+    return numerador / denominador
+}
