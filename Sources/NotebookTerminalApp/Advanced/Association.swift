@@ -1,6 +1,8 @@
 // É o mecanismo pelo qual um objeto utiliza os recursos de outro, basicamente ele está vinculado a outra classe.
 // Pode tratar-se de uma associação simples (1x1), associações complexas (1xN) ou (NxM), ou de um
 // acoplamento (é parte de) que temos "composição" e "agregação".
+// Para não gerar ciclo de referencia e liberar memoria usamos weak caso ambas as classes referenciam
+// uma a outra de forma opcional e usamos unowned caso pelo menos uma das classes a referencia seja obrigatoria.
 
 import Foundation
 import AppKit
@@ -81,7 +83,7 @@ struct Order1 {
 
 class Keyboard {
     var model: String
-    var notebook: Notebook
+    unowned var notebook: Notebook
 
     init(model: String, notebook: Notebook) {
         self.model = model

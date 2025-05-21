@@ -186,10 +186,7 @@ TODO:
 - [x] Assincronicidade igual ao python (Corotines)
 - [x] Launch Daemon e Launch User
 - [x] Empacotamento de modulos e utilização do pacote
-- [ ] SwiftUI* (Terça)
-    - [ ] Seção 74 - Grand Central Dispatch and Memory (52m)
-    - [ ] Seção 75 - Error Handling (22m)
-    - [ ] Seção 76 - Generics (30m)
+- [x] SwiftUI
 - [ ] ObjectiveC (Quarta) (Video) (6,5h)
 - [ ] MacOS Using SwiftUI Projeto 01 (Quinta) (12h)
     - [ ] Seção 21 - To Do List

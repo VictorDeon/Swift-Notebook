@@ -29,6 +29,8 @@ struct LoopCommands: ParsableCommand {
         LoopMatrix.run()
         print("→ Loop Dict:")
         LoopDict.run()
+        print("→ Loop Where:")
+        LoopWhere.run()
     }
 }
 
@@ -138,6 +140,16 @@ struct LoopDict {
             // James: 987654
             // Adam: 123456
             // Amy: 777777
+        }
+    }
+}
+
+struct LoopWhere {
+    static func run() {
+        let contacts: [String: Int] = ["Adam": 123456, "James": 987654, "Amy": 777777]
+        for contact in contacts where contact.key == "James" {
+            print("\(contact.key): \(contact.value)")
+            // James: 987654
         }
     }
 }

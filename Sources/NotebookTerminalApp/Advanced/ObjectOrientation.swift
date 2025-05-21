@@ -110,16 +110,6 @@ class GameCharacter: Attackable, Movable, Game {
     }
 }
 
-/// Equatable cria uma comparação customizada
-/// char1 = GameCharacter(health: 100)
-/// char2 = GameCharacter(health: 200)
-/// char1 == char2 ? false
-extension GameCharacter: Equatable {
-    static func == (lhs: GameCharacter, rhs: GameCharacter) -> Bool {
-        return lhs.health == rhs.health
-    }
-}
-
 // MARK: 2. Herança e Especialização
 // 2.1 Inimigo Genérico: Enemy
 class Enemy: GameCharacter {
