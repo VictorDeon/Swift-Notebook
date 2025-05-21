@@ -97,6 +97,7 @@ struct TerminalApp: AsyncParsableCommand {
             LoopCommands.self,
             ScopeCommands.self,
             TypeCommands.self,
+            InputCommands.self,
             // Intermediary
             ExceptionCommands.self,
             FunctionCommands.self,
