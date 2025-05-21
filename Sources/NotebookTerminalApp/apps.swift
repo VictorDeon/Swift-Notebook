@@ -123,6 +123,11 @@ struct TerminalApp: AsyncParsableCommand {
             DelegateCommands.self,
             SingletonCommands.self,
             MVVMCommands.self,
+            SingleResponsabilityPrincipleCommands.self,
+            OpenClosePrincipleCommands.self,
+            LiskovSubstitutionPrincipleCommands.self,
+            InterfaceSegregationPrincipleCommands.self,
+            DependencyInversionPrincipleCommands.self,
             // Libraries
             RequestCommands.self,
             TimeCommands.self,
