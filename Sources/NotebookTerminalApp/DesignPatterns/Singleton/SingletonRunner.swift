@@ -35,13 +35,13 @@ struct SingletonCommands: AsyncParsableCommand {
             print("Your Car Singleton Colour: \(yourCarSingleton.colour)")  // Blue (é a mesma instancia singleton)
 
             let settings = SingletonSettings.shared
-            print(settings.lang!)
+            print(settings.lang)
         }
     }
 }
 
 /// Singleton que permite modificação de seus atributos e instanciaçoes da classe
-class CarSingleton {
+fileprivate class CarSingleton {
     var colour = "Red"
 
     // Precisamos enviar para a thread principal para evitar concorrencia ao modificar os dados desse singleton.
@@ -49,11 +49,11 @@ class CarSingleton {
 }
 
 /// Singleton que não permitie modificação ou instanciações
-class SingletonSettings {
+fileprivate class SingletonSettings {
     let lang: String = "pt-BR"
 
     // Definie a forma de acesso as configurações
-    @MainActor static let shared = Settings()
+    @MainActor static let shared = SingletonSettings()
 
     // Impede de inicializar uma nova instancia das configurações.
     private init() {}

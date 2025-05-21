@@ -43,13 +43,13 @@ struct IOCommands: ParsableCommand {
     }
 }
 
-struct PessoaAleatoria: Codable {
+fileprivate struct Pessoa: Codable {
     let nome: String
     let idade: Int
 }
 
 /// Usaremos FileHandle e as funções de conveniência de Data.
-struct ManipulandoArquivos {
+fileprivate struct ManipulandoArquivos {
     static func run() {
         do {
             guard let docsURL = FileManager.default
@@ -87,7 +87,7 @@ struct ManipulandoArquivos {
             let jsonfile = "\(folder)/teste.json"
             try createFile(at: jsonfile)
             // Arquivo criado com sucesso!
-            print(try readJSON(at: jsonfile, type: PessoaAleatoria.self))
+            print(try readJSON(at: jsonfile, type: Pessoa.self))
             // PessoaAleatoria(nome: "Ana", idade: 30)
             try deleteFile(at: jsonfile)
             // Arquivo removido com sucesso!
@@ -95,7 +95,7 @@ struct ManipulandoArquivos {
             let plistFile = "\(folder)/teste.plist"
             try createFile(at: plistFile)
             // Arquivo criado com sucesso!
-            print(try readPLIST(at: plistFile, type: PessoaAleatoria.self))
+            print(try readPLIST(at: plistFile, type: Pessoa.self))
             // PessoaAleatoria(nome: "Ana", idade: 30)
             try deleteFile(at: plistFile)
             // Arquivo removido com sucesso!
@@ -226,12 +226,12 @@ struct ManipulandoArquivos {
             fileManager.createFile(atPath: url.path, contents: content, attributes: nil)
         } else if path.hasSuffix(".json") {
             let _: JSONEncoder = JSONEncoder()
-            let person = PessoaAleatoria(nome: "Ana", idade: 30)
+            let person = Pessoa(nome: "Ana", idade: 30)
             let jsonData = try JSONEncoder().encode(person)
             let url = URL(fileURLWithPath: path)
             try jsonData.write(to: url)
         } else if path.hasSuffix(".plist") {
-            let person = PessoaAleatoria(nome: "Ana", idade: 30)
+            let person = Pessoa(nome: "Ana", idade: 30)
             let plistData = try PropertyListEncoder().encode(person)
             let url = URL(fileURLWithPath: path)
             try plistData.write(to: url)

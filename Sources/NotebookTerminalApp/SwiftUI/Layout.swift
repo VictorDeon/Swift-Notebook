@@ -54,7 +54,7 @@ struct LayoutCommands: AsyncParsableCommand {
     }
 }
 
-struct VStackContent: View {
+fileprivate struct VStackContent: View {
     var body: some View {
         /// Todas as views dentro dessa stack vao ser alinhadas verticalmente
         VStack {
@@ -67,7 +67,7 @@ struct VStackContent: View {
     }
 }
 
-struct HStackContent: View {
+fileprivate struct HStackContent: View {
     var body: some View {
         /// Todas as views dentro dessa stack vao se alinhadas horizontalmente
         HStack {
@@ -80,7 +80,7 @@ struct HStackContent: View {
     }
 }
 
-struct ZStackContent: View {
+fileprivate struct ZStackContent: View {
     var body: some View {
         /// Todas as views dentro dessa stack vao ser alinhadas uma em cima da outra.
         ZStack {
@@ -93,7 +93,7 @@ struct ZStackContent: View {
     }
 }
 
-struct LayoutContent: View {
+fileprivate struct LayoutContent: View {
     var body: some View {
         /// Monta o background
         ZStack {
@@ -112,7 +112,7 @@ struct LayoutContent: View {
     }
 }
 
-struct AlignmentContent: View {
+fileprivate struct AlignmentContent: View {
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea()
@@ -141,7 +141,7 @@ struct AlignmentContent: View {
     }
 }
 
-struct PositionContent: View {
+fileprivate struct PositionContent: View {
     var body: some View {
         VStack {
             // Posicionamento absoluto em relação a tela x=0 e y=0 é o lateral esquerda superior.
@@ -161,7 +161,7 @@ struct PositionContent: View {
     }
 }
 
-struct GeometryContent: View {
+fileprivate struct GeometryContent: View {
     var body: some View {
         GeometryReader { screen in
             VStack {

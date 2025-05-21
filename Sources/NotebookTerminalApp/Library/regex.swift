@@ -40,7 +40,7 @@ struct RegexCommands: ParsableCommand {
 ///     firstMatch(in:options:range:) → NSTextCheckingResult?
 ///     enumerateMatches(in:options:range:using:) → itera com closure
 ///     stringByReplacingMatches(in:options:range:withTemplate:) → substituição
-struct ConceitosBasicosRegex {
+fileprivate struct ConceitosBasicosRegex {
     static func run() {
         let pattern = "\\b\\w+@\\w+\\.\\w{2,}\\b"
         // \\b: boundary, \\w+: palavra, @, domínio, .tld de 2+ caracteres
@@ -64,7 +64,7 @@ struct ConceitosBasicosRegex {
 /// Capturing Groups e Named Groups
 /// Para named groups, a sintaxe é (?<nome>...), mas cuidado: NSRegularExpression só aceita se
 /// o flag patternOptions: .allowCommentsAndWhitespace estiver ativo, ou você pode usar regex nativo do Swift 5.7+
-struct CapturarGrupos {
+fileprivate struct CapturarGrupos {
     static func run() {
         let pattern = "(\\d{2})/(\\d{2})/(\\d{4})"
         // Captura dia, mês e ano
@@ -91,7 +91,7 @@ struct CapturarGrupos {
 /// firstMatch(of:), matches(of:) para achar ocorrências.
 /// replacing(_:with:) para substituições:
 @available(macOS 13.0, *)
-struct RegexNativo {
+fileprivate struct RegexNativo {
     static func run() {
         let emailRegex = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/
         let text = "Login: user@swift.org"

@@ -188,7 +188,7 @@ TODO:
 - [x] Empacotamento de modulos e utilização do pacote
 - [x] SwiftUI
 - [x] Execução por Terminal com Path Parameters
-- [ ] Inputs e Outputs
+- [x] Inputs e Outputs
 - [ ] Firebase
     - [ ] Firebase Auth: Solução em nuvem de autenticação.
     - [ ] Firestore: Solução de banco de dados em nuvem NoSQL
@@ -270,6 +270,6 @@ TODO:
     - [ ] Cifra de Cesar
     - [ ] Simulated Annealing
 - [ ] Socket
-- [ ] SOLID
+- [x] SOLID
 - [ ] Machine Learning e Data Science
 - [ ] Matematica

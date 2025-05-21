@@ -18,7 +18,7 @@ struct OpenClosePrincipleCommands: ParsableCommand {
 
 // Antes da refatoração
 // Toda vez que adiciona um novo tipo, modifica-se DiscountService.
-class DiscountServiceInvalid {
+fileprivate class DiscountServiceInvalid {
     func applyDiscount(amount: Double, type: String) -> Double {
         switch type {
         case "summer":
@@ -32,19 +32,19 @@ class DiscountServiceInvalid {
 }
 
 // Para novas políticas, basta criar novas DiscountStrategy, sem tocar em DiscountService.
-protocol DiscountStrategy {
+fileprivate protocol DiscountStrategy {
     func apply(to amount: Double) -> Double
 }
 
-class SummerDiscount: DiscountStrategy {
+fileprivate class SummerDiscount: DiscountStrategy {
     func apply(to amount: Double) -> Double { amount * 0.9 }
 }
 
-class WinterDiscount: DiscountStrategy {
+fileprivate class WinterDiscount: DiscountStrategy {
     func apply(to amount: Double) -> Double { amount * 0.8 }
 }
 
-class DiscountService {
+fileprivate class DiscountService {
     private let strategy: DiscountStrategy
 
     init(strategy: DiscountStrategy) {

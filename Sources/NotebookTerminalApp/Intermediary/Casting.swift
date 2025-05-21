@@ -43,25 +43,25 @@ struct CastingCommands: ParsableCommand {
 
 // MARK: - Classes de exemplo
 
-class Animal {
+fileprivate class Animal {
     let name: String
     init(name: String) { self.name = name }
 }
 
-class Human: Animal {
+fileprivate class Human: Animal {
     func code() {
         print("\(name) está codando.")
     }
 }
 
-class Fish: Animal {
+fileprivate class Fish: Animal {
     func breatheUnderWater() {
         print("\(name) está respirando embaixo d’água.")
     }
 }
 
 /// Sempre seguro
-struct Upcasting {
+fileprivate struct Upcasting {
     static func run() {
         let jack = Human(name: "Jack Bauer")
         // Tratamos o 'jack' como Animal
@@ -72,7 +72,7 @@ struct Upcasting {
 }
 
 /// Verificando tipo com is
-struct VerificandoTipo {
+fileprivate struct VerificandoTipo {
     static func run() {
         let jack = Human(name: "Jack Bauer")
         let creatures: [Animal] = [jack, Fish(name: "Nemo")]
@@ -84,7 +84,7 @@ struct VerificandoTipo {
 }
 
 /// Downcasting inseguro com as!
-struct DowncastingInseguro {
+fileprivate struct DowncastingInseguro {
     static func run() {
         let jack = Human(name: "Jack Bauer")
         let creatures: [Animal] = [jack, Fish(name: "Nemo")]
@@ -97,7 +97,7 @@ struct DowncastingInseguro {
 }
 
 /// Downcasting seguro com as?
-struct DowncastingSeguro {
+fileprivate struct DowncastingSeguro {
     static func run() {
         let jack = Human(name: "Jack Bauer")
         let creatures: [Animal] = [jack, Fish(name: "Nemo")]
@@ -110,7 +110,7 @@ struct DowncastingSeguro {
 }
 
 /// Type Casting com switch
-struct TypeCastingComSwitch {
+fileprivate struct TypeCastingComSwitch {
     static func run() {
         let jack = Human(name: "Jack Bauer")
         let creatures: [Animal] = [jack, Fish(name: "Nemo")]

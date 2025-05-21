@@ -24,12 +24,12 @@ struct IdentifiableCommands: AsyncParsableCommand {
     }
 }
 
-struct UserHash: Identifiable {
+fileprivate struct User: Identifiable {
     let id: UUID = UUID()
     let name: String
 }
 
-struct IdentifiableStringContent: View {
+fileprivate struct IdentifiableStringContent: View {
     
     @State var names = ["Paul", "Laura", "Tom"]
     
@@ -49,12 +49,12 @@ struct IdentifiableStringContent: View {
     }
 }
 
-struct IdentifiableUserContent: View {
+fileprivate struct IdentifiableUserContent: View {
     
     @State var users = [
-        UserHash(name: "Paul"),
-        UserHash(name: "Laura"),
-        UserHash(name: "Tom")
+        User(name: "Paul"),
+        User(name: "Laura"),
+        User(name: "Tom")
     ]
     
     var body: some View {
@@ -63,7 +63,7 @@ struct IdentifiableUserContent: View {
                 user in Text(user.name)
             }
             Button {
-                users.append(UserHash(name: "NewName"))
+                users.append(User(name: "NewName"))
             } label: {
                 Text("Add new name")
             }

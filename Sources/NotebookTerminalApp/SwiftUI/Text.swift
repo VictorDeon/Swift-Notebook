@@ -21,7 +21,7 @@ struct TextCommands: AsyncParsableCommand {
     }
 }
 
-struct TextContent: View {
+fileprivate struct TextContent: View {
     var body: some View {
         VStack(spacing: 15) {
             Text("Hello World")

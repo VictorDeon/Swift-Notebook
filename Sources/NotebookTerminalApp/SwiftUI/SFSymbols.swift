@@ -22,7 +22,7 @@ struct SFSymbolCommands: AsyncParsableCommand {
     }
 }
 
-struct SFSymbolContent: View {
+fileprivate struct SFSymbolContent: View {
     var body: some View {
         VStack(spacing: 15) {
             Image(systemName: "person.circle")

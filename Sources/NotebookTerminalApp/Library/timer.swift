@@ -29,7 +29,7 @@ struct TimeCommands: ParsableCommand {
     }
 }
 
-class Logo {
+fileprivate class Logo {
     var title: String = ""
     private var delay: Double = 0.0
 
@@ -59,7 +59,7 @@ class Logo {
 }
 extension Logo: @unchecked Sendable {}
 
-func timerRunnerSync() {
+fileprivate func timerRunnerSync() {
     let logo = Logo()
     let title = "FlashChat"
     for letter in title {
@@ -72,7 +72,7 @@ func timerRunnerSync() {
     print("Titulo: \(logo.title)")  // Titulo: FlashChat
 }
 
-func timerRunnerAsync() {
+fileprivate func timerRunnerAsync() {
     let title = "FlashChat"
     var current = ""
     let semaphore = DispatchSemaphore(value: 0)

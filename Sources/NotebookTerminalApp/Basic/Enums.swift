@@ -60,16 +60,16 @@ struct EnumCommands: ParsableCommand {
     }
 }
 
-enum WeekDay: String, CaseIterable, ExpressibleByArgument {
+fileprivate enum WeekDay: String, CaseIterable, ExpressibleByArgument {
     case monday, tuesday, wednesday, thusday, friday, saturday, sunday
 }
 
-enum TestResult {
+fileprivate enum TestResult {
     case success(String)
     case fail(String)
 }
 
-enum Temperature: String, CaseIterable, ExpressibleByArgument {
+fileprivate enum Temperature: String, CaseIterable, ExpressibleByArgument {
     case hot, cold
 
     func description() -> String {
@@ -82,12 +82,12 @@ enum Temperature: String, CaseIterable, ExpressibleByArgument {
     }
 }
 
-enum Status: Int {
+fileprivate enum Status: Int {
     case actived = 1
     case inactived = 0
 }
 
-struct EnumRunner {
+fileprivate struct EnumRunner {
     static func run(today: WeekDay) {
         switch today {
         case .monday:

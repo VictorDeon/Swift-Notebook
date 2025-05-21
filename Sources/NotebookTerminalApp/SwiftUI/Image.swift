@@ -24,7 +24,7 @@ struct ImageCommands: AsyncParsableCommand {
     }
 }
 
-struct ImageContent: View {
+fileprivate struct ImageContent: View {
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea()
@@ -51,7 +51,7 @@ struct ImageContent: View {
     }
 }
 
-struct BigImageContent: View {
+fileprivate struct BigImageContent: View {
     var body: some View {
         ZStack {
             Color.white.ignoresSafeArea()

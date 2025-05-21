@@ -36,8 +36,8 @@ struct ExtensionCommands: ParsableCommand {
         print("4 casas decimais:", original.rounded(to: 4)) // → 3.1416
         
         // 3) Equatable
-        let user1 = User10(id: 1, name: "Usuario 01")
-        let user2 = User10(id: 1, name: "Usuario 02")
+        let user1 = User(id: 1, name: "Usuario 01")
+        let user2 = User(id: 1, name: "Usuario 02")
         print(user1 == user2) // true
         print(user1 != user2) // false
         
@@ -53,13 +53,13 @@ struct ExtensionCommands: ParsableCommand {
         
         // 6) Hashable
         // como os usuarios tem o mesmo id eles são considerados repetidos
-        let users: Set<User10> = Set<User10>([user1, user2])
+        let users: Set<User> = Set<User>([user1, user2])
         print(users.count) // 1
     }
 }
 
 /// Adiciona função de arredondamento customizado a Double
-extension Double {
+fileprivate extension Double {
     /// Retorna o valor arredondado para 'places' casas decimais
     ///
     /// - Parameter places: número de casas decimais desejadas
@@ -71,7 +71,7 @@ extension Double {
     }
 }
 
-struct User10 {
+fileprivate struct User {
     var id: Int
     var name: String
 }
@@ -80,27 +80,27 @@ struct User10 {
 /// Qualquer tipo que implementar o protocolo Equatable pode modificar o comportamento do == e do !=
 /// Metodos como o filter ou outros precisa da implementação desse protocolo.
 /// Struct e Enums já implementa esse protocolo
-extension User10: Equatable {
-    static func == (lhs: User10, rhs: User10) -> Bool {
+extension User: Equatable {
+    static func == (lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
     }
     
-    static func != (lhs: User10, rhs: User10) -> Bool {
+    static func != (lhs: User, rhs: User) -> Bool {
         return lhs.id != rhs.id
     }
 }
 
 /// Modifica o print do objeto
-extension User10: CustomStringConvertible {
+extension User: CustomStringConvertible {
     public var description: String {
         return name
     }
 }
 
 /// Modifica o print com String(reflecting: ...) e dentro de arrays
-extension User10: CustomDebugStringConvertible {
+extension User: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "User10(\(description))"
+        return "User(\(description))"
     }
 }
 
@@ -108,27 +108,27 @@ extension User10: CustomDebugStringConvertible {
 /// Se extender o Comparable você pode sobrescrever tb o `==` e o `!=`
 /// Metodos como sort e sorted precisa que o objeto implemente esse protocolo
 /// Struct e Enums já implementa esse protocolo
-extension User10: Comparable {
-    static func < (lhs: User10, rhs: User10) -> Bool {
+extension User: Comparable {
+    static func < (lhs: User, rhs: User) -> Bool {
         return lhs.id < rhs.id
     }
     
-    static func > (lhs: User10, rhs: User10) -> Bool {
+    static func > (lhs: User, rhs: User) -> Bool {
         return lhs.id > rhs.id
     }
     
-    static func <= (lhs: User10, rhs: User10) -> Bool {
+    static func <= (lhs: User, rhs: User) -> Bool {
         return lhs.id <= rhs.id
     }
     
-    static func >= (lhs: User10, rhs: User10) -> Bool {
+    static func >= (lhs: User, rhs: User) -> Bool {
         return lhs.id >= rhs.id
     }
 }
 
 /// Usado em Set e Dictionary para deixar a chave do dicionario e os elementos do Set unico.
 /// Struct e Enums já implementa esse protocolo
-extension User10: Hashable {
+extension User: Hashable {
     /// Vamos tornar o objeto user unico a partir de seu ID
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

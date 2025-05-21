@@ -34,7 +34,7 @@ struct LoopCommands: ParsableCommand {
     }
 }
 
-struct LoopRange {
+fileprivate struct LoopRange {
     static func run() {
         let start: Int = 1
         let end: Int = 5
@@ -60,7 +60,7 @@ struct LoopRange {
     }
 }
 
-struct LoopString {
+fileprivate struct LoopString {
     static func run() {
         for char in "Ola mundo!" {
             print("Letra: \(char)")
@@ -78,7 +78,7 @@ struct LoopString {
     }
 }
 
-struct LoopArray {
+fileprivate struct LoopArray {
     static func run() {
         // Loop vetor (garante a ordem)
         let fruits: [String] = ["pera", "banana", "uva", "uva", "abacate"]
@@ -93,7 +93,7 @@ struct LoopArray {
     }
 }
 
-struct LoopWhile {
+fileprivate struct LoopWhile {
     static func run() {
         var index = 0
         while index < 3 {
@@ -106,7 +106,7 @@ struct LoopWhile {
     }
 }
 
-struct LoopSet {
+fileprivate struct LoopSet {
     static func run() {
         // Loop set (não garante a ordem e valores sao sempre unicos)
         let notRepeatedFruits: Set = ["pera", "banana", "banana", "banana", "abacate"]
@@ -119,7 +119,7 @@ struct LoopSet {
     }
 }
 
-struct LoopMatrix {
+fileprivate struct LoopMatrix {
     static func run() {
         var matrix: [[Int]] = Array(repeating: Array(repeating: 0, count: 3), count: 3)
         print(matrix)  // [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -132,7 +132,7 @@ struct LoopMatrix {
     }
 }
 
-struct LoopDict {
+fileprivate struct LoopDict {
     static func run() {
         let contacts: [String: Int] = ["Adam": 123456, "James": 987654, "Amy": 777777]
         for contact in contacts {
@@ -144,7 +144,7 @@ struct LoopDict {
     }
 }
 
-struct LoopWhere {
+fileprivate struct LoopWhere {
     static func run() {
         let contacts: [String: Int] = ["Adam": 123456, "James": 987654, "Amy": 777777]
         for contact in contacts where contact.key == "James" {

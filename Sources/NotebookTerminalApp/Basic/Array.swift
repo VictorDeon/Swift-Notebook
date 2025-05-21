@@ -30,7 +30,7 @@ struct ArrayCommands: ParsableCommand {
     }
 }
 
-struct SintaxeDeArray {
+fileprivate struct SintaxeDeArray {
     static func run(array: [Int]) {
         let nomes: [String] = ["Alice", "Bob", "Carol"]
         print(nomes) // ["Alice", "Bob", "Carol"]
@@ -39,7 +39,7 @@ struct SintaxeDeArray {
     }
 }
 
-struct PropriedadesBasicas {
+fileprivate struct PropriedadesBasicas {
     static func run() {
         let nomes: [String] = ["Alice", "Bob", "Carol"]
 
@@ -60,7 +60,7 @@ struct PropriedadesBasicas {
     }
 }
 
-struct AcessandoElementos {
+fileprivate struct AcessandoElementos {
     static func run() {
         let frutas = ["🍎", "🍌", "🍇", "🍊"]
         print(frutas[0])                    // 🍎
@@ -71,7 +71,7 @@ struct AcessandoElementos {
     }
 }
 
-struct Mutacoes {
+fileprivate struct Mutacoes {
     static func run() {
         var letras = ["a", "b", "c"]
 
@@ -103,7 +103,7 @@ struct Mutacoes {
     }
 }
 
-struct TransformacoesFuncionais {
+fileprivate struct TransformacoesFuncionais {
     static func run() {
         let nums = [1, 2, 3, 4, 5]
 
@@ -150,7 +150,7 @@ struct TransformacoesFuncionais {
     }
 }
 
-struct BuscaEConsulta {
+fileprivate struct BuscaEConsulta {
     static func run() {
         let cores = ["vermelho", "verde", "azul", "amarelo"]
 
@@ -169,7 +169,7 @@ struct BuscaEConsulta {
     }
 }
 
-struct OrdenacaoEmbaralhamento {
+fileprivate struct OrdenacaoEmbaralhamento {
     static func run() {
         var numeros = [3, 1, 4, 2]
 
@@ -191,7 +191,7 @@ struct OrdenacaoEmbaralhamento {
     }
 }
 
-struct FatiamentoFragmentos {
+fileprivate struct FatiamentoFragmentos {
     static func run() {
         let letras = ["a", "b", "c", "d", "e"]
 
@@ -211,7 +211,7 @@ struct FatiamentoFragmentos {
     }
 }
 
-struct CombinacaoEnumeracao {
+fileprivate struct CombinacaoEnumeracao {
     static func run() {
         let array1 = [1, 2, 3]
         let array2 = ["x", "y", "z", "k"]
@@ -240,7 +240,7 @@ struct CombinacaoEnumeracao {
     }
 }
 
-struct ArraysMultidimensionais {
+fileprivate struct ArraysMultidimensionais {
     static func run() {
         let matriz2D: [[Int]] = [[1, 2, 3], [4, 5, 6]]
         print(matriz2D[1][2])   // 6
@@ -251,7 +251,7 @@ struct ArraysMultidimensionais {
     }
 }
 
-struct OutrasUtilidades {
+fileprivate struct OutrasUtilidades {
     static func run() {
         // Trocar dois elementos
         var mix = [10, 20, 30]
@@ -278,7 +278,7 @@ struct OutrasUtilidades {
     }
 }
 
-struct ArrayRunner {
+fileprivate struct ArrayRunner {
     var array: [Int] = []
 
     func execute() {

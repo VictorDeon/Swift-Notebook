@@ -20,7 +20,7 @@ struct ShapeCommands: AsyncParsableCommand {
     }
 }
 
-struct ShapeContentView: View {
+fileprivate struct ShapeContentView: View {
     var body: some View {
         VStack(spacing: 15) {
             Rectangle()

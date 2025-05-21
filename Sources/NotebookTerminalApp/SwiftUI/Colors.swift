@@ -20,7 +20,7 @@ struct ColorCommands: AsyncParsableCommand {
     }
 }
 
-struct ColorContentView: View {
+fileprivate struct ColorContentView: View {
     var body: some View {
         VStack(spacing: 15) {
             Color.green

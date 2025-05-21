@@ -34,7 +34,7 @@ struct TypeCommands: ParsableCommand {
 }
 
 /// Tipo String
-struct StringType {
+fileprivate struct StringType {
     static func run() {
         let frase = "Olá, Swift é ótimo!"
 
@@ -63,7 +63,7 @@ struct StringType {
 }
 
 /// Tipo Int
-struct IntType {
+fileprivate struct IntType {
     static func run() {
         let valor = 10
 
@@ -85,7 +85,7 @@ struct IntType {
 }
 
 /// Tipo Float e Double
-struct FloatType {
+fileprivate struct FloatType {
     static func run() {
         let value1: Float  = 3.7
         let value2: Double = 9.81
@@ -108,7 +108,7 @@ struct FloatType {
 }
 
 /// Tipo Booleano
-struct BoolType {
+fileprivate struct BoolType {
     static func run() {
         var flag = true
 
@@ -127,7 +127,7 @@ struct BoolType {
 }
 
 /// Tipo Array
-struct ArrayType {
+fileprivate struct ArrayType {
     static func run() {
         var nums = [1, 2, 3]
 
@@ -166,7 +166,7 @@ struct ArrayType {
 }
 
 /// Tipo Dicionario
-struct DictType {
+fileprivate struct DictType {
     static func run() {
         var info: [String: Int] = ["idade": 25, "peso": 70]
 
@@ -195,7 +195,7 @@ struct DictType {
 }
 
 /// Tipo Set
-struct SetType {
+fileprivate struct SetType {
     static func run() {
         var letras: Set = ["a", "b", "c"]
 
@@ -223,7 +223,7 @@ struct SetType {
 }
 
 /// Tipo Tupla
-struct TupleType {
+fileprivate struct TupleType {
     static func run() {
         let pessoa: (nome: String, idade: Int) = ("Maria", 30)
 
@@ -238,7 +238,7 @@ struct TupleType {
 }
 
 /// Tipo qualquer coisa
-struct AnyType {
+fileprivate struct AnyType {
     static func run() {
         var qualquer: Any = "texto"
         qualquer = 99

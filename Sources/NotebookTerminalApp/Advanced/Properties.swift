@@ -48,7 +48,7 @@ struct PropertiesCommands: ParsableCommand {
     }
 }
 
-struct PizzaCalculator {
+fileprivate struct PizzaCalculator {
     // 1) Stored property com Property Observers
     // Uma propriedade armazenada leftoverSlices com observers para notificar desperdício.
     private(set) var leftoverSlices: Int = 0 {

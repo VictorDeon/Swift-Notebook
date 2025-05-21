@@ -42,7 +42,7 @@ struct GridsCommands: AsyncParsableCommand {
 /// .justify-content-end: Stack {  Spacer() + conteudo }
 /// .justify-content-center: Stack { Spacer() + conteudo + Spacer() }
 /// .justify-content-between: Stack { conteudo + Spacer() + conteudo  }
-struct HorizontalStack: View {
+fileprivate struct HorizontalStack: View {
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             Text("Item 1")
@@ -56,7 +56,7 @@ struct HorizontalStack: View {
 }
 
 /// .frame(maxHeight: .infinity) faz o VStack expandir-se, permitindo que o Spacer() “empurre” conteúdos.
-struct VerticalStack: View {
+fileprivate struct VerticalStack: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Título").font(.title)
@@ -69,7 +69,7 @@ struct VerticalStack: View {
     }
 }
 
-struct GridsContentView: View {
+fileprivate struct GridsContentView: View {
     var body: some View {
         VStack(spacing: 15) {
             Grid(horizontalSpacing: 0, verticalSpacing: 5) {
@@ -102,7 +102,7 @@ struct GridsContentView: View {
 
 /// Para um numero largo de dados ou dados dinamicos utilize o GridLazy ao inves do Grid por questão de performace
 /// GridItem(.flexible()…): cada coluna se ajusta igualmente (flex).
-struct LazyVGridsFlexibleContentView: View {
+fileprivate struct LazyVGridsFlexibleContentView: View {
     
     // Definimos 3 colunas flexíveis, como col-4 col-4 col-4
     let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 16), count: 3)
@@ -123,7 +123,7 @@ struct LazyVGridsFlexibleContentView: View {
 }
 
 /// GridItem(.adaptive(minimum: 100)): cria quantas colunas couberem, com largura ≥ 100pt (similar a col-auto/responsive).
-struct LazyVGridsAdaptativeContentView: View {
+fileprivate struct LazyVGridsAdaptativeContentView: View {
     
     // Definimos 3 colunas flexíveis, como col-4 col-4 col-4
     let adaptiveCols = [ GridItem(.adaptive(minimum: 120), spacing: 12) ]
@@ -144,7 +144,7 @@ struct LazyVGridsAdaptativeContentView: View {
 }
 
 /// fixed type grid: Cria colunas ou linhas com tamanho fixo (largura para V e altura para H)
-struct LazyHGridsContentView: View {
+fileprivate struct LazyHGridsContentView: View {
     
     let rows: [GridItem] = [
         GridItem(.fixed(50)),

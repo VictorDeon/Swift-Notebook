@@ -50,24 +50,24 @@ struct OOCommands: ParsableCommand {
 // 1.1 Protocolos e Encapsulamento
 // Definimos dois protocolos para reforçar abstração e polimorfismo:
 /// Contrato para quem pode atacar
-protocol Attackable {
+fileprivate protocol Attackable {
     var health: Int { get set }
     func attack() -> Int
     mutating func takeDamage(_ amount: Int)
 }
 
 /// Contrato para quem pode se mover
-protocol Movable {
+fileprivate protocol Movable {
     func move()
 }
 
 /// Classe Abstrata que só classes podem usar (protocol + extension = abstract class)
-protocol Game: AnyObject {
+fileprivate protocol Game: AnyObject {
     func attack()
     func move()
 }
 /// Extensão a classe abstrata
-extension Game {
+fileprivate extension Game {
     func attack() {
         fatalError("attack() precisa ser implementado pela subclasse")
     }
@@ -78,7 +78,7 @@ extension Game {
 
 // 1.2 Classe Base: Character
 // Usamos uma classe para demonstrar passagem por referência, herança e encapsulamento:
-class GameCharacter: Attackable, Movable, Game {
+fileprivate class GameCharacter: Attackable, Movable, Game {
     // público para leitura, privado para escrita
     private(set) var name: String             // name é read-only fora da classe
     var health: Int
@@ -112,7 +112,7 @@ class GameCharacter: Attackable, Movable, Game {
 
 // MARK: 2. Herança e Especialização
 // 2.1 Inimigo Genérico: Enemy
-class Enemy: GameCharacter {
+fileprivate class Enemy: GameCharacter {
     private var attackStrength: Int
 
     init(name: String, health: Int = 100, attackStrength: Int = 10) {
@@ -131,7 +131,7 @@ class Enemy: GameCharacter {
 }
 
 // 2.2 Inimigo Especial: Dragon
-final class Dragon: Enemy {
+fileprivate final class Dragon: Enemy {
     let wingSpan: Int
 
     init(name: String, health: Int = 300, attackStrength: Int = 50, wingSpan: Int = 5) {
@@ -159,7 +159,7 @@ final class Dragon: Enemy {
 
 // MARK: 3. Value Type: Struct Goblin
 // Para comparar, um Goblin como struct — passagem por valor e necessidade de mutating para mutar estado
-struct Goblin: Attackable, Movable {
+fileprivate struct Goblin: Attackable, Movable {
     var name: String
     var health: Int
     var attackStrength: Int
@@ -181,7 +181,7 @@ struct Goblin: Attackable, Movable {
 
 // MARK: 4. Demonstração de Polimorfismo
 // No OORunner, usamos arrays de Attackable e Movable para mostrar tratamento uniforme:
-struct OORunner {
+fileprivate struct OORunner {
     func execute() {
         // Instâncias
         let skeleton = Enemy(name: "Esqueleto")

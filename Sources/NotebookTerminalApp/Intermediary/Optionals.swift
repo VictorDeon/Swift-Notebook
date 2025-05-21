@@ -23,7 +23,7 @@ struct OptionalCommands: ParsableCommand {
     }
 }
 
-struct Person {
+fileprivate struct Person {
     var name: String? = "Fulano de Tal"
     var email: String? = "fulano@gmail.com"
     func speak() {
@@ -33,7 +33,7 @@ struct Person {
 
 /// Force Unwrapping! (Perigoso, pq se o valor for nil vai disparar uma exceção)
 /// so utilize se tiver certeza que o valor sempres sera preenchido.
-struct ForceUnwrapping {
+fileprivate struct ForceUnwrapping {
     static func run() {
         let fulana = Person()
         print(fulana.name!)
@@ -41,7 +41,7 @@ struct ForceUnwrapping {
 }
 
 /// Check for nil value (Verifica se o valor e nil)
-struct CheckForNilValue {
+fileprivate struct CheckForNilValue {
     static func run() {
         let fulana = Person()
 
@@ -52,7 +52,7 @@ struct CheckForNilValue {
 }
 
 /// Optional Binding (Forma mais rapida de se fazer a validação sem usar o force unwrapping)
-struct OptionalBinding {
+fileprivate struct OptionalBinding {
     static func run() {
         let cicrana = Person()
         let fulana = Person()
@@ -65,7 +65,7 @@ struct OptionalBinding {
 }
 
 /// Nil Coalescing Operator (Insere um valor defaul caso seja nil
-struct NilCoalescingOperator {
+fileprivate struct NilCoalescingOperator {
     static func run() {
         let fulana = Person()
         print(fulana.name ?? "valor default")
@@ -73,7 +73,7 @@ struct NilCoalescingOperator {
 }
 
 /// Optional Chaining (Usado em scructs e classes)
-struct OptionalChaining {
+fileprivate struct OptionalChaining {
     static func run() {
         let maria: Person? = Person()
         print(maria?.name ?? "valor default")

@@ -20,7 +20,7 @@ struct StateCommands: AsyncParsableCommand {
     }
 }
 
-struct StateContentView: View {
+fileprivate struct StateContentView: View {
     
     @State private var counter: Int = 0
     
@@ -35,7 +35,7 @@ struct StateContentView: View {
     }
 }
 
-struct BindingContentView: View {
+fileprivate struct BindingContentView: View {
     
     @Binding var counter: Int
     

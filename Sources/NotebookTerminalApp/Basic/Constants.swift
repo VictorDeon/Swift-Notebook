@@ -17,7 +17,7 @@ struct ConstantCommands: ParsableCommand {
     }
 }
 
-struct Constants {
+fileprivate struct Constants {
     static let apiKey = "YOUR_API_KEY_HERE"
     struct Metadata {
         static let appName = "notebook"

@@ -23,7 +23,7 @@ struct UserDefaultCommands: ParsableCommand {
     }
 }
 
-func userDefaultRunner() {
+fileprivate func userDefaultRunner() {
     let defaults = UserDefaults.standard
     defaults.set(0.24, forKey: "Volume")
     defaults.set(true, forKey: "MusicOn")

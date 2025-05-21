@@ -4,7 +4,7 @@ import AppKit
 import ArgumentParser
 
 // 1) Definição de erros, agora conformando a LocalizedError
-enum MathError: LocalizedError {
+fileprivate enum MathError: LocalizedError {
     case divisionByZero
     case negativeNumerator
     case other(message: String)
@@ -69,7 +69,7 @@ struct ExceptionCommands: ParsableCommand {
 }
 
 // 3) Função de divisão com múltiplas validações
-func divide(_ numerador: Int, by denominador: Int) throws -> Int {
+fileprivate func divide(_ numerador: Int, by denominador: Int) throws -> Int {
     // pré-condição: denominador não pode ser zero
     guard denominador != 0 else {
         throw MathError.divisionByZero
@@ -82,6 +82,6 @@ func divide(_ numerador: Int, by denominador: Int) throws -> Int {
 }
 
 // 4) Exemplo de função rethrowing, para mostrar como propagar erros
-func applyOperation<T>(_ value1: Int, _ value2: Int, operation: (Int, Int) throws -> T) rethrows -> T {
+fileprivate func applyOperation<T>(_ value1: Int, _ value2: Int, operation: (Int, Int) throws -> T) rethrows -> T {
     return try operation(value1, value2)
 }

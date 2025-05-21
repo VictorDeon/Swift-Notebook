@@ -22,7 +22,7 @@ struct SheetsAndNavigationCommands: AsyncParsableCommand {
 
 /// Identifiable você precisa configurar um ID autoincremental
 /// Hashable seu parametros tem que ser possivel gerar uma hash unica, o id consegue gera isso pelo metodo hash.
-struct IDPerson: Identifiable, Hashable {
+fileprivate struct Person: Identifiable, Hashable {
     let id = UUID()
     let name: String
 
@@ -31,10 +31,10 @@ struct IDPerson: Identifiable, Hashable {
     }
 }
 
-struct SheetsContentView: View {
+fileprivate struct SheetsContentView: View {
     
     @State private var showSheet: Bool = false
-    @State private var person: IDPerson?
+    @State private var person: Person?
     
     var body: some View {
         NavigationStack {
@@ -46,13 +46,13 @@ struct SheetsContentView: View {
                 }
                 Divider()
                 Button {
-                    person = IDPerson(name: "Paul")
+                    person = Person(name: "Paul")
                 } label: {
                     Text("Item Sheet")
                 }
                 Divider()
                 NavigationLink {
-                    NavigationItemView(person: IDPerson(name: "Paul"))
+                    NavigationItemView(person: Person(name: "Paul"))
                 } label: {
                     Text("Navigation Link Item View")
                 }
@@ -73,7 +73,7 @@ struct SheetsContentView: View {
     }
 }
 
-struct SheetView: View {
+fileprivate struct SheetView: View {
 
     @Environment(\.dismiss) var dismiss
     @Binding var showSheet: Bool
@@ -98,9 +98,9 @@ struct SheetView: View {
     }
 }
 
-struct SheetItemView: View {
+fileprivate struct SheetItemView: View {
     
-    let person: IDPerson
+    let person: Person
 
     var body: some View {
         VStack {
@@ -111,11 +111,11 @@ struct SheetItemView: View {
     }
 }
 
-struct NavigationItemView: View {
+fileprivate struct NavigationItemView: View {
     
-    let person: IDPerson
+    let person: Person
     @State private var presentViewOnNavigationStack: Bool = false
-    @State private var personToNavigateTo: IDPerson? = nil
+    @State private var personToNavigateTo: Person? = nil
 
     var body: some View {
         VStack {
@@ -133,12 +133,12 @@ struct NavigationItemView: View {
             }
             Divider()
             Button {
-                personToNavigateTo = IDPerson(name: "Maria")
+                personToNavigateTo = Person(name: "Maria")
             } label: {
                 Text("Next View by navigationDestination with Item")
             }
             Divider()
-            NavigationLink(value: IDPerson(name: "Pedro")) {
+            NavigationLink(value: Person(name: "Pedro")) {
                 Text("Next View by navigationDestination with Hashable Value")
             }
         }
@@ -150,7 +150,7 @@ struct NavigationItemView: View {
         .navigationDestination(item: $personToNavigateTo) { person in
             SheetItemView(person: person)
         }
-        .navigationDestination(for: IDPerson.self) { person in
+        .navigationDestination(for: Person.self) { person in
             SheetItemView(person: person)
         }
     }

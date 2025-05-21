@@ -29,7 +29,7 @@ struct ConcorrencyCommands: AsyncParsableCommand {
     }
 }
 
-struct RequisicaoAssincrona {
+fileprivate struct RequisicaoAssincrona {
     static func run01() {
         print("Antes da requisição no servidor acontecer.")
         URLSession.shared.downloadTask(

@@ -19,12 +19,12 @@ struct NSCoderCommands: ParsableCommand {
 }
 
 // Codable = Encodable + Decodable
-struct TodoItem: Codable {
+fileprivate struct TodoItem: Codable {
     var title: String = ""
     var done: Bool = false
 }
 
-func nscodeRunner() {
+fileprivate func nscodeRunner() {
     let dataFilePath = FileManager.default.urls(
         for: .documentDirectory,
         in: .userDomainMask

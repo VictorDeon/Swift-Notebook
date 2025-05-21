@@ -104,12 +104,12 @@ struct RequestCommands: ParsableCommand {
     }
 }
 
-struct Login: Encodable {
+fileprivate struct Login: Encodable {
     let email: String
     let password: String
 }
 
-struct DecodableModel: Decodable {
+fileprivate struct DecodableModel: Decodable {
     let url: String
     let origin: String
     let headers: [String: String]
@@ -117,12 +117,12 @@ struct DecodableModel: Decodable {
     let data: String?
 }
 
-struct AuthModel: Decodable {
+fileprivate struct AuthModel: Decodable {
     let authenticated: Bool
     let user: String
 }
 
-struct MakeRequest {
+fileprivate struct MakeRequest {
     /// .validate valida se o status code esta entre 200 e 300 e se o accept type ta correto.
     /// .responseDecodable(of: ModelDecodable.self) retorna os dados formatados de acordo com a modelo
     /// que implementa o protocolo Decodable

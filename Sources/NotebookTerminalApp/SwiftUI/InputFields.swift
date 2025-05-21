@@ -20,7 +20,7 @@ struct InputFieldCommands: AsyncParsableCommand {
     }
 }
 
-struct InputFieldContentView: View {
+fileprivate struct InputFieldContentView: View {
     
     // Text fields
     @State private var username: String = ""
@@ -48,6 +48,9 @@ struct InputFieldContentView: View {
     
     // Slider (numeric input)
     @State private var sliderValue: Double = 50
+    
+    // Long Text Field
+    @State private var biografy: String = ""
     
     var body: some View {
         ScrollView {
@@ -105,6 +108,17 @@ struct InputFieldContentView: View {
                 
                 Text("Slider: \(Int(sliderValue))")
                 Slider(value: $sliderValue, in: 0...100)
+                
+                Divider()
+                
+                Text("TextEditor: \(biografy)")
+                TextEditor(text: $biografy)
+                    .foregroundStyle(Color.black)
+                    .scrollContentBackground(.hidden)
+                    .frame(height: 150)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .padding(.horizontal, 10)
                 
             }
             .padding(10)

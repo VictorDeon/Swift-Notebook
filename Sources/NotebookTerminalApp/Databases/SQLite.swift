@@ -20,14 +20,14 @@ struct SQLiteCommands: AsyncParsableCommand {
 }
 
 // MARK: - Models
-struct QLSettings: Codable, FetchableRecord, PersistableRecord {
+fileprivate struct Settings: Codable, FetchableRecord, PersistableRecord {
     var id: String = UUID().uuidString
     var volume: Int = 0
     var lang: String?
     static let databaseTableName = "settings"
 }
 
-struct QLUser: Codable, FetchableRecord, PersistableRecord {
+fileprivate struct User: Codable, FetchableRecord, PersistableRecord {
     var id: String = UUID().uuidString
     var name: String
     var document: String
@@ -35,7 +35,7 @@ struct QLUser: Codable, FetchableRecord, PersistableRecord {
     static let databaseTableName = "users"
 }
 
-struct QLVehicle: Codable, FetchableRecord, PersistableRecord {
+fileprivate struct Vehicle: Codable, FetchableRecord, PersistableRecord {
     var id: String = UUID().uuidString
     var licensePlate: String
     var model: String
@@ -45,21 +45,21 @@ struct QLVehicle: Codable, FetchableRecord, PersistableRecord {
     static let databaseTableName = "vehicles"
 }
 
-struct QLGroup: Codable, FetchableRecord, PersistableRecord {
+fileprivate struct Group: Codable, FetchableRecord, PersistableRecord {
     var id: String = UUID().uuidString
     var name: String
     var descriptions: String?
     static let databaseTableName = "groups"
 }
 
-struct UserGroup: Codable, FetchableRecord, PersistableRecord {
+fileprivate struct UserGroup: Codable, FetchableRecord, PersistableRecord {
     var userId: String
     var groupId: String
     static let databaseTableName = "user_group"
 }
 
 /// Singleton para abrir e migrar o banco
-class DatabaseManager {
+fileprivate class DatabaseManager {
     @MainActor static let shared = DatabaseManager()
     let dbQueue: DatabaseQueue
 
@@ -123,15 +123,15 @@ class DatabaseManager {
     }
 }
 
-typealias DATABASE = DatabaseManager
+fileprivate typealias DATABASE = DatabaseManager
 
 @MainActor
-class SettingsRepository {
+fileprivate class SettingsRepository {
     let dbQueue = DATABASE.shared.dbQueue
 
     @discardableResult
-    func add(volume: Int?, lang: String?) throws -> QLSettings {
-        var settings = QLSettings()
+    func add(volume: Int?, lang: String?) throws -> Settings {
+        var settings = Settings()
         settings.volume = volume ?? 0
         settings.lang = lang
         try dbQueue.write { database in
@@ -140,7 +140,7 @@ class SettingsRepository {
         return settings
     }
 
-    func update(_ settings: inout QLSettings, volume: Int?, lang: String?) throws {
+    func update(_ settings: inout Settings, volume: Int?, lang: String?) throws {
         try dbQueue.write { database in
             settings.volume = volume ?? settings.volume
             settings.lang = lang ?? settings.lang
@@ -148,7 +148,7 @@ class SettingsRepository {
         }
     }
 
-    func delete(_ settings: QLSettings) throws -> Bool {
+    func delete(_ settings: Settings) throws -> Bool {
         return try dbQueue.write { database in
             try settings.delete(database)
         }
@@ -156,39 +156,39 @@ class SettingsRepository {
 }
 
 @MainActor
-class UserRepository {
+fileprivate class UserRepository {
     let dbQueue = DATABASE.shared.dbQueue
 
-    func add(name: String, document: String, settingsId: String? = nil) throws -> QLUser {
-        let user = QLUser(name: name, document: document, settingsId: settingsId)
+    func add(name: String, document: String, settingsId: String? = nil) throws -> User {
+        let user = User(name: name, document: document, settingsId: settingsId)
         try dbQueue.write { database in
             try user.insert(database)
         }
         return user
     }
 
-    func all() throws -> [QLUser] {
+    func all() throws -> [User] {
         try dbQueue.read { database in
-            try QLUser.fetchAll(database)
+            try User.fetchAll(database)
         }
     }
 
-    func get(by id: String) throws -> QLUser? {
+    func get(by id: String) throws -> User? {
         try dbQueue.read { database in
-            try QLUser.fetchOne(database, key: id)
+            try User.fetchOne(database, key: id)
         }
     }
 
-    func fetch(name: String) throws -> [QLUser] {
+    func fetch(name: String) throws -> [User] {
         try dbQueue.read { database in
-            try QLUser
+            try User
                 .filter(sql: "name LIKE '%' || ? || '%'", arguments: [name])
                 .order(Column("name"))
                 .fetchAll(database)
         }
     }
 
-    func update(_ user: inout QLUser, name: String? = nil, document: String? = nil) throws {
+    func update(_ user: inout User, name: String? = nil, document: String? = nil) throws {
         try dbQueue.write { database in
             if let newName = name { user.name = newName }
             if let newDoc = document { user.document = newDoc }
@@ -196,7 +196,7 @@ class UserRepository {
         }
     }
 
-    func delete(_ user: QLUser) throws -> Bool {
+    func delete(_ user: User) throws -> Bool {
         return try dbQueue.write { database in
             try user.delete(database)
         }
@@ -204,16 +204,16 @@ class UserRepository {
 }
 
 @MainActor
-class VehicleRepository {
+fileprivate class VehicleRepository {
     let dbQueue = DATABASE.shared.dbQueue
 
     func add(
-        for user: QLUser,
+        for user: User,
         licensePlate: String,
         model: String,
         manufacture: String,
-        year: Int) throws -> QLVehicle {
-        let vehicle = QLVehicle(
+        year: Int) throws -> Vehicle {
+        let vehicle = Vehicle(
             licensePlate: licensePlate,
             model: model,
             manufacture: manufacture,
@@ -226,20 +226,20 @@ class VehicleRepository {
         return vehicle
     }
 
-    func all(by user: QLUser) throws -> [QLVehicle] {
+    func all(by user: User) throws -> [Vehicle] {
         try dbQueue.read { database in
-            try QLVehicle.filter(Column("ownerId") == user.id).fetchAll(database)
+            try Vehicle.filter(Column("ownerId") == user.id).fetchAll(database)
         }
     }
 
-    func get(by id: String) throws -> QLVehicle? {
+    func get(by id: String) throws -> Vehicle? {
         try dbQueue.read { database in
-            try QLVehicle.fetchOne(database, key: id)
+            try Vehicle.fetchOne(database, key: id)
         }
     }
 
     func update(
-        _ vehicle: inout QLVehicle,
+        _ vehicle: inout Vehicle,
         licensePlate: String? = nil,
         model: String? = nil,
         manufacture: String? = nil,
@@ -253,7 +253,7 @@ class VehicleRepository {
         }
     }
 
-    func delete(_ vehicle: QLVehicle) throws -> Bool {
+    func delete(_ vehicle: Vehicle) throws -> Bool {
         return try dbQueue.write { database in
             try vehicle.delete(database)
         }
@@ -261,30 +261,30 @@ class VehicleRepository {
 }
 
 @MainActor
-class GroupRepository {
+fileprivate class GroupRepository {
     let dbQueue = DATABASE.shared.dbQueue
 
-    func add(name: String, description: String?) throws -> QLGroup {
-        let group = QLGroup(name: name, descriptions: description)
+    func add(name: String, description: String?) throws -> Group {
+        let group = Group(name: name, descriptions: description)
         try dbQueue.write { database in
             try group.insert(database)
         }
         return group
     }
 
-    func all() throws -> [QLGroup] {
+    func all() throws -> [Group] {
         try dbQueue.read { database in
-            try QLGroup.fetchAll(database)
+            try Group.fetchAll(database)
         }
     }
 
-    func get(by id: String) throws -> QLGroup? {
+    func get(by id: String) throws -> Group? {
         try dbQueue.read { database in
-            try QLGroup.fetchOne(database, key: id)
+            try Group.fetchOne(database, key: id)
         }
     }
 
-    func update(_ group: inout QLGroup, name: String? = nil, description: String? = nil) throws {
+    func update(_ group: inout Group, name: String? = nil, description: String? = nil) throws {
         try dbQueue.write { database in
             if let newName = name { group.name = newName }
             if let newDescription = description { group.descriptions = newDescription }
@@ -292,20 +292,20 @@ class GroupRepository {
         }
     }
 
-    func delete(_ group: QLGroup) throws -> Bool {
+    func delete(_ group: Group) throws -> Bool {
         return try dbQueue.write { database in
             try group.delete(database)
         }
     }
 
-    func addUser(_ user: QLUser, to group: QLGroup) throws {
+    func addUser(_ user: User, to group: Group) throws {
         let userGroup = UserGroup(userId: user.id, groupId: group.id)
         try dbQueue.write { database in
             try userGroup.insert(database)
         }
     }
 
-    func removeUser(_ user: QLUser, from group: QLGroup) throws {
+    func removeUser(_ user: User, from group: Group) throws {
         try dbQueue.write { database in
             try database.execute(
                 sql: """
@@ -318,8 +318,7 @@ class GroupRepository {
     }
 }
 
-// swiftlint:disable:next function_body_length
-@MainActor func sqliteRunner() {
+@MainActor fileprivate func sqliteRunner() {
     let settingsRepo = SettingsRepository()
     let userRepo     = UserRepository()
     let vehicleRepo  = VehicleRepository()

@@ -41,20 +41,20 @@ struct GenericsCommands: ParsableCommand {
 }
 
 /// T pode ser qualquer tipo, ele é um tipo generico.
-func mergeTogether<T>(a: T, b: T) -> [T] {
+fileprivate func mergeTogether<T>(a: T, b: T) -> [T] {
     return [a, b]
 }
 
-func createDict<T, U>(a: T, b: U) -> [T: U] {
+fileprivate func createDict<T, U>(a: T, b: U) -> [T: U] {
     return [a: b]
 }
 
 /// Aqui estamos aplicando uma constraint dizendo que o tipo que deve ser enviado para essa função tem que ser Equatable
-func isTheSame<T: Equatable>(a: T, b: T) -> Bool {
+fileprivate func isTheSame<T: Equatable>(a: T, b: T) -> Bool {
     return a == b
 }
 
-class Queue<T> {
+fileprivate class Queue<T> {
     private var storage: [T] = []
     
     init(head: T) {

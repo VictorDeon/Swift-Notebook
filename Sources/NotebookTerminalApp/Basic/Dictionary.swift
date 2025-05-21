@@ -33,7 +33,7 @@ struct DictionaryCommands: ParsableCommand {
 }
 
 /// Criação de Dicionarios
-struct CriacaoDeDicionarios {
+fileprivate struct CriacaoDeDicionarios {
     static func run() {
         // Dicionário vazio (tipo explícito)
         let emptyDict: [String: Int] = [:]
@@ -64,7 +64,7 @@ struct CriacaoDeDicionarios {
 }
 
 /// Acessando Valores
-struct AcessandoValores {
+fileprivate struct AcessandoValores {
     static func run() {
         let personInfo: [String: String] = [
             "firstName": "Alice",
@@ -91,7 +91,7 @@ struct AcessandoValores {
 }
 
 /// Adicionando e atualizando entradas
-struct AdicionandoAtualizandoEntradas {
+fileprivate struct AdicionandoAtualizandoEntradas {
     static func run() {
         var scores: [String: Int] = [:]
 
@@ -111,7 +111,7 @@ struct AdicionandoAtualizandoEntradas {
 }
 
 /// Removendo entradas
-struct RemovendoEntradas {
+fileprivate struct RemovendoEntradas {
     static func run() {
         var scores: [String: Int] = ["Alice": 85, "Bob": 100]
         print(scores)               // [Alice: 85, Bob: 100]
@@ -128,7 +128,7 @@ struct RemovendoEntradas {
 }
 
 /// Iterando sobre dicionários
-struct IterandoSobreDict {
+fileprivate struct IterandoSobreDict {
     static func run() {
         let capitals = ["France": "Paris", "Japan": "Tokyo", "Brazil": "Brasília"]
 
@@ -158,7 +158,7 @@ struct IterandoSobreDict {
 }
 
 /// Transformando e filtrando
-struct TransformandoEFiltrando {
+fileprivate struct TransformandoEFiltrando {
     static func run() {
         let ages = ["Alice": 30, "Bob": 15, "Carla": 28]
         print(ages)                 // ["Alice": 30, "Bob": 15, "Carla": 28]
@@ -180,7 +180,7 @@ struct TransformandoEFiltrando {
 }
 
 /// Mesclando dicionários
-struct MesclandoDict {
+fileprivate struct MesclandoDict {
     static func run() {
         let dictA = ["a": 1, "b": 2]
         let dictB = ["b": 20, "c": 3]
@@ -196,7 +196,7 @@ struct MesclandoDict {
 }
 
 /// Ordenando
-struct Ordenando {
+fileprivate struct Ordenando {
     static func run() {
         let capitals = ["France": "Paris", "Japan": "Tokyo", "Brazil": "Brasília"]
         print(capitals)         // ["France": "Paris", "Japan": "Tokyo", "Brazil": "Brasília"]

@@ -28,7 +28,7 @@ struct ScopeCommands: ParsableCommand {
 
 /// Global: declarado fora de qualquer função ou tipo, visível em todo o arquivo (e em módulos importados, se public).
 /// Local: dentro de func, if, for, etc. Morre quando o bloco termina.
-struct EscopoGlobalVsLocal {
+fileprivate struct EscopoGlobalVsLocal {
     static func run() {
         // 1) Global (arquivo inteiro) se esse codigo estivesse em um arquivo separado
         let globalValue = "👋 Olá, Swift!"
@@ -49,7 +49,7 @@ struct EscopoGlobalVsLocal {
 }
 
 /// Funçoes aninhadas e escopo de bloco
-struct FuncoesAninhadasEscopoDeBloco {
+fileprivate struct FuncoesAninhadasEscopoDeBloco {
     static func run() {
         func outerFunction() {
             var count = 0
@@ -77,7 +77,7 @@ struct FuncoesAninhadasEscopoDeBloco {
 
 /// let: cria constantes imutáveis — não podem mudar de valor.
 /// var: cria variáveis mutáveis — podem ser alteradas.
-struct LetVsVarNoEscopo {
+fileprivate struct LetVsVarNoEscopo {
     static func run() {
         let pii = 3.14
         print(pii)               // 3.14
@@ -91,7 +91,7 @@ struct LetVsVarNoEscopo {
 
 /// Declarar uma nova variável com mesmo nome dentro de um escopo interno “esconde” a externa
 /// Use shadowing com cuidado para não confundir quem lê.
-struct Shadowing {
+fileprivate struct Shadowing {
     static func run() {
         let message = "Olá"
         func greet() {
@@ -106,7 +106,7 @@ struct Shadowing {
 /// Escopo de closures e captura de variáveis
 /// Closures herdam o escopo léxico onde foram criadas e capturam referências a variáveis externas
 /// total vive enquanto a closure existir, mesmo após makeIncrementer terminar.
-struct EscopoDeClosure {
+fileprivate struct EscopoDeClosure {
     static func run() {
         func makeIncrementer(by amount: Int) -> () -> Int {
             var total = 0

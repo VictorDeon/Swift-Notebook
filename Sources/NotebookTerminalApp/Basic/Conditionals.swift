@@ -50,7 +50,7 @@ struct ConditionalCommands: ParsableCommand {
     }
 }
 
-struct Conditional {
+fileprivate struct Conditional {
     static func run(age: Int) {
         if age > 70 {
             print("Muito velho para dirigir.")
@@ -62,14 +62,14 @@ struct Conditional {
     }
 }
 
-struct CondicionalTernario {
+fileprivate struct CondicionalTernario {
     static func run(age: Int) {
         let printable = age > 18 ? "Pode dirigir" : "Não pode dirigir"
         print(printable)
     }
 }
 
-struct CondicionalSwitch {
+fileprivate struct CondicionalSwitch {
     static func run(age: Int) {
         switch age {
         case 70...120:  // Closed Range

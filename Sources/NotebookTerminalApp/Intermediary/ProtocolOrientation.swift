@@ -20,7 +20,7 @@ struct POPCommands: ParsableCommand {
     }
 }
 
-protocol VehicleProtocol {
+fileprivate protocol VehicleProtocol {
     var description: String { get }
     var brand: String { get }
     init(brand: String)
@@ -28,23 +28,23 @@ protocol VehicleProtocol {
     func stop()
 }
 
-extension VehicleProtocol {
+fileprivate extension VehicleProtocol {
     func getBrand() -> String {
         return brand
     }
 }
 
-protocol EngineProtocol {
+fileprivate protocol EngineProtocol {
     var hasFuel: Bool { get }
     var isServiced: Bool { get }
 }
 
-struct Engine: EngineProtocol {
+fileprivate struct Engine: EngineProtocol {
     var hasFuel: Bool = true
     var isServiced: Bool = false
 }
 
-struct Celta: VehicleProtocol {
+fileprivate struct Celta: VehicleProtocol {
     var description: String {
         return getBrand()
     }
@@ -72,7 +72,7 @@ struct Celta: VehicleProtocol {
     }
 }
 
-struct AirPlane {
+fileprivate struct AirPlane {
     var engine: Engine
     
     init(engine: Engine) {

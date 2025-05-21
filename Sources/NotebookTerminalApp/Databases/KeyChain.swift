@@ -45,7 +45,7 @@ struct KeyChainCommands: AsyncParsableCommand {
 }
 
 @MainActor
-final class KeychainHelper {
+fileprivate final class KeychainHelper {
     static let shared = KeychainHelper()
     private init() {}
 
@@ -130,7 +130,7 @@ final class KeychainHelper {
 }
 
 @MainActor
-func keychainRunner(_ serviceBundle: String, _ account: String, _ data: String) {
+fileprivate func keychainRunner(_ serviceBundle: String, _ account: String, _ data: String) {
     let service = Bundle.main.bundleIdentifier ?? serviceBundle
 
     if let tokenData = data.data(using: .utf8) {

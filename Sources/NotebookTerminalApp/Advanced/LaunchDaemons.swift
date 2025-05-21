@@ -117,7 +117,7 @@ struct LaunchDaemonCommands: ParsableCommand {
 /// Erros: trate exceções de I/O e de Process para feedback ao usuário.
 /// Ao atualizar o plist, faça primeiro sudo launchctl unload … antes de load.
 /// Para remover, basta apagar o .plist e descarregar com launchctl unload.
-struct LaunchDaemonEmSwift {
+fileprivate struct LaunchDaemonEmSwift {
     static func run(_ executable: String, _ arguments: [String]) {
         // 1. Monte o dicionário com as chaves
         let daemonConfig: [String: Any] = [

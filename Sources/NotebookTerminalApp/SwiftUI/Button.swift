@@ -20,7 +20,7 @@ struct ButtonCommands: AsyncParsableCommand {
     }
 }
 
-struct ContentView: View {
+fileprivate struct ContentView: View {
     var body: some View {
         VStack {
             Button("Tap Button", action: {

@@ -44,7 +44,7 @@ struct ClosuresCommands: ParsableCommand {
 }
 
 /// Sintaxe básica
-struct SintaxeBasica {
+fileprivate struct SintaxeBasica {
     static func run() {
         // { (parâmetros) -> TipoRetorno in corpo-da-closure }
         let closureExemplo: (Int, Int) -> Int = { (value1: Int, value2: Int) -> Int in
@@ -55,12 +55,12 @@ struct SintaxeBasica {
 }
 
 // Podemos criar funções que recebem closures para executar diferentes operações:
-func calculator(_ value1: Int, _ value2: Int, operation: (Int, Int) -> Int) -> Int {
+fileprivate func calculator(_ value1: Int, _ value2: Int, operation: (Int, Int) -> Int) -> Int {
     operation(value1, value2)
 }
 
 /// Closures como parâmetros de funções
-struct ClosuresComoParametrosDeFuncoes {
+fileprivate struct ClosuresComoParametrosDeFuncoes {
     static func run() {
         // Funções auxiliares
         func add(_ value1: Int, _ value2: Int) -> Int { value1 + value2 }
@@ -85,7 +85,7 @@ struct ClosuresComoParametrosDeFuncoes {
 }
 
 /// Trailing closures & shorthand argument names
-struct TrailingClosuresEShorthandArguments {
+fileprivate struct TrailingClosuresEShorthandArguments {
     static func run() {
         // Quando a closure é o último parâmetro, podemos usar sintaxe de trailing
         // closure e nomes abreviados ($0, $1, …):
@@ -100,7 +100,7 @@ struct TrailingClosuresEShorthandArguments {
 }
 
 /// Aplicação em coleções: map, filter, reduce
-struct AplicacoesEmColecoes {
+fileprivate struct AplicacoesEmColecoes {
     static func run() {
         // Swift padrão oferece métodos para transformar e filtrar arrays usando closures:
         let números = [6, 2, 3, 9, 4, 1]
@@ -122,7 +122,7 @@ struct AplicacoesEmColecoes {
 }
 
 /// Retornando closures e captura de valores
-struct RetornandoClosuresECapturaDeValores {
+fileprivate struct RetornandoClosuresECapturaDeValores {
     static func run() {
         // Closures podem capturar e manter referências de variáveis externas:
         func makeIncrementer(by amount: Int) -> () -> Int {
@@ -142,7 +142,7 @@ struct RetornandoClosuresECapturaDeValores {
     }
 }
 
-struct EscapingClosures {
+fileprivate struct EscapingClosures {
     enum APIError: Error {
         case failedToGetResponse
     }

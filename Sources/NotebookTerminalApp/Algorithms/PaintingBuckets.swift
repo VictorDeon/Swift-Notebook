@@ -35,7 +35,7 @@ struct PaintingBucketsCommands: ParsableCommand {
     }
 }
 
-func paintingBucketRunner(_ width: Float, _ height: Float, _ bucketAreaCovered: Float) {
+fileprivate func paintingBucketRunner(_ width: Float, _ height: Float, _ bucketAreaCovered: Float) {
     var bucketsOfPaint: Int {
         let area = width * height
         let numberOfBuckets = area / bucketAreaCovered

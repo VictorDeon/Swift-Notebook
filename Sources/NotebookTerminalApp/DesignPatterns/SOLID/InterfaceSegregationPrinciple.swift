@@ -45,11 +45,11 @@ fileprivate protocol Feedable {
     func eat()
 }
 
-class HumanWorker: Workable, Feedable {
+fileprivate class HumanWorker: Workable, Feedable {
     func work() { print("Sou um humano trabalhando...") }
     func eat() { print("Realizando uma pausa para comer") }
 }
 
-class RobotWorker: Workable {
+fileprivate class RobotWorker: Workable {
     func work() { print("Sou um robo trabalhando sem pausa...") }
 }

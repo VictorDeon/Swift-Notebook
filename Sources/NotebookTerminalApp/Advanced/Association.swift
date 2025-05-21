@@ -30,7 +30,7 @@ struct AssociationCommands: ParsableCommand {
     }
 }
 
-struct Address1 {
+fileprivate struct Address {
     var zipCode: String
     var country: String?
     var state: String?
@@ -40,34 +40,34 @@ struct Address1 {
     var complement: String?
 }
 
-struct Group1 {
+fileprivate struct Group {
     var name: String
-    var people: [Person1] = []
+    var people: [Person] = []
 }
 
-struct Phone {
+fileprivate struct Phone {
     var ddd: Int
     var number: Int
 }
 
-struct Person1 {
+fileprivate struct Person {
     var name: String
     var phone: String?
-    var address: Address1?
-    var groups: [Group1] = []
+    var address: Address?
+    var groups: [Group] = []
     var phones: [Phone] = []
 }
 
-struct Item1 {
+fileprivate struct Item {
     var title: String
     var price: Float
 }
 
-struct Order1 {
-    var items: [Item1] = []
+fileprivate struct Order {
+    var items: [Item] = []
     var total: Float = 0
 
-    init(items: [Item1]) {
+    init(items: [Item]) {
         for item in items {
             self.items.append(item)
         }
@@ -81,7 +81,7 @@ struct Order1 {
     }
 }
 
-class Keyboard {
+fileprivate class Keyboard {
     var model: String
     unowned var notebook: Notebook
 
@@ -92,7 +92,7 @@ class Keyboard {
     }
 }
 
-class Notebook {
+fileprivate class Notebook {
     var model: String
     var keyboard: Keyboard?
 
@@ -107,10 +107,10 @@ class Notebook {
 }
 
 /// Associação 1x1
-struct Association1x1 {
+fileprivate struct Association1x1 {
     static func execute() {
-        let brasilia = Address1(zipCode: "70658192", city: "Brasilia", number: 304)
-        let fulana = Person1(name: "Ana", phone: "61992839456", address: brasilia)
+        let brasilia = Address(zipCode: "70658192", city: "Brasilia", number: 304)
+        let fulana = Person(name: "Ana", phone: "61992839456", address: brasilia)
         print(fulana.name)              // Ana
         print(fulana.phone!)            // 61992839456
         print(fulana.address!.zipCode)  // 70658192
@@ -118,13 +118,13 @@ struct Association1x1 {
     }
 }
 
-struct Association1xN {
+fileprivate struct Association1xN {
     static func execute() {
         let phone1 = Phone(ddd: 61, number: 998382934)
         let phone2 = Phone(ddd: 15, number: 838493302)
         let phone3 = Phone(ddd: 61, number: 110293994)
 
-        var fulana = Person1(name: "Ana", phone: "61992839456", phones: [phone1, phone2])
+        var fulana = Person(name: "Ana", phone: "61992839456", phones: [phone1, phone2])
         fulana.phones.append(phone3)
 
         print(fulana.name)  // Ana
@@ -137,18 +137,18 @@ struct Association1xN {
     }
 }
 
-struct AssociationNxM {
+fileprivate struct AssociationNxM {
     static func execute() {
         // Vamos criar alguma pessoas
-        var pedro = Person1(name: "Pedro")
-        var paula = Person1(name: "Paula")
-        var joao = Person1(name: "João")
-        var marcos = Person1(name: "Marcos")
-        var camila = Person1(name: "Camila")
+        var pedro = Person(name: "Pedro")
+        var paula = Person(name: "Paula")
+        var joao = Person(name: "João")
+        var marcos = Person(name: "Marcos")
+        var camila = Person(name: "Camila")
 
         // Vamos criar alguns grupos
-        let group1 = Group1(name: "Grupo A", people: [pedro, paula, joao])
-        let group2 = Group1(name: "Grupo B", people: [marcos, camila])
+        let group1 = Group(name: "Grupo A", people: [pedro, paula, joao])
+        let group2 = Group(name: "Grupo B", people: [marcos, camila])
 
         pedro.groups.append(group1)
         paula.groups.append(group1)
@@ -176,14 +176,14 @@ struct AssociationNxM {
 }
 
 /// É um tipo de associação que indica todo-parte se o objeto morrer o objeto parte continuará existindo
-struct Aggregation {
+fileprivate struct Aggregation {
     static func execute() {
         // Os items existem independente do pedido
-        let item1 = Item1(title: "XTudo", price: 11.90)
-        let item2 = Item1(title: "Coca-Cola", price: 5.75)
-        let item3 = Item1(title: "Batata Frita", price: 5.00)
+        let item1 = Item(title: "XTudo", price: 11.90)
+        let item2 = Item(title: "Coca-Cola", price: 5.75)
+        let item3 = Item(title: "Batata Frita", price: 5.00)
 
-        var order = Order1(items: [item1, item2, item3])
+        var order = Order(items: [item1, item2, item3])
         print("O pedido ficou: R$ " + String(order.getBill()))
         // O pedido ficou: R$ 22.65
     }
@@ -191,7 +191,7 @@ struct Aggregation {
 
 /// É um tipo de associação que indica todo-parte na qual o objeto parte só pode pertencer a um único objeto todo,
 /// se o objeto todo morrer, o objeto parte também morre.
-struct Composition {
+fileprivate struct Composition {
     static func execute() {
         // O notebook pode existir sem um teclado
         let notebook = Notebook(model: "HP")

@@ -48,7 +48,7 @@ struct CicloDeReferenciaCommands: ParsableCommand {
 
 // Quando você cria Pessoa(nome: "Ana"), dentro de init a closure guarda self (ou seja, a própria Ana).
 // Agora Pessoa guarda a closure, e a closure guarda a Pessoa → ciclo → “fuga” impossível.
-class PessoaLeaky {
+fileprivate class PessoaLeaky {
     var nome: String
     // Uma closure que pode usar 'self'
     var tarefa: (() -> Void)?
@@ -70,7 +70,7 @@ class PessoaLeaky {
 // [weak self] diz: “Dentro desta closure, não prendo self de verdade. Se não houver ninguém mais usando o objeto,
 // ele pode ser desalocado normalmente.”
 // A closure passa a ter self como opcional (self? ou guard let), porque ele pode já ter sido liberado.
-class PessoaSafe {
+fileprivate class PessoaSafe {
     var nome: String
     var tarefa: (() -> Void)?
 
@@ -89,7 +89,7 @@ class PessoaSafe {
     }
 }
 
-func runLeakyExample() {
+fileprivate func runLeakyExample() {
     print("→ Iniciando exemplo LEAKY")
     var pessoa: PessoaLeaky? = PessoaLeaky(nome: "Ana")
     pessoa?.tarefa?()
@@ -99,7 +99,7 @@ func runLeakyExample() {
     // Aqui não veremos o deinit, pois há retain cycle
 }
 
-func runSafeExample() {
+fileprivate func runSafeExample() {
     print("→ Iniciando exemplo SAFE")
     var pessoa: PessoaSafe? = PessoaSafe(nome: "Bruno")
     pessoa?.tarefa?()

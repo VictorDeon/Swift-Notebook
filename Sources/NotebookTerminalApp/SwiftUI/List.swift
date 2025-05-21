@@ -29,7 +29,7 @@ struct ListCommands: AsyncParsableCommand {
     }
 }
 
-struct StringListContentView: View {
+fileprivate struct StringListContentView: View {
     
     @State private var shoppingItems: [String] = [
         "Apples",
@@ -49,13 +49,13 @@ struct StringListContentView: View {
     }
 }
 
-struct ShoppingModel: Identifiable {
+fileprivate struct ShoppingModel: Identifiable {
     let id: UUID = UUID()
     let title: String
     let price: Double
 }
 
-struct ItemListContentView: View {
+fileprivate struct ItemListContentView: View {
     
     @State private var shoppingItems: [ShoppingModel] = [
         ShoppingModel(title: "Apples", price: 12.30),
@@ -79,7 +79,7 @@ struct ItemListContentView: View {
     }
 }
 
-struct ForListContentView: View {
+fileprivate struct ForListContentView: View {
     
     @State private var shoppingItems: [ShoppingModel] = [
         ShoppingModel(title: "Apples", price: 12.30),
@@ -107,7 +107,7 @@ struct ForListContentView: View {
 }
 
 /// O List por padrão já é um ScrollView
-struct ScrollListContentView: View {
+fileprivate struct ScrollListContentView: View {
     
     @State private var shoppingItems: [ShoppingModel] = [
         ShoppingModel(title: "Apples", price: 12.30),

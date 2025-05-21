@@ -49,37 +49,37 @@ struct FunctionCommands: ParsableCommand {
 }
 
 // Parametros nomeados iguais Externamente e Internamente
-func sum1(value1: Int, value2: Int) -> Int {
+fileprivate func sum1(value1: Int, value2: Int) -> Int {
     return value1 + value2
 }
 
 // Parametros nao nomeados
-func sum2(_ value1: Int, _ value2: Int) -> Int {
+fileprivate func sum2(_ value1: Int, _ value2: Int) -> Int {
     return value1 + value2
 }
 
 // Parametros nomeados diferentes Externamente e Internamente
-func sum3(value1 number1: Int, value2 number2: Int) -> Int {
+fileprivate func sum3(value1 number1: Int, value2 number2: Int) -> Int {
     return number1 + number2
 }
 
 // Parametros nomeados e Nao nomeados na mesma função
-func sum4(_ value1: Int, value2: Int) -> Int {
+fileprivate func sum4(_ value1: Int, value2: Int) -> Int {
     return value1 + value2
 }
 
 // Função sem retorno e sem parâmetros
-func printHello() {
+fileprivate func printHello() {
     print("Hello World!")
 }
 
 // Função que recebe outra função como parâmetro
-func mathCalculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
+fileprivate func mathCalculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
     operation(n1, n2)
 }
 
 // Funções podem ser retornada de outras funções.
-func getHelloWorldFunction() -> () -> Void {
+fileprivate func getHelloWorldFunction() -> () -> Void {
     return printHello
 }
 

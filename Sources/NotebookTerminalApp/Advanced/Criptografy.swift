@@ -38,7 +38,7 @@ struct CriptografyCommands: ParsableCommand {
 /// Na criptografia simétrica, usamos a mesma chave para encriptar e decriptar.
 /// AES-GCM: fornece confidencialidade e autenticação (integridade e não rejeição).
 /// O sealedBox.combined já inclui nonce e tag, facilitando armazenamento/transmissão.
-struct CriptografiaSimetrica {
+fileprivate struct CriptografiaSimetrica {
     static func run() {
         // 1. Gerar uma chave simétrica de 256 bits
         let key = SymmetricKey(size: .bits256)
@@ -66,7 +66,7 @@ struct CriptografiaSimetrica {
 
 /// Criptografia Assimétrica
 /// As chaves são persistido em memoria.
-struct CriptografiaAssimetrica {
+fileprivate struct CriptografiaAssimetrica {
     /// 2.1. Assinatura Digital com P256 (ECDSA)
     /// Usada para garantir integridade e autoria de mensagens.
     static func assinaturaDigital() {
@@ -155,14 +155,14 @@ struct CriptografiaAssimetrica {
     }
 }
 
-struct MyClaims: Claims {
+fileprivate struct MyClaims: Claims {
     let sub: String      // subject (usuário)
     let exp: Date        // expiração
     let roles: [String]  // custom claim
 }
 
 /// JSON Web Tokens são largamente usados para autenticação/autorização.
-struct TokensJWT {
+fileprivate struct TokensJWT {
     static let secret: String = "segredo-super-secreto"
 
     static func encode() -> String {

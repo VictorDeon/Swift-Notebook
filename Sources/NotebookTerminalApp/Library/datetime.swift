@@ -32,7 +32,7 @@ struct DateTimeCommands: ParsableCommand {
 }
 
 /// Criando instâncias de Date
-struct InstanciasDate {
+fileprivate struct InstanciasDate {
     static func run() {
         // Data e hora atual
         let now = Date()
@@ -58,7 +58,7 @@ struct InstanciasDate {
 ///     HH – hora em 24h (00–23)
 ///     mm – minuto (00–59)
 ///     ss – segundo (00–59)
-struct FormatandoDatas {
+fileprivate struct FormatandoDatas {
     static func run() {
         let now = Date()
         let formatter = DateFormatter()
@@ -74,7 +74,7 @@ struct FormatandoDatas {
 }
 
 /// Convertendo strings em Date
-struct ConverterStringEmDate {
+fileprivate struct ConverterStringEmDate {
     static func run() {
         let dateString = "2025-05-20 09:45"
         let parser = DateFormatter()
@@ -92,7 +92,7 @@ struct ConverterStringEmDate {
 
 /// Trabalhando com Calendar e DateComponents
 /// O Calendar permite extrair componentes (ano, mês, dia…) e fazer cálculos.
-struct CalendarEDataComponents {
+fileprivate struct CalendarEDataComponents {
     static func run() {
         let now = Date()
         let calendar = Calendar.current
@@ -113,7 +113,7 @@ struct CalendarEDataComponents {
 }
 
 /// Intervalos e comparação de datas
-struct IntervalosEComparacao {
+fileprivate struct IntervalosEComparacao {
     static func run() {
         let today = Date()
         let oneDay: TimeInterval = 24 * 60 * 60
@@ -138,7 +138,7 @@ struct IntervalosEComparacao {
 }
 
 /// Time zones e Locale
-struct TimeZonesELocale {
+fileprivate struct TimeZonesELocale {
     static func run() {
         let today = Date()
 
@@ -172,7 +172,7 @@ struct TimeZonesELocale {
 
 /// Medindo duração de operações
 /// Para medições de performance mais precisas, prefira DispatchTime ou CFAbsoluteTimeGetCurrent().
-struct MedindoDuracao {
+fileprivate struct MedindoDuracao {
     static func run() {
         let start = Date()
         sleep(3)
@@ -183,7 +183,7 @@ struct MedindoDuracao {
 }
 
 /// Formatos padronizados
-struct FormatosPadronizados {
+fileprivate struct FormatosPadronizados {
     static func run() {
         let today = Date()
         let isoFormatter = ISO8601DateFormatter()

@@ -38,7 +38,7 @@ struct SOCommands: ParsableCommand {
 
 /// Em Swift (em macOS/iOS ou Linux), a classe principal para executar comandos externos é a Process.
 /// Para capturar a saída (stdout e stderr), usamos a classe Pipe.
-struct ConceitosBasicos {
+fileprivate struct ConceitosBasicos {
     static func run() {
         let process = Process()
         // caminho do executável
@@ -73,7 +73,7 @@ struct ConceitosBasicos {
 }
 
 /// Para diferenciar stdout de stderr, use pipes separados, assim é possível tratar mensagens de erro separadamente.
-struct TratandoErrorDeFormaRobusta {
+fileprivate struct TratandoErrorDeFormaRobusta {
     static func run() {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
@@ -105,7 +105,7 @@ struct TratandoErrorDeFormaRobusta {
 }
 
 /// Execução Assíncrona para não bloquear a thread principal (útil em apps GUI ou servidores)
-struct AsyncExecution {
+fileprivate struct AsyncExecution {
     static func run() {
         let queue = DispatchQueue(label: "tech.vksoftware.process", qos: .userInitiated)
 
@@ -145,7 +145,7 @@ struct AsyncExecution {
 }
 
 /// Rode qualquer comando shell
-func runShellCommand(_ launchPath: String, _ arguments: [String]) throws -> (output: String, exitCode: Int32) {
+fileprivate func runShellCommand(_ launchPath: String, _ arguments: [String]) throws -> (output: String, exitCode: Int32) {
     let process = Process()
     process.executableURL = URL(fileURLWithPath: launchPath)
     process.arguments = arguments

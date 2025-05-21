@@ -32,6 +32,7 @@ fileprivate class CheckoutInvalid {
 }
 
 // Depois da refatoração
+// Checkout depende da abstração PaymentService, permitindo trocar implementações facilmente.
 fileprivate protocol PaymentService {
     func pay(amount: Double)
 }

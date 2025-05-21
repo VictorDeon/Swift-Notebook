@@ -23,7 +23,7 @@ struct RealmCommands: AsyncParsableCommand {
     }
 }
 
-class Settings: Object {
+fileprivate class Settings: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var volume: Int = 0
     @objc dynamic var lang: String?
@@ -33,7 +33,7 @@ class Settings: Object {
     }
 }
 
-class Vehicle: Object {
+fileprivate class Vehicle: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var licensePlate: String = ""
     @objc dynamic var model: String = ""
@@ -46,7 +46,7 @@ class Vehicle: Object {
     }
 }
 
-class Group: Object {
+fileprivate class Group: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
     @objc dynamic var descriptions: String?
@@ -57,7 +57,7 @@ class Group: Object {
     }
 }
 
-class User: Object {
+fileprivate class User: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
     @objc dynamic var document: String = ""
@@ -71,7 +71,7 @@ class User: Object {
 }
 
 /// Singleton para abrir o banco
-class RealmDatabaseManager {
+fileprivate class RealmDatabaseManager {
     @MainActor static let shared = RealmDatabaseManager()
     var realm: Realm?
 
@@ -88,7 +88,7 @@ class RealmDatabaseManager {
 }
 
 @MainActor
-struct RealmSettingsRepository {
+fileprivate struct RealmSettingsRepository {
     private let realm = RealmDatabaseManager.shared.realm
 
     // Create
@@ -133,7 +133,7 @@ struct RealmSettingsRepository {
 }
 
 @MainActor
-struct RealmUserRepository {
+fileprivate struct RealmUserRepository {
     private let realm = RealmDatabaseManager.shared.realm
 
     // Create
@@ -202,7 +202,7 @@ struct RealmUserRepository {
 }
 
 @MainActor
-struct RealmVehicleRepository {
+fileprivate struct RealmVehicleRepository {
     private let realm = RealmDatabaseManager.shared.realm
 
     // Create
@@ -272,7 +272,7 @@ struct RealmVehicleRepository {
 }
 
 @MainActor
-struct RealmGroupRepository {
+fileprivate struct RealmGroupRepository {
     private let realm = RealmDatabaseManager.shared.realm
 
     // Create
@@ -341,7 +341,7 @@ struct RealmGroupRepository {
 }
 
 @MainActor
-func realmRunner() { // swiftlint:disable:this function_body_length
+fileprivate func realmRunner() { // swiftlint:disable:this function_body_length
     let settingsRepository = RealmSettingsRepository()
     let userRepository     = RealmUserRepository()
     let vehicleRepository  = RealmVehicleRepository()
@@ -430,4 +430,4 @@ func realmRunner() { // swiftlint:disable:this function_body_length
     } catch {
         print("❌ Erro durante CRUD demo:", error)
     }
-} // swiftlint:disable:this file_length
+}

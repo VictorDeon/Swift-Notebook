@@ -104,11 +104,12 @@ struct TerminalApp: AsyncParsableCommand {
             OptionalCommands.self,
             RandomCommands.self,
             HigherOrderFunctionsCommands.self,
-            // Advanced
             CastingCommands.self,
-            ClosuresCommands.self,
             ExtensionCommands.self,
             OOCommands.self,
+            POPCommands.self,
+            // Advanced
+            ClosuresCommands.self,
             PropertiesCommands.self,
             CicloDeReferenciaCommands.self,
             AssociationCommands.self,
@@ -118,7 +119,6 @@ struct TerminalApp: AsyncParsableCommand {
             CriptografyCommands.self,
             LaunchDaemonCommands.self,
             GenericsCommands.self,
-            POPCommands.self,
             // Design Patterns
             DelegateCommands.self,
             SingletonCommands.self,
@@ -151,7 +151,7 @@ struct TerminalApp: AsyncParsableCommand {
             ColorCommands.self,
             ButtonCommands.self,
             StateCommands.self,
-            TextFieldCommands.self,
+            AlertCommands.self,
             IdentifiableCommands.self,
             SheetsAndNavigationCommands.self,
             ListCommands.self,

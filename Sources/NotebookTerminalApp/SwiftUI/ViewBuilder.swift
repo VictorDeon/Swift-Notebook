@@ -24,14 +24,14 @@ struct ViewBuilderCommands: AsyncParsableCommand {
     }
 }
 
-struct Excercise: Identifiable {
+fileprivate struct Excercise: Identifiable {
     let id = UUID()
     let name: String
     let reps: Int
     let weight: Int
 }
 
-struct WorkoutBuilder<Content: View>: View {
+fileprivate struct WorkoutBuilder<Content: View>: View {
     let columns = [
         GridItem(.fixed(150), alignment: .leading),
         GridItem(.flexible()),
@@ -49,19 +49,19 @@ struct WorkoutBuilder<Content: View>: View {
     }
 }
 
-struct TextCustomModifier: ViewModifier {
+fileprivate struct TextCustomModifier: ViewModifier {
     func body(content: Content) -> some View {
         return content.font(.system(size: 15, weight: .semibold))
     }
 }
 
-extension View {
+fileprivate extension View {
     func tableHeaderTextStyle() -> some View {
         modifier(TextCustomModifier())
     }
 }
 
-struct ViewBuilderContent: View {
+fileprivate struct ViewBuilderContent: View {
     
     @State private var excercises = [
         Excercise(name: "Bench Press", reps: 10, weight: 50),

@@ -21,7 +21,7 @@ struct SingleResponsabilityPrincipleCommands: ParsableCommand {
 }
 
 /// Aqui OrderManager faz cálculo, persistência e envio de e-mail: responsabilidade demais.
-class OrderManager {
+fileprivate class OrderManager {
     func calculateTotal(for items: [Double]) -> Double {
         return items.reduce(0) { $0 + $1 }
     }
@@ -36,21 +36,21 @@ class OrderManager {
 }
 
 // 1. Responsabilidade: cálculo
-class OrderCalculator {
+fileprivate class OrderCalculator {
     func total(for items: [Double]) -> Double {
         items.reduce(0) { $0 + $1 }
     }
 }
 
 // 2. Responsabilidade: persistência
-class OrderRepository {
+fileprivate class OrderRepository {
     func save(_ order: Any) {
         print("Pedido sendo salvo no banco de dados.")
     }
 }
 
 // 3. Responsabilidade: comunicação
-class EmailService {
+fileprivate class EmailService {
     func sendConfirmation(to email: String) {
         print("Enviando email para \(email)")
     }
