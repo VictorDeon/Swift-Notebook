@@ -1,4 +1,7 @@
 // Funções seguem a seguinte sintaxe: func MyFunc(external internal: type, ...) -> returnType { ...code }
+// Funções podem ser armazenada em variaveis
+// Funções podem ser passadas como parâmetro func MyFunc(n1: Int, n2: Int, op: () -> Int) { ... }
+// Funções podem retornar outras funções.
 
 import AppKit
 import ArgumentParser
@@ -28,7 +31,18 @@ struct FunctionCommands: ParsableCommand {
         print(sum2(value1, value2))           // 3
         print(sum3(value1: value1, value2: value2))   // 3
         print(sum4(value1, value2: value2))       // 3
-        printHello()
+        printHello() // Hello World!
+        getHelloWorldFunction()() // Hello World!
+
+        // Funções podem ser armazenadas em variaveis
+        let sumCopy = sum2
+        print(sumCopy(value1, value2)) // 3
+        print(mathCalculator(value1, value2, operation: sum1)) // 3
+        
+        // Funções podem ser armazenadas em data structure
+        let operations = [sum1, sum2, sum3, sum4]
+        print(operations[0](value1, value2)) // 3
+        
     }
 }
 
@@ -56,3 +70,14 @@ func sum4(_ value1: Int, value2: Int) -> Int {
 func printHello() {
     print("Hello World!")
 }
+
+// Função que recebe outra função como parâmetro
+func mathCalculator(_ n1: Int, _ n2: Int, operation: (Int, Int) -> Int) -> Int {
+    operation(n1, n2)
+}
+
+// Funções podem ser retornada de outras funções.
+func getHelloWorldFunction() -> () -> Void {
+    return printHello
+}
+

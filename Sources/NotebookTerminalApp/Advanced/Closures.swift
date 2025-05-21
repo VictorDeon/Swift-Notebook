@@ -38,6 +38,8 @@ struct ClosuresCommands: ParsableCommand {
         AplicacoesEmColecoes.run()
         print("→ Retornando closures e captura de valores:")
         RetornandoClosuresECapturaDeValores.run()
+        print("→ Escaping Closure:")
+        EscapingClosures.run()
     }
 }
 
@@ -73,6 +75,12 @@ struct ClosuresComoParametrosDeFuncoes {
         print(calculator(2, 3, operation: { (value1: Int, value2: Int) -> Int in
             return value2 - value1
         }))  // 1
+        
+        // Podemos retornar uma closure em uma função
+        func exec() -> (Int, Int) -> Int {
+            return { (n1, n2) in n1 + n2 }
+        }
+        print(exec()(5, 5)) // 10
     }
 }
 
@@ -83,6 +91,7 @@ struct TrailingClosuresEShorthandArguments {
         // closure e nomes abreviados ($0, $1, …):
         // Trailing closure:
         print(calculator(2, 3) { $1 - $0 })   // 1
+        print(calculator(2, 3) { n1, n2 in n1 + n2 })  // 5
 
         // Sintaxe abreviada em diferentes níveis:
         let subtração: (Int, Int) -> Int = { $1 - $0 }
@@ -130,5 +139,70 @@ struct RetornandoClosuresECapturaDeValores {
         print(incByTwo())   // 6
         print(incByTwo())   // 8
         // Aqui, a closure “lembra” da variável total mesmo após o fim da função.
+    }
+}
+
+struct EscapingClosures {
+    enum APIError: Error {
+        case failedToGetResponse
+    }
+    
+    static func run() {
+        typealias CompletionHandler = @Sendable (_ response: Result<String, APIError>) -> Void
+        
+        func fetchData(completionHandler: @escaping CompletionHandler) {
+            guard let urlComponents = URLComponents(string: "https://jsonplaceholder.typicode.com/todos/1") else {
+                completionHandler(.failure(APIError.failedToGetResponse))
+                return
+            }
+            
+            guard let url = urlComponents.url else {
+                completionHandler(.failure(.failedToGetResponse))
+                return
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept")
+            
+            let config = URLSessionConfiguration.default
+            let session = URLSession(configuration: config)
+            
+            let task = session.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    completionHandler(.failure(.failedToGetResponse))
+                    return
+                }
+                
+                guard let data = data, let response = String(data: data, encoding: String.Encoding.utf8) else {
+                    completionHandler(.failure(.failedToGetResponse))
+                    return
+                }
+                
+                completionHandler(.success(response))
+            }
+            
+            task.resume()
+        }
+        
+        // Cria o semáforo com valor inicial 0
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        fetchData { response in
+            switch response {
+            case .success(let data):
+                print(data)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+            // Libera o semáforo, permitindo que a thread principal continue
+            semaphore.signal()
+        }
+        
+        // Aguarda até que semaphore.signal() seja chamado
+        _ = semaphore.wait(timeout: .distantFuture)
+        print("Programa encerrando após receber o callback.")
     }
 }
