@@ -1,9 +1,6 @@
 name: Build and Release NotebookTerminalApp
 
 on:
-  push:
-    tags:
-      - "v*"
   workflow_dispatch:
     inputs:
       version:

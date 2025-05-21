@@ -23,6 +23,7 @@ struct RealmCommands: AsyncParsableCommand {
     }
 }
 
+@objc(Settings)
 fileprivate class Settings: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var volume: Int = 0
@@ -33,6 +34,7 @@ fileprivate class Settings: Object {
     }
 }
 
+@objc(Vehicle)
 fileprivate class Vehicle: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var licensePlate: String = ""
@@ -46,6 +48,7 @@ fileprivate class Vehicle: Object {
     }
 }
 
+@objc(Group)
 fileprivate class Group: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
@@ -57,6 +60,7 @@ fileprivate class Group: Object {
     }
 }
 
+@objc(User)
 fileprivate class User: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
