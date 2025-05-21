@@ -1,7 +1,9 @@
 // Funções seguem a seguinte sintaxe: func MyFunc(external internal: type, ...) -> returnType { ...code }
-// Funções podem ser armazenada em variaveis
-// Funções podem ser passadas como parâmetro func MyFunc(n1: Int, n2: Int, op: () -> Int) { ... }
-// Funções podem retornar outras funções.
+// Programação funcional é um paradigma de programação que usa funções puras, ou seja, funções que não dependem
+// de variaveis externas e não as modifica. Ele sempre retorna o mesmo resultado para as mesmas entradas.
+// Impura: func sum(n1: Int, n2: Int) -> Void { result = n1 + n2 }
+// Pura: func sum(n1: Int, n2: Int) -> Int { return n1 + n2 }
+// Para usar programação funcional use e abuse de Higher Order Functions como .filter, .map, .reduce e etc.
 
 import AppKit
 import ArgumentParser

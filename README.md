@@ -188,7 +188,6 @@ TODO:
 - [x] Empacotamento de modulos e utilização do pacote
 - [x] SwiftUI
 - [ ] ObjectiveC (Quarta) (Video) (6,5h)
-    - [ ] Seção 73 - Functional Programming
 - [ ] MacOS Using SwiftUI Projeto 01 (Quinta) (4h)
     - [ ] Seção 21 - To Do List
     - [ ] Seção 22 - Adaptive Layout (Watch-Only) (17m)

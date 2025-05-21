@@ -173,7 +173,8 @@ struct TransformandoEFiltrando {
 
         // compactMapValues: remove valores nil após transformação
         let rawData: [String: String?] = ["a": "1", "b": nil, "c": "3"]
-        let ints = rawData.compactMapValues { $0.flatMap(Int.init) }
+        let ints = rawData.compactMapValues { $0 }
+//        let ints = rawData.filter { $0.value != nil }.mapValues { $0! }
         print(ints)                 // ["a": 1, "c": 3]
     }
 }

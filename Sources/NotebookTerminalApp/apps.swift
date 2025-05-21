@@ -102,6 +102,7 @@ struct TerminalApp: AsyncParsableCommand {
             FunctionCommands.self,
             OptionalCommands.self,
             RandomCommands.self,
+            HigherOrderFunctionsCommands.self,
             // Advanced
             CastingCommands.self,
             ClosuresCommands.self,
