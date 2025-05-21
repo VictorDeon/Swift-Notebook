@@ -1,5 +1,7 @@
 /*
  Em Swift, além de propriedades armazenadas (stored properties), podemos usar:
+    - Store Properties: Sao as variaveis tipicas de uma struct ou classe, armazenam o valor dentro delas.
+    - Lazy Properties: São valores armazenados na qual seu valor é calculado somente apos a primeira vez de uso.
     - Computed Properties (Propriedades Computadas): não armazenam um valor diretamente, mas calculam-no
       dinamicamente a cada acesso.
         1. Declaração obrigatoriamente em var.
@@ -16,9 +18,9 @@ import Foundation
 import AppKit
 import ArgumentParser
 
-struct ComputedAttributesCommands: ParsableCommand {
+struct PropertiesCommands: ParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "computed-attributes",
+        commandName: "properties",
         abstract: "Tutorial sobre computed attributes em swift"
     )
 
@@ -57,6 +59,15 @@ struct PizzaCalculator {
             print("🍕 Sobrou \(leftoverSlices) pedaço(s) de pizza.")
         }
     }
+    
+    // Vai ter um resultado dependendo do resultado do didSet acima.
+    lazy var temDesperdicio: Bool = {
+        if leftoverSlices <= 0 {
+            return false
+        }
+        
+        return true
+    }()
 
     // Propriedades recebidas via inicialização
     let slicesPerPizza: Int
@@ -88,5 +99,6 @@ struct PizzaCalculator {
         // (reaproveitamos o mesmo valor para cálculo de sobra)
         var mutableSelf = self
         mutableSelf.pizzasNeeded = pizzasNeeded
+        print(mutableSelf.temDesperdicio) // true
     }
 }

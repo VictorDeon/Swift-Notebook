@@ -108,7 +108,7 @@ struct TerminalApp: AsyncParsableCommand {
             ClosuresCommands.self,
             ExtensionCommands.self,
             OOCommands.self,
-            ComputedAttributesCommands.self,
+            PropertiesCommands.self,
             CicloDeReferenciaCommands.self,
             AssociationCommands.self,
             SOCommands.self,
@@ -150,7 +150,8 @@ struct TerminalApp: AsyncParsableCommand {
             SheetsAndNavigationCommands.self,
             ListCommands.self,
             GridsCommands.self,
-            ViewBuilderCommands.self
+            ViewBuilderCommands.self,
+            InputFieldCommands.self
         ]
     )
 
