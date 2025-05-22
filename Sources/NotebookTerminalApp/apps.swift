@@ -157,7 +157,10 @@ struct TerminalApp: AsyncParsableCommand {
             ListCommands.self,
             GridsCommands.self,
             ViewBuilderCommands.self,
-            InputFieldCommands.self
+            InputFieldCommands.self,
+            BindingCommands.self,
+            EnvironmentObjectCommands.self,
+            EnvironmentCommands.self
         ]
     )
 
