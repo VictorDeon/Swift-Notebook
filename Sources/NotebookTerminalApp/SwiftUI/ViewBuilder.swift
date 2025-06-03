@@ -3,6 +3,7 @@
 import SwiftUI
 import Foundation
 import ArgumentParser
+import VKSwiftUI
 
 struct ViewBuilderCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -16,7 +17,7 @@ struct ViewBuilderCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(ViewBuilderContent(), by: app)
+            TerminalSwiftUI.showWindow(ViewBuilderContent(), by: app)
             app.run()
 
             print("Finalizado!")

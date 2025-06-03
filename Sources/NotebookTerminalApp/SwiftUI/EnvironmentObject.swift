@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct EnvironmentObjectCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -13,7 +14,7 @@ struct EnvironmentObjectCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             let redux = CounterRedux()
-            TerminalApp.showWindow(ContentViewRoot().environmentObject(redux), by: app)
+            TerminalSwiftUI.showWindow(ContentViewRoot().environmentObject(redux), by: app)
             app.run()
 
             print("Finalizado!")

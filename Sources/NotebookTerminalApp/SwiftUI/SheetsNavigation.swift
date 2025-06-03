@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct SheetsAndNavigationCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -12,7 +13,7 @@ struct SheetsAndNavigationCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(SheetsContentView(), by: app)
+            TerminalSwiftUI.showWindow(SheetsContentView(), by: app)
             app.run()
 
             print("Finalizado!")

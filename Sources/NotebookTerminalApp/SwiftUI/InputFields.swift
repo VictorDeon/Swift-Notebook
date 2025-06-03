@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct InputFieldCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -12,7 +13,7 @@ struct InputFieldCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(InputFieldContentView(), by: app, title: "Formulario")
+            TerminalSwiftUI.showWindow(InputFieldContentView(), by: app, title: "Formulario")
             app.run()
 
             print("Finalizado!")

@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct ColorCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -12,7 +13,7 @@ struct ColorCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(ColorContentView(), by: app)
+            TerminalSwiftUI.showWindow(ColorContentView(), by: app)
             app.run()
 
             print("Finalizado!")

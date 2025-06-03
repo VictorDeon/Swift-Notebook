@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct GridsCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -12,22 +13,22 @@ struct GridsCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(HorizontalStack(), by: app, title: "Horizontal Stack")
+            TerminalSwiftUI.showWindow(HorizontalStack(), by: app, title: "Horizontal Stack")
             app.run()
             
-            TerminalApp.showWindow(VerticalStack(), by: app, title: "Vertical Stack")
+            TerminalSwiftUI.showWindow(VerticalStack(), by: app, title: "Vertical Stack")
             app.run()
             
-            TerminalApp.showWindow(GridsContentView(), by: app, title: "Grids")
+            TerminalSwiftUI.showWindow(GridsContentView(), by: app, title: "Grids")
             app.run()
  
-            TerminalApp.showWindow(LazyVGridsFlexibleContentView(), by: app, title: "Lazy V Flexible Grids")
+            TerminalSwiftUI.showWindow(LazyVGridsFlexibleContentView(), by: app, title: "Lazy V Flexible Grids")
             app.run()
             
-            TerminalApp.showWindow(LazyVGridsAdaptativeContentView(), by: app, title: "Lazy V Adaptative Grids")
+            TerminalSwiftUI.showWindow(LazyVGridsAdaptativeContentView(), by: app, title: "Lazy V Adaptative Grids")
             app.run()
 
-            TerminalApp.showWindow(LazyHGridsContentView(), by: app, title: "Lazy H Grids")
+            TerminalSwiftUI.showWindow(LazyHGridsContentView(), by: app, title: "Lazy H Grids")
             app.run()
 
             print("Finalizado!")

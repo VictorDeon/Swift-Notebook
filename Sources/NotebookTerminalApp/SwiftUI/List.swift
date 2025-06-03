@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct ListCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -12,16 +13,16 @@ struct ListCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(StringListContentView(), by: app, title: "String")
+            TerminalSwiftUI.showWindow(StringListContentView(), by: app, title: "String")
             app.run()
             
-            TerminalApp.showWindow(ItemListContentView(), by: app, title: "Items")
+            TerminalSwiftUI.showWindow(ItemListContentView(), by: app, title: "Items")
             app.run()
             
-            TerminalApp.showWindow(ForListContentView(), by: app, title: "ForEach")
+            TerminalSwiftUI.showWindow(ForListContentView(), by: app, title: "ForEach")
             app.run()
             
-            TerminalApp.showWindow(ScrollListContentView(), by: app, title: "Scroll")
+            TerminalSwiftUI.showWindow(ScrollListContentView(), by: app, title: "Scroll")
             app.run()
 
             print("Finalizado!")

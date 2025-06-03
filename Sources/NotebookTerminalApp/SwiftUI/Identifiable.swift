@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct IdentifiableCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -13,10 +14,10 @@ struct IdentifiableCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(IdentifiableStringContent(), by: app)
+            TerminalSwiftUI.showWindow(IdentifiableStringContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(IdentifiableUserContent(), by: app)
+            TerminalSwiftUI.showWindow(IdentifiableUserContent(), by: app)
             app.run()
 
             print("Finalizado!")

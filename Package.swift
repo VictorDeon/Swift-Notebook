@@ -88,7 +88,8 @@ let package = Package(
         .package(url: "https://github.com/groue/GRDB.swift.git", from: "7.5.0"),
         .package(url: "https://github.com/realm/realm-swift.git", .upToNextMajor(from: "20.0.2")),
         .package(url: "https://github.com/Kitura/Swift-JWT.git", from: "4.0.0"),
-        .package(url: "https://github.com/VictorDeon/VKLogging.git", from: "1.0.0")
+        .package(url: "https://github.com/VictorDeon/VKLogging.git", from: "1.0.0"),
+        .package(url: "https://github.com/VictorDeon/VKSwiftUI.git", from: "1.0.1")
     ],
     targets: [
         .executableTarget(
@@ -99,7 +100,8 @@ let package = Package(
                 .product(name: "GRDB", package: "GRDB.swift"),
                 .product(name: "RealmSwift", package: "realm-swift"),
                 .product(name: "SwiftJWT", package: "Swift-JWT"),
-                .product(name: "VKLogging", package: "VKLogging")
+                .product(name: "VKLogging", package: "VKLogging"),
+                .product(name: "VKSwiftUI", package: "VKSwiftUI")
             ],
             resources: [
                 .process("version.txt"),

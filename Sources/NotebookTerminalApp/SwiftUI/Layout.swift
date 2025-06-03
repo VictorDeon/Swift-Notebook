@@ -16,6 +16,7 @@ As view `VStack`, `HStack` e `ZStack` são conhecidas como **Compound Views**, o
 
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct LayoutCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -28,25 +29,25 @@ struct LayoutCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(VStackContent(), by: app)
+            TerminalSwiftUI.showWindow(VStackContent(), by: app)
             app.run()
 
-            TerminalApp.showWindow(HStackContent(), by: app)
+            TerminalSwiftUI.showWindow(HStackContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(ZStackContent(), by: app)
+            TerminalSwiftUI.showWindow(ZStackContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(LayoutContent(), by: app)
+            TerminalSwiftUI.showWindow(LayoutContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(AlignmentContent(), by: app)
+            TerminalSwiftUI.showWindow(AlignmentContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(PositionContent(), by: app)
+            TerminalSwiftUI.showWindow(PositionContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(GeometryContent(), by: app)
+            TerminalSwiftUI.showWindow(GeometryContent(), by: app)
             app.run()
 
             print("Finalizado!")

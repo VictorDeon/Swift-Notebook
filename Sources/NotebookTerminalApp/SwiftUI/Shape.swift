@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct ShapeCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -12,7 +13,7 @@ struct ShapeCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(ShapeContentView(), by: app)
+            TerminalSwiftUI.showWindow(ShapeContentView(), by: app)
             app.run()
 
             print("Finalizado!")

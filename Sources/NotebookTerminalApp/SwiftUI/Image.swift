@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 struct ImageCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -13,10 +14,10 @@ struct ImageCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(ImageContent(), by: app)
+            TerminalSwiftUI.showWindow(ImageContent(), by: app)
             app.run()
             
-            TerminalApp.showWindow(BigImageContent(), by: app)
+            TerminalSwiftUI.showWindow(BigImageContent(), by: app)
             app.run()
 
             print("Finalizado!")

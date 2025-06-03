@@ -2,6 +2,7 @@
 
 import AppKit
 import ArgumentParser
+import VKSwiftUI
 
 struct MVVMCommands: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -14,7 +15,7 @@ struct MVVMCommands: AsyncParsableCommand {
     mutating func run() async throws {
         await MainActor.run {
             let app = NSApplication.shared
-            TerminalApp.showWindow(CounterView(), by: app)
+            TerminalSwiftUI.showWindow(CounterView(), by: app)
             app.run()
 
             print("Finalizado!")

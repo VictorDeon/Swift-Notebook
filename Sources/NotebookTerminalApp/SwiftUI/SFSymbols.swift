@@ -1,5 +1,6 @@
 import SwiftUI
 import ArgumentParser
+import VKSwiftUI
 
 /// Download do app com todos os symbols: https://developer.apple.com/sf-symbols/
 struct SFSymbolCommands: AsyncParsableCommand {
@@ -14,7 +15,7 @@ struct SFSymbolCommands: AsyncParsableCommand {
         await MainActor.run {
             let app = NSApplication.shared
             
-            TerminalApp.showWindow(SFSymbolContent(), by: app)
+            TerminalSwiftUI.showWindow(SFSymbolContent(), by: app)
             app.run()
 
             print("Finalizado!")

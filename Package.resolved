@@ -1,5 +1,5 @@
 {
-  "originHash" : "f360e815a87f23bb22cbe3b72038a910d195173284c0e1a131e207562b69535d",
+  "originHash" : "7d0daad35947883b068abd264748d7f7f0c8b43cb684e2401d5d76aa0af298a3",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -116,6 +116,15 @@
       "state" : {
         "revision" : "61cc09ade25539b9aac9adaecaf140b5ee96a3c3",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "vkswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/VictorDeon/VKSwiftUI.git",
+      "state" : {
+        "revision" : "505af82e0bb1690c4bd05d973a71f699adfbb83c",
+        "version" : "1.0.1"
       }
     }
   ],
