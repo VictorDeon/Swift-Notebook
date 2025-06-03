@@ -22,6 +22,16 @@ $ .build/<debug|release>/<NomeDoSeuBinario>
 3. Modifique o scheme no editor para ao clicar em run executar o scheme que desejar.
 // Lib de parametros de terminal: https://github.com/apple/swift-argument-parser
 
+### Debugger XCode (lldb)
+
+* Listar todas as variaveis locais: `frame variable`
+
+* Mostrar apenas uma variavel especifica: `frame variable <nome-da-variavel>.<propriedade>`
+
+* Executar algum metodo: `expression <meu-objeto>.<meu-metodo>()`
+
+* Printar o valor de algo: `po <nome-da-variavel>.<propriedade>`
+
 ### Gerar documentação
 
 Para documentar o codigo utilize três barras `///` para documentação inline ou `/** */` para documentação
