@@ -74,7 +74,7 @@ jobs:
 
       - name: Build the project
         run: |
-          swift build -c release
+          swift build -c release --arch arm64 --arch x86_64
           mkdir -p pkgroot/usr/local/bin pkgroot/usr/local/lib
           cp .build/release/NotebookTerminalApp pkgroot/usr/local/bin/
           cp .build/release/libRealmSwift.dylib pkgroot/usr/local/lib/
