@@ -88,7 +88,7 @@ let package = Package(
         .package(url: "https://github.com/groue/GRDB.swift.git", from: "7.5.0"),
         .package(url: "https://github.com/realm/realm-swift.git", .upToNextMajor(from: "20.0.2")),
         .package(url: "https://github.com/Kitura/Swift-JWT.git", from: "4.0.0"),
-        .package(url: "https://github.com/VictorDeon/VKLogging.git", from: "1.0.0"),
+        .package(url: "https://github.com/VictorDeon/VKLogging.git", from: "1.3.0"),
         .package(url: "https://github.com/VictorDeon/VKSwiftUI.git", from: "1.0.1")
     ],
     targets: [

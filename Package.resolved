@@ -1,5 +1,5 @@
 {
-  "originHash" : "7d0daad35947883b068abd264748d7f7f0c8b43cb684e2401d5d76aa0af298a3",
+  "originHash" : "cdb42e5f1e5292502f6ebccb852b4a6ef7f0d0ec07f9d1aef8b9e154314c9fd4",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -114,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/VictorDeon/VKLogging.git",
       "state" : {
-        "revision" : "61cc09ade25539b9aac9adaecaf140b5ee96a3c3",
-        "version" : "1.0.0"
+        "revision" : "1b1777704e173affdb1ee4ab87428c671d92d0c2",
+        "version" : "1.3.0"
       }
     },
     {

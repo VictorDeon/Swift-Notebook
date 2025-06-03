@@ -42,8 +42,8 @@ struct LoggingCommands: AsyncParsableCommand {
             logger.debug("Msg + trace", trace: traceID)
             // 15/05/2025 18:51:14 [debug] vX.Y.Z trace=19CC049E-FECD-4E62-AC6C-354CB0786687: Msg + trace
             logger.debug("Msg + trace + json", trace: traceID, json: [
-                "userId": AnyEncodable("fulano@gmail.com"),
-                "retry": AnyEncodable(false)
+                "userId": "fulano@gmail.com",
+                "retry": false
             ])
             // 15/05/2025 18:51:14 [debug] vX.Y.Z trace=19CC049E-FECD-4E62-AC6C-354CB0786687:
             // Msg + trace + json
@@ -52,15 +52,15 @@ struct LoggingCommands: AsyncParsableCommand {
             logger.info("Msg")
             logger.info("Msg + trace", trace: traceID)
             logger.info("Msg + trace + json", trace: traceID, json: [
-                "userId": AnyEncodable("fulano@gmail.com"),
-                "retry": AnyEncodable(false)
+                "userId": "fulano@gmail.com",
+                "retry": false
             ])
 
             logger.warning("Msg")
             logger.warning("Msg + trace", trace: traceID)
             logger.warning("Msg + trace + json", trace: traceID, json: [
-                "userId": AnyEncodable("fulano@gmail.com"),
-                "retry": AnyEncodable(false)
+                "userId": "fulano@gmail.com",
+                "retry": false
             ])
 
             do {
@@ -69,7 +69,7 @@ struct LoggingCommands: AsyncParsableCommand {
                 logger.info(
                     "→ Resultado: \(resultado)",
                     trace: traceID,
-                    json: ["result": AnyEncodable(resultado)]
+                    json: ["result": resultado]
                 )
             } catch {
                 // 15/05/2025 18:51:14 [error] vX.Y.Z: Erro: tentativa de divisão por zero.
